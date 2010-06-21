@@ -3,7 +3,7 @@ package net.orfjackal.specsy
 import org.junit.Test
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
-import collection.mutable.{Buffer, ArrayBuffer}
+import collection.mutable.{Buffer}
 
 class ExecutionModelTest {
   val c = new Context
@@ -34,4 +34,20 @@ class ExecutionModelTest {
 
     assertThat(spy, is(Buffer("root", "A", "AA")))
   }
+
+//  @Test
+//  def the_child_specs_are_executed_in_isolation() {
+//    c.specify("root", {
+//      spy.append("root")
+//
+//      c.specify("child A", {
+//        spy.append("A")
+//      })
+//      c.specify("child B", {
+//        spy.append("B")
+//      })
+//    })
+//
+//    assertThat(spy, is(Buffer("root", "A", "root", "B")))
+//  }
 }
