@@ -7,19 +7,25 @@ object Path {
 }
 
 case class Path(indexes: IndexedSeq[Int]) {
+  def length: Int = indexes.length
+
+  def lastIndex: Int = {
+    indexes.last
+  }
+
   def childAtIndex(index: Int): Path = {
     new Path(indexes :+ index)
   }
 
-  def isOn(target: Path): Boolean = {
-    indexes == target.indexes.take(indexes.length)
+  def isOn(that: Path): Boolean = {
+    this == that.prefixOfLength(this.length)
   }
 
-  def isBeyond(target: Path): Boolean = {
-    target.isOn(this) && indexes.length > target.indexes.length
+  private def prefixOfLength(len: Int): Path = {
+    Path(this.indexes.take(len))
   }
 
-  def lastIndex: Int = {
-    indexes.last
+  def isBeyond(that: Path): Boolean = {
+    that.isOn(this) && this.length > that.length
   }
 }

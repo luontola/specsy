@@ -9,11 +9,14 @@ class Spec(
   private var children = List[Spec]()
 
   def addChild(childName: String): Spec = {
-    val nextChildIndex = children.length
-    val childPath = currentPath.childAtIndex(nextChildIndex)
-    val child = new Spec(childName, this, childPath, targetPath)
+    val child = new Spec(childName, this, pathOfNextChild, targetPath)
     children = child :: children
     child
+  }
+
+  private def pathOfNextChild: Path = {
+    val nextChildIndex = children.length
+    currentPath.childAtIndex(nextChildIndex)
   }
 
   def shouldExecute: Boolean = isOnTargetPath || (isUnseen && isFirstChild)
