@@ -9,13 +9,13 @@ import org.junit.runner._
 class SpecsyJUnitRunnerTest {
   @Test
   def runs_specs_using_JUnit() {
-    val result = JUnitCore.runClasses(classOf[dummySpecWithTwoChildren])
+    val result = JUnitCore.runClasses(classOf[DummySpecWithTwoChildren])
     assertThat(result.getRunCount, is(2))
   }
 }
 
 @RunWith(classOf[SpecsyJUnitRunner])
-class dummySpecWithTwoChildren extends Specsy {
+class DummySpecWithTwoChildren extends Specsy {
   "child A" >> {
   }
   "child B" >> {

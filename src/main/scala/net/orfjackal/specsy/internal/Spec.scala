@@ -1,4 +1,4 @@
-package net.orfjackal.specsy
+package net.orfjackal.specsy.internal
 
 class Spec(
         val name: String,

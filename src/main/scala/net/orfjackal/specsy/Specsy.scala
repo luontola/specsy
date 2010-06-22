@@ -1,5 +1,7 @@
 package net.orfjackal.specsy
 
+import net.orfjackal.specsy.internal.ContextDealer
+
 trait Specsy {
   private val context = ContextDealer.take()
 

@@ -1,4 +1,4 @@
-package net.orfjackal.specsy
+package net.orfjackal.specsy.internal
 
 object Path {
   def apply(indexes: Int*): Path = {

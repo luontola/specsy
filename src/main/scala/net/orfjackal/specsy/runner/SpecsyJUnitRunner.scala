@@ -2,8 +2,9 @@ package net.orfjackal.specsy.runner
 
 import org.junit.runner.notification.RunNotifier
 import org.junit.runner._
-import net.orfjackal.specsy._
 import scala.collection.mutable.Buffer
+import net.orfjackal.specsy.internal._
+import net.orfjackal.specsy.Specsy
 
 class SpecsyJUnitRunner(testClass: Class[Specsy]) extends Runner {
   def run(notifier: RunNotifier) {
