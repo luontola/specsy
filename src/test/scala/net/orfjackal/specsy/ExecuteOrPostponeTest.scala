@@ -4,7 +4,7 @@ import org.junit.Test
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 
-class ExecuteOrPosponeTest {
+class ExecuteOrPostponeTest {
   @Test
   def specs_are_executed_when_on_target_path() {
     val currentPath = Path()
