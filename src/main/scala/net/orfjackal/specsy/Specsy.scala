@@ -1,12 +1,13 @@
 package net.orfjackal.specsy
 
 trait Specsy {
-  implicit def newChildSpec(name: String): ChildSpec = new ChildSpec(name)
+  private val context = ContextDealer.take()
 
-  class ChildSpec(name: String) {
+  protected implicit def specify(name: String): NestedSpec = new NestedSpec(name)
+
+  protected class NestedSpec(name: String) {
     def >>(body: => Any) {
-      // TODO
-      println(name + " >>")
+      context.specify(name, body)
     }
   }
 }

@@ -2,7 +2,8 @@ package net.orfjackal.specsy.runner
 
 import org.junit.runner.notification.RunNotifier
 import org.junit.runner._
-import net.orfjackal.specsy.Specsy
+import net.orfjackal.specsy._
+import scala.collection.mutable.Buffer
 
 class SpecsyJUnitRunner(testClass: Class[Specsy]) extends Runner {
   def run(notifier: RunNotifier) {
@@ -10,19 +11,34 @@ class SpecsyJUnitRunner(testClass: Class[Specsy]) extends Runner {
     notifier.addListener(result.createListener)
     notifier.fireTestRunStarted(getDescription)
 
-    // TODO: run the specs
+    var toBeExecuted = Buffer[Path](Path())
+    while (toBeExecuted.length > 0) {
+      val pathToExecute = toBeExecuted.remove(0)
 
-    testClass.getConstructor().newInstance()
+      val desc = Description.createTestDescription(testClass, "path: " + pathToExecute)
+      notifier.fireTestStarted(desc)
 
-    val test1 = Description.createTestDescription(testClass, "test1")
-    notifier.fireTestStarted(test1)
-    notifier.fireTestFinished(test1)
+      val result = executePath(pathToExecute)
 
-    val test2 = Description.createTestDescription(testClass, "test2")
-    notifier.fireTestStarted(test2)
-    notifier.fireTestFinished(test2)
+      notifier.fireTestFinished(desc)
+
+      toBeExecuted.appendAll(result.postponedPaths)
+    }
 
     notifier.fireTestRunFinished(result)
+  }
+
+  private def executePath(path: Path) = {
+    val context = new Context(path)
+    executeWithContext(context)
+    context
+  }
+
+  private def executeWithContext(context: Context): Unit = {
+    context.specify(testClass.getSimpleName, {
+      ContextDealer.prepare(context)
+      testClass.getConstructor().newInstance()
+    })
   }
 
   def getDescription: Description = {
