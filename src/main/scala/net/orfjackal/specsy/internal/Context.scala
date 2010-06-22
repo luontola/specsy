@@ -24,7 +24,11 @@ class Context(targetPath: Path) {
   private def processSpec(body: => Any) {
     if (currentSpec.shouldExecute) {
       executed = currentSpec.currentPath
-      body
+      try {
+        body
+      } catch {
+        case e => e.printStackTrace
+      }
     }
     if (currentSpec.shouldPostpone) {
       postponed = currentSpec.currentPath :: postponed
