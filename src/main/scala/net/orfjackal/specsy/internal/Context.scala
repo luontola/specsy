@@ -1,14 +1,14 @@
 package net.orfjackal.specsy.internal
 
 class Context(targetPath: Path) {
-  private var currentSpec: Spec = null
+  private var currentSpec: SpecRun = null
   private var executed: Path = null
   private var postponed = List[Path]()
-  private var _failures = List[(Spec, Throwable)]()
+  private var _failures = List[(SpecRun, Throwable)]()
 
   def this() = this (Path())
 
-  def failures: List[(Spec, Throwable)] = _failures
+  def failures: List[(SpecRun, Throwable)] = _failures
 
   def specify(name: String, body: => Unit) {
     enterSpec(name)
@@ -18,7 +18,7 @@ class Context(targetPath: Path) {
 
   private def enterSpec(name: String) {
     if (currentSpec == null) {
-      currentSpec = new Spec(name, null, Path(), targetPath)
+      currentSpec = new SpecRun(name, null, Path(), targetPath)
     } else {
       currentSpec = currentSpec.addChild(name)
     }

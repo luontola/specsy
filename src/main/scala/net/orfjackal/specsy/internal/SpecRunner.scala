@@ -5,7 +5,7 @@ import scala.collection.mutable.Buffer
 class SpecRunner {
   private var passCount = 0
   private var failCount = 0
-  private var failures = List[(Spec, Throwable)]()
+  private var failures = List[(SpecRun, Throwable)]()
 
   def run(spec: Context => Unit): SpecResult = {
     var queue = Buffer[Path]()

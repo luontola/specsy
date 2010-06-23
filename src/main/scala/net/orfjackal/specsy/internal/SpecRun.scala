@@ -1,16 +1,16 @@
 package net.orfjackal.specsy.internal
 
-class Spec(
+class SpecRun(
         val name: String,
-        val parent: Spec,
+        val parent: SpecRun,
         val currentPath: Path,
         targetPath: Path
         ) {
   private var nextChild = currentPath.firstChild
-  private var children = List[Spec]()
+  private var children = List[SpecRun]()
 
-  def addChild(childName: String): Spec = {
-    val child = new Spec(childName, this, pathOfNextChild(), targetPath)
+  def addChild(childName: String): SpecRun = {
+    val child = new SpecRun(childName, this, pathOfNextChild(), targetPath)
     children = child :: children
     child
   }
