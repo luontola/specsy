@@ -86,7 +86,6 @@ class JUnitRunnerLearningTest {
     }
 
     override def testStarted(description: Description) {
-      println("-- " + description + "\t" + description.getChildren)
       events.append("testStarted " + description.getDisplayName)
     }
 

@@ -7,7 +7,7 @@ class Context(targetPath: Path) {
 
   def this() = this (Path())
 
-  def specify(name: String, body: => Any) {
+  def specify(name: String, body: => Unit) {
     enterSpec(name)
     processSpec(body)
     exitSpec()
@@ -21,7 +21,7 @@ class Context(targetPath: Path) {
     }
   }
 
-  private def processSpec(body: => Any) {
+  private def processSpec(body: => Unit) {
     if (currentSpec.shouldExecute) {
       executed = currentSpec.currentPath
       try {
