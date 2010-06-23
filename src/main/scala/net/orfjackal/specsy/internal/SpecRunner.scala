@@ -3,21 +3,46 @@ package net.orfjackal.specsy.internal
 import scala.collection.mutable.Buffer
 
 class SpecRunner {
+  private var passCount = 0
+  private var failCount = 0
+  private var failures = List[(Spec, Throwable)]()
+
   def run(spec: Context => Unit): SpecResult = {
-    var postponed = Buffer[Path]()
-    postponed.append(Path())
+    var queue = Buffer[Path]()
+    queue.append(Path())
 
-    var runCount = 0
-    while (postponed.length > 0) {
-      val pathToExecute = postponed.remove(0)
-      runCount += 1
-
-      val c = new Context(pathToExecute)
-      spec(c)
-
-      postponed.appendAll(c.postponedPaths)
+    while (queue.length > 0) {
+      val pathToExecute = queue.remove(0)
+      val c = executePath(pathToExecute, spec)
+      queue.appendAll(c.postponedPaths)
     }
 
-    SpecResult(runCount)
+    SpecResult(passCount, failCount, failures)
+  }
+
+  def executePath(path: Path, spec: (Context) => Unit): Context = {
+    val c = new Context(path)
+    executeSafely(c, spec)
+    saveResults(c)
+    c
+  }
+
+  def executeSafely(c: Context, spec: (Context) => Unit): Unit = {
+    try {
+      spec(c)
+    } catch {
+      case e =>
+        e.printStackTrace
+        throw new RuntimeException("Internal error", e)
+    }
+  }
+
+  def saveResults(c: Context): Unit = {
+    if (c.failures.isEmpty) {
+      passCount += 1
+    } else {
+      failCount += 1
+      failures = failures ::: c.failures
+    }
   }
 }

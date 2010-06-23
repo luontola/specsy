@@ -27,7 +27,57 @@ class ReportingResultsTest {
     assertThat(result.runCount, is(2))
   }
 
-  // TODO: report pass & fail
-  // TODO: report failure stack traces (and shorten them)
+  @Test
+  def reports_passed_and_failed_runs() {
+    val result = runner.run(c => {
+      c.specify("root", {
+        c.specify("child A", {})
+        c.specify("child B", {})
+        c.specify("child C", {
+          throw new AssertionError("a failure")
+        })
+      })
+    })
+    assertThat(result.passCount, is(2))
+    assertThat(result.failCount, is(1))
+  }
+
+  @Test
+  def the_rest_of_the_siblings_are_executed_even_when_the_first_sibling_fails() {
+    val result = runner.run(c => {
+      c.specify("root", {
+        c.specify("child A", {
+          throw new AssertionError("a failure")
+        })
+        c.specify("child B", {})
+        c.specify("child C", {})
+      })
+    })
+    assertThat(result.passCount, is(2))
+    assertThat(result.failCount, is(1))
+  }
+
+  @Test
+  def reports_the_specs_and_exceptions_that_caused_a_failure() {
+    val result = runner.run(c => {
+      c.specify("root", {
+        c.specify("child A", {
+          throw new AssertionError("failure A")
+        })
+        c.specify("child B", {
+          throw new AssertionError("failure B")
+        })
+      })
+    })
+
+    val failureA = result.failures(0)
+    val failureB = result.failures(1)
+    assertThat(failureA._1.name, is("child A"))
+    assertThat(failureA._2.getMessage, is("failure A"))
+    assertThat(failureB._1.name, is("child B"))
+    assertThat(failureB._2.getMessage, is("failure B"))
+  }
+
+  // TODO: shorten failure stack traces
   // TODO: capture test output
 }

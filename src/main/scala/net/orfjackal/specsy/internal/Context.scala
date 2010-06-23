@@ -4,8 +4,11 @@ class Context(targetPath: Path) {
   private var currentSpec: Spec = null
   private var executed: Path = null
   private var postponed = List[Path]()
+  private var _failures = List[(Spec, Throwable)]()
 
   def this() = this (Path())
+
+  def failures: List[(Spec, Throwable)] = _failures
 
   def specify(name: String, body: => Unit) {
     enterSpec(name)
@@ -23,15 +26,19 @@ class Context(targetPath: Path) {
 
   private def processSpec(body: => Unit) {
     if (currentSpec.shouldExecute) {
+      executeSafely(body)
       executed = currentSpec.currentPath
-      try {
-        body
-      } catch {
-        case e => e.printStackTrace
-      }
     }
     if (currentSpec.shouldPostpone) {
       postponed = currentSpec.currentPath :: postponed
+    }
+  }
+
+  private def executeSafely(body: => Unit) {
+    try {
+      body
+    } catch {
+      case e => _failures ::= (currentSpec, e)
     }
   }
 

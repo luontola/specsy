@@ -6,17 +6,19 @@ class Spec(
         val currentPath: Path,
         targetPath: Path
         ) {
+  private var nextChild = currentPath.firstChild
   private var children = List[Spec]()
 
   def addChild(childName: String): Spec = {
-    val child = new Spec(childName, this, pathOfNextChild, targetPath)
+    val child = new Spec(childName, this, pathOfNextChild(), targetPath)
     children = child :: children
     child
   }
 
-  private def pathOfNextChild: Path = {
-    val nextChildIndex = children.length
-    currentPath.childAtIndex(nextChildIndex)
+  private def pathOfNextChild() = {
+    val path = nextChild
+    nextChild = nextChild.nextSibling
+    path
   }
 
   def shouldExecute: Boolean = isOnTargetPath || (isUnseen && isFirstChild)
@@ -27,6 +29,5 @@ class Spec(
 
   private def isUnseen = currentPath.isBeyond(targetPath)
 
-  private def isFirstChild = currentPath.lastIndex == 0
+  private def isFirstChild = currentPath.isFirstChild
 }
-
