@@ -2,7 +2,7 @@ package net.orfjackal.specsy.internal
 
 class Context(targetPath: Path) {
   private var currentSpec: SpecRun = null
-  private var executed: Path = null
+  private var executed: SpecRun = null // TODO: make 'executed' a list?
   private var postponed = List[Path]()
   private var _failures = List[(SpecRun, Throwable)]()
 
@@ -26,8 +26,9 @@ class Context(targetPath: Path) {
 
   private def processSpec(body: => Unit) {
     if (currentSpec.shouldExecute) {
+      // TODO: there is no test that this assignment must be first (otherwise the path will be root's path, and IDEA's test runner will get confused)
+      executed = currentSpec
       executeSafely(body)
-      executed = currentSpec.currentPath
     }
     if (currentSpec.shouldPostpone) {
       postponed = currentSpec.currentPath :: postponed
@@ -46,9 +47,14 @@ class Context(targetPath: Path) {
     currentSpec = currentSpec.parent
   }
 
-  def executedPath: Path = {
+  def executedSpec: SpecRun = {
     assert(executed != null)
     executed
+  }
+
+  def executedPath: Path = {
+    assert(executed != null)
+    executed.currentPath
   }
 
   def postponedPaths: List[Path] = {

@@ -8,7 +8,7 @@ trait Specsy {
   protected implicit def specify(name: String): NestedSpec = new NestedSpec(name)
 
   protected class NestedSpec(name: String) {
-    def >>(body: => Any) {
+    def >>(body: => Unit) {
       context.specify(name, body)
     }
   }

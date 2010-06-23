@@ -10,24 +10,26 @@ class SpecRunner {
   def run(spec: Context => Unit): SpecResult = {
     var queue = Buffer[Path]()
     queue.append(Path())
+    var executedSpecs = Buffer[SpecRun]()
 
     while (queue.length > 0) {
       val pathToExecute = queue.remove(0)
       val c = executePath(pathToExecute, spec)
+      executedSpecs.append(c.executedSpec)
       queue.appendAll(c.postponedPaths)
     }
 
-    SpecResult(passCount, failCount, failures)
+    SpecResult(passCount, failCount, executedSpecs.toList, failures)
   }
 
-  def executePath(path: Path, spec: (Context) => Unit): Context = {
+  private def executePath(path: Path, spec: (Context) => Unit): Context = {
     val c = new Context(path)
     executeSafely(c, spec)
     saveResults(c)
     c
   }
 
-  def executeSafely(c: Context, spec: (Context) => Unit): Unit = {
+  private def executeSafely(c: Context, spec: (Context) => Unit): Unit = {
     try {
       spec(c)
     } catch {
@@ -37,7 +39,7 @@ class SpecRunner {
     }
   }
 
-  def saveResults(c: Context): Unit = {
+  private def saveResults(c: Context): Unit = {
     if (c.failures.isEmpty) {
       passCount += 1
     } else {

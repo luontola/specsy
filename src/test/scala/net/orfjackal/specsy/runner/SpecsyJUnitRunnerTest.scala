@@ -17,6 +17,7 @@ class SpecsyJUnitRunnerTest {
 @RunWith(classOf[SpecsyJUnitRunner])
 class DummySpecWithTwoChildren extends Specsy {
   "child A" >> {
+//    assertThat("foo", is("bar"))
   }
   "child B" >> {
   }

@@ -1,48 +1,59 @@
 package net.orfjackal.specsy.runner
 
-import org.junit.runner.notification.RunNotifier
 import org.junit.runner._
 import scala.collection.mutable.Buffer
 import net.orfjackal.specsy.internal._
 import net.orfjackal.specsy.Specsy
+import org.junit.runner.notification._
 
 class SpecsyJUnitRunner(testClass: Class[Specsy]) extends Runner {
-  def run(notifier: RunNotifier) {
-    val result = new Result()
-    notifier.addListener(result.createListener)
-    notifier.fireTestRunStarted(getDescription)
+  private lazy val result = runSpecs()
 
-    var toBeExecuted = Buffer[Path](Path())
-    while (toBeExecuted.length > 0) {
-      val pathToExecute = toBeExecuted.remove(0)
+  // TODO: reconstruct the spec hierarchy
+  private lazy val childDescriptions: List[(Description, SpecRun)] = {
+    for (spec <- result.executedSpecs)
+    yield (Description.createTestDescription(testClass, spec.name), spec)
+  }
 
-      val desc = Description.createTestDescription(testClass, "path: " + pathToExecute)
-      notifier.fireTestStarted(desc)
-
-      val result = executePath(pathToExecute)
-
-      notifier.fireTestFinished(desc)
-
-      toBeExecuted.appendAll(result.postponedPaths)
+  private lazy val suiteDescription = {
+    val suite = Description.createSuiteDescription(testClass)
+    for ((desc, path) <- childDescriptions) {
+      suite.addChild(desc)
     }
-
-    notifier.fireTestRunFinished(result)
+    suite
   }
 
-  private def executePath(path: Path) = {
-    val context = new Context(path)
-    executeWithContext(context)
-    context
-  }
-
-  private def executeWithContext(context: Context): Unit = {
-    context.specify(testClass.getSimpleName, {
-      ContextDealer.prepare(context)
-      testClass.getConstructor().newInstance()
+  private def runSpecs(): SpecResult = {
+    val runner = new SpecRunner
+    runner.run(c => {
+      c.specify(testClass.getSimpleName, {
+        ContextDealer.prepare(c)
+        testClass.getConstructor().newInstance()
+      })
     })
   }
 
-  def getDescription: Description = {
-    Description.createSuiteDescription(testClass)
+  def run(notifier: RunNotifier) {
+    for ((desc, spec) <- childDescriptions) {
+      notifier.fireTestStarted(desc)
+      val failure = findFailure(desc, spec)
+      if (failure != null) {
+        notifier.fireTestFailure(failure)
+      } else {
+        notifier.fireTestFinished(desc)
+      }
+    }
   }
+
+  // XXX: make it easier to convert the results to descriptions
+  private def findFailure(desc: Description, currentSpec: SpecRun): Failure = {
+    for ((failedSpec, cause) <- result.failures) {
+      if (failedSpec == currentSpec) {
+        return new Failure(desc, cause)
+      }
+    }
+    return null
+  }
+
+  def getDescription = suiteDescription
 }
