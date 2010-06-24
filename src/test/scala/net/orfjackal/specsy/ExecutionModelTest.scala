@@ -77,4 +77,24 @@ class ExecutionModelTest {
 
     assertThat(spy, is(Buffer("A1", "B1")))
   }
+
+  @Test
+  def child_specs_are_executed_immediately_where_they_are_declared() {
+    runner.run(c => {
+      c.run("root", {
+        var i = 0
+
+        c.specify("child A", {
+          spy.append("A" + i)
+        })
+        i += 1
+
+        c.specify("child B", {
+          spy.append("B" + i)
+        })
+      })
+    })
+
+    assertThat(spy, is(Buffer("A0", "B1")))
+  }
 }
