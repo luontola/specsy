@@ -2,6 +2,8 @@ package net.orfjackal.specsy.internal
 
 object Path {
   def apply(indexes: Int*): Path = Path(IndexedSeq(indexes: _*))
+
+  val Root: Path = Path()
 }
 
 case class Path(indexes: IndexedSeq[Int]) {

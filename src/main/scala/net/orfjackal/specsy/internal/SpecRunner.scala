@@ -9,7 +9,7 @@ class SpecRunner {
 
   def run(spec: Context => Unit): SpecResult = {
     var queue = Buffer[Path]()
-    queue.append(Path())
+    queue.append(Path.Root)
     var executedSpecs = Buffer[SpecRun]()
 
     while (queue.length > 0) {

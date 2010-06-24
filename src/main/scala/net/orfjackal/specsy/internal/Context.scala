@@ -7,7 +7,7 @@ class Context(targetPath: Path) {
   private var postponed = List[Path]()
   private var _failures = List[(SpecRun, Throwable)]()
 
-  def this() = this (Path())
+  def this() = this (Path.Root)
 
   def run(className: String, rootSpec: => Unit) {
     changeStatus(Context.NotStarted, Context.Running)
@@ -20,7 +20,7 @@ class Context(targetPath: Path) {
   }
 
   private def enterRootSpec(name: String) {
-    current = new SpecRun(name, null, Path(), targetPath)
+    current = new SpecRun(name, null, Path.Root, targetPath)
   }
 
   def specify(name: String, body: => Unit) {
