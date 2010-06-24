@@ -7,6 +7,10 @@ object Path {
 }
 
 case class Path(indexes: IndexedSeq[Int]) {
+  for (i <- indexes) {
+    require(i >= 0, "all indexes must be >= 0, but was " + indexes)
+  }
+
   def isRoot: Boolean = length == 0
 
   def parent: Path = Path(indexes.dropRight(1))

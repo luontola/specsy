@@ -5,7 +5,7 @@ case class SpecResult(
         failCount: Int,
         executedSpecs: List[SpecRun],
         failures: List[(SpecRun, Throwable)]) {
-  assert(failCount == failures.length, "Expected " + failCount + " failures but was " + failures)
+  assert(failCount == failures.length, "expected " + failCount + " failures, but was " + failures)
 
   def runCount: Int = passCount + failCount
 }

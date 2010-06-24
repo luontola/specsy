@@ -3,10 +3,10 @@ package net.orfjackal.specsy.internal
 class SpecRun(
         val name: String,
         val parent: SpecRun,
-        val currentPath: Path,
+        val path: Path,
         targetPath: Path
         ) {
-  private var nextChild = currentPath.firstChild
+  private var nextChild = path.firstChild
   private var children = List[SpecRun]()
 
   def addChild(childName: String): SpecRun = {
@@ -25,9 +25,9 @@ class SpecRun(
 
   def shouldPostpone: Boolean = isUnseen && !isFirstChild
 
-  private def isOnTargetPath = currentPath.isOn(targetPath)
+  private def isOnTargetPath = path.isOn(targetPath)
 
-  private def isUnseen = currentPath.isBeyond(targetPath)
+  private def isUnseen = path.isBeyond(targetPath)
 
-  private def isFirstChild = currentPath.isFirstChild
+  private def isFirstChild = path.isFirstChild
 }

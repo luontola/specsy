@@ -9,7 +9,7 @@ object ContextDealer {
 
   def take(): Context = {
     val context = prepared.get
-    assert(context != null, "Tried to take the Context before it was prepared")
+    assert(context != null, "tried to take the context before it was prepared")
     prepared.set(null)
     context
   }

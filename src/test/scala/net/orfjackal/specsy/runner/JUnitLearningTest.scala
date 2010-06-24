@@ -9,8 +9,28 @@ import org.junit.runner.notification._
 import scala.collection.mutable.Buffer
 import org.junit.internal.builders.JUnit4Builder
 
-class JUnitRunnerLearningTest {
+class JUnitLearningTest {
   val events = Buffer[String]()
+
+  // execution order of methods within a class is compiler-specific
+  val eventsRunOrder1 = Buffer(
+    "testRunStarted",
+    "testStarted test1(net.orfjackal.specsy.runner.DummyTest1)",
+    "testFinished test1(net.orfjackal.specsy.runner.DummyTest1)",
+    "testStarted test2(net.orfjackal.specsy.runner.DummyTest2)",
+    "testFinished test2(net.orfjackal.specsy.runner.DummyTest2)",
+    "testStarted test3(net.orfjackal.specsy.runner.DummyTest2)",
+    "testFinished test3(net.orfjackal.specsy.runner.DummyTest2)",
+    "testRunFinished")
+  val eventsRunOrder2 = Buffer(
+    "testRunStarted",
+    "testStarted test1(net.orfjackal.specsy.runner.DummyTest1)",
+    "testFinished test1(net.orfjackal.specsy.runner.DummyTest1)",
+    "testStarted test3(net.orfjackal.specsy.runner.DummyTest2)",
+    "testFinished test3(net.orfjackal.specsy.runner.DummyTest2)",
+    "testStarted test2(net.orfjackal.specsy.runner.DummyTest2)",
+    "testFinished test2(net.orfjackal.specsy.runner.DummyTest2)",
+    "testRunFinished")
 
   @Test
   def running_individual_test_classes() {
@@ -18,15 +38,7 @@ class JUnitRunnerLearningTest {
     core.addListener(new SpyRunListener)
     val result = core.run(classOf[DummyTest1], classOf[DummyTest2])
 
-    assertThat(events, is(Buffer(
-      "testRunStarted",
-      "testStarted test1(net.orfjackal.specsy.runner.DummyTest1)",
-      "testFinished test1(net.orfjackal.specsy.runner.DummyTest1)",
-      "testStarted test2(net.orfjackal.specsy.runner.DummyTest2)",
-      "testFinished test2(net.orfjackal.specsy.runner.DummyTest2)",
-      "testStarted test3(net.orfjackal.specsy.runner.DummyTest2)",
-      "testFinished test3(net.orfjackal.specsy.runner.DummyTest2)",
-      "testRunFinished")))
+    assertThat(events, is(anyOf(equalTo(eventsRunOrder1), equalTo(eventsRunOrder2))))
     assertThat(result.getRunCount, is(3))
   }
 
@@ -38,15 +50,7 @@ class JUnitRunnerLearningTest {
 
     // the suite itself is not seen by the RunListener
     // - the output is exactly the same as when running individual test classes
-    assertThat(events, is(Buffer(
-      "testRunStarted",
-      "testStarted test1(net.orfjackal.specsy.runner.DummyTest1)",
-      "testFinished test1(net.orfjackal.specsy.runner.DummyTest1)",
-      "testStarted test2(net.orfjackal.specsy.runner.DummyTest2)",
-      "testFinished test2(net.orfjackal.specsy.runner.DummyTest2)",
-      "testStarted test3(net.orfjackal.specsy.runner.DummyTest2)",
-      "testFinished test3(net.orfjackal.specsy.runner.DummyTest2)",
-      "testRunFinished")))
+    assertThat(events, is(anyOf(equalTo(eventsRunOrder1), equalTo(eventsRunOrder2))))
     assertThat(result.getRunCount, is(3))
   }
 
@@ -68,7 +72,7 @@ class JUnitRunnerLearningTest {
   }
 
 
-  class SpyRunListener extends RunListener {
+  private class SpyRunListener extends RunListener {
     override def testIgnored(description: Description) {
       events.append("testIgnored " + description.getDisplayName)
     }

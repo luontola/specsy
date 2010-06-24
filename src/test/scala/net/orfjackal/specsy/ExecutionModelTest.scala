@@ -13,7 +13,7 @@ class ExecutionModelTest {
   @Test
   def there_is_one_root_spec() {
     runner.run(c => {
-      c.run("root", {
+      c.bootstrap("root", {
         spy.append("root")
       })
     })
@@ -24,7 +24,7 @@ class ExecutionModelTest {
   @Test
   def the_root_spec_can_contain_multiple_nested_child_specs() {
     runner.run(c => {
-      c.run("root", {
+      c.bootstrap("root", {
         spy.append("root")
 
         c.specify("child A", {
@@ -43,7 +43,7 @@ class ExecutionModelTest {
   @Test
   def the_specs_are_executed_one_branch_at_a_time_until_all_are_executed() {
     runner.run(c => {
-      c.run("root", {
+      c.bootstrap("root", {
         spy.append("root")
 
         c.specify("child A", {
@@ -61,7 +61,7 @@ class ExecutionModelTest {
   @Test
   def variables_declared_inside_specs_are_isolated_from_the_side_effects_of_sibling_specs() {
     runner.run(c => {
-      c.run("root", {
+      c.bootstrap("root", {
         var i = 0
 
         c.specify("child A", {
@@ -81,7 +81,7 @@ class ExecutionModelTest {
   @Test
   def child_specs_are_executed_immediately_where_they_are_declared() {
     runner.run(c => {
-      c.run("root", {
+      c.bootstrap("root", {
         var i = 0
 
         c.specify("child A", {

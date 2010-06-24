@@ -26,7 +26,7 @@ class SpecsyJUnitRunner(testClass: Class[Specsy]) extends Runner {
   private def runSpecs(): SpecResult = {
     val runner = new SpecRunner
     runner.run(c => {
-      c.run(testClass.getSimpleName, {
+      c.bootstrap(testClass.getSimpleName, {
         ContextDealer.prepare(c)
         testClass.getConstructor().newInstance()
       })

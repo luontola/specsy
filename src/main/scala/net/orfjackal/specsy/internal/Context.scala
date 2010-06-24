@@ -1,7 +1,16 @@
 package net.orfjackal.specsy.internal
 
+import Context._
+
+object Context {
+  abstract sealed class Status
+  case object NotStarted extends Status
+  case object Running extends Status
+  case object Finished extends Status
+}
+
 class Context(targetPath: Path) {
-  private var status: Context.Status = Context.NotStarted
+  private var status: Status = NotStarted
   private var current: SpecRun = null
   private var executed: SpecRun = null // TODO: make 'executed' a list?
   private var postponed = List[Path]()
@@ -9,14 +18,14 @@ class Context(targetPath: Path) {
 
   def this() = this (Path.Root)
 
-  def run(className: String, rootSpec: => Unit) {
-    changeStatus(Context.NotStarted, Context.Running)
+  def bootstrap(className: String, rootSpec: => Unit) {
+    changeStatus(NotStarted, Running)
 
     enterRootSpec(className)
     processSpec(rootSpec)
     exitSpec()
 
-    changeStatus(Context.Running, Context.Finished)
+    changeStatus(Running, Finished)
   }
 
   private def enterRootSpec(name: String) {
@@ -24,7 +33,7 @@ class Context(targetPath: Path) {
   }
 
   def specify(name: String, body: => Unit) {
-    assertStatusIs(Context.Running)
+    assertStatusIs(Running)
 
     enterSpec(name)
     processSpec(body)
@@ -42,7 +51,7 @@ class Context(targetPath: Path) {
       executeSafely(body)
     }
     if (current.shouldPostpone) {
-      postponed = current.currentPath :: postponed
+      postponed = current.path :: postponed
     }
   }
 
@@ -59,38 +68,31 @@ class Context(targetPath: Path) {
   }
 
   def executedSpec: SpecRun = {
-    assertStatusIs(Context.Finished)
+    assertStatusIs(Finished)
     executed
   }
 
   def executedPath: Path = {
-    assertStatusIs(Context.Finished)
-    executed.currentPath
+    assertStatusIs(Finished)
+    executed.path
   }
 
   def postponedPaths: List[Path] = {
-    assertStatusIs(Context.Finished)
+    assertStatusIs(Finished)
     postponed
   }
 
   def failures: List[(SpecRun, Throwable)] = {
-    assertStatusIs(Context.Finished)
+    assertStatusIs(Finished)
     _failures
   }
 
-  private def changeStatus(from: Context.Status, to: Context.Status) {
+  private def changeStatus(from: Status, to: Status) {
     assertStatusIs(from)
     status = to
   }
 
-  private def assertStatusIs(expected: Context.Status) {
-    assert(status == expected, "Should have been " + expected + ", but was " + status)
+  private def assertStatusIs(expected: Status) {
+    assert(status == expected, "expected status " + expected + ", but was " + status)
   }
-}
-
-object Context {
-  abstract class Status
-  case object NotStarted extends Status
-  case object Running extends Status
-  case object Finished extends Status
 }

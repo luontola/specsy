@@ -1,6 +1,6 @@
 package net.orfjackal.specsy.internal
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable._
 
 class SpecRunner {
   private var passCount = 0
@@ -8,9 +8,9 @@ class SpecRunner {
   private var failures = List[(SpecRun, Throwable)]()
 
   def run(spec: Context => Unit): SpecResult = {
-    var queue = Buffer[Path]()
+    var queue = ListBuffer[Path]()
     queue.append(Path.Root)
-    var executedSpecs = Buffer[SpecRun]()
+    var executedSpecs = ListBuffer[SpecRun]()
 
     while (queue.length > 0) {
       val pathToExecute = queue.remove(0)
@@ -35,7 +35,7 @@ class SpecRunner {
     } catch {
       case e =>
         e.printStackTrace
-        throw new RuntimeException("Internal error", e)
+        throw new RuntimeException("internal error", e)
     }
   }
 
