@@ -11,7 +11,7 @@ class ReportingResultsTest {
   @Test
   def reports_the_total_number_of_specs_run() {
     val result = runner.run(c => {
-      c.specify("root", {})
+      c.run("root", {})
     })
     assertThat(result.runCount, is(1))
   }
@@ -19,7 +19,7 @@ class ReportingResultsTest {
   @Test
   def there_are_as_many_runs_as_leaf_specs() {
     val result = runner.run(c => {
-      c.specify("root", {
+      c.run("root", {
         c.specify("child A", {})
         c.specify("child B", {})
       })
@@ -30,7 +30,7 @@ class ReportingResultsTest {
   @Test
   def reports_passed_and_failed_runs() {
     val result = runner.run(c => {
-      c.specify("root", {
+      c.run("root", {
         c.specify("child A", {})
         c.specify("child B", {})
         c.specify("child C", {
@@ -45,7 +45,7 @@ class ReportingResultsTest {
   @Test
   def the_rest_of_the_siblings_are_executed_even_when_the_first_sibling_fails() {
     val result = runner.run(c => {
-      c.specify("root", {
+      c.run("root", {
         c.specify("child A", {
           throw new AssertionError("a failure")
         })
@@ -60,7 +60,7 @@ class ReportingResultsTest {
   @Test
   def reports_the_specs_and_exceptions_that_caused_a_failure() {
     val result = runner.run(c => {
-      c.specify("root", {
+      c.run("root", {
         c.specify("child A", {
           throw new AssertionError("failure A")
         })
