@@ -48,7 +48,9 @@
             <id>scala-tools.org snapshots</id>
             <name>Scala-tools Maven2 Repository</name>
             <url>http://scala-tools.org/repo-snapshots</url>
-            <snapshots/>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
