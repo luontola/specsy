@@ -6,7 +6,7 @@ object Path {
   val Root: Path = Path()
 }
 
-case class Path(indexes: IndexedSeq[Int]) {
+case class Path(indexes: IndexedSeq[Int]) extends Ordered[Path] {
   for (i <- indexes) {
     require(i >= 0, "all indexes must be >= 0, but was " + indexes)
   }
@@ -31,7 +31,21 @@ case class Path(indexes: IndexedSeq[Int]) {
 
   private def prefixOfLength(len: Int) = Path(indexes.take(len))
 
-  private def length = indexes.length
+  def compare(that: Path): Int = {
+    var i = 0
+    while (i < this.length && i < that.length) {
+      val thisIndex = this.indexAt(i)
+      val thatIndex = that.indexAt(i)
+      if (thisIndex != thatIndex) {
+        return thisIndex - thatIndex
+      }
+    }
+    this.length - that.length
+  }
+
+  def length = indexes.length
+
+  def indexAt(i: Int): Int = indexes(i)
 
   private def lastIndex = indexes.last
 }
