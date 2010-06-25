@@ -3,7 +3,7 @@ package net.orfjackal.specsy.runner
 import java.lang._
 import scala.collection._
 import net.orfjackal.specsy.runner.notification._
-import net.orfjackal.specsy.internal.Path
+import net.orfjackal.specsy.core.Path
 
 class ResultCollector extends TestSuiteNotifier {
   private val testClasses = new mutable.HashMap[Class[_], TestClassState]()

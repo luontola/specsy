@@ -2,7 +2,7 @@ package net.orfjackal.specsy.junit
 
 import org.junit.runner._
 import scala.collection.mutable.Buffer
-import net.orfjackal.specsy.internal._
+import net.orfjackal.specsy.core._
 import net.orfjackal.specsy.Specsy
 import org.junit.runner.notification.Failure
 

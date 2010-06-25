@@ -1,4 +1,4 @@
-package net.orfjackal.specsy.internal
+package net.orfjackal.specsy.core
 
 import scala.collection.mutable._
 

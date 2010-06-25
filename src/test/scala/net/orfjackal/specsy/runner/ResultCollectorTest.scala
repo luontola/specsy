@@ -3,7 +3,7 @@ package net.orfjackal.specsy.runner
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 import org.junit._
-import net.orfjackal.specsy.internal._
+import net.orfjackal.specsy.core._
 import net.orfjackal.specsy.Specsy
 import net.orfjackal.specsy.runner.notification.TestSuiteNotifier
 

@@ -1,4 +1,4 @@
-package net.orfjackal.specsy.internal
+package net.orfjackal.specsy.core
 
 object ContextDealer {
   private val prepared = new ThreadLocal[Context]

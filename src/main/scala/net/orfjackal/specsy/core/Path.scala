@@ -1,4 +1,4 @@
-package net.orfjackal.specsy.internal
+package net.orfjackal.specsy.core
 
 object Path {
   def apply(indexes: Int*): Path = Path(IndexedSeq(indexes: _*))

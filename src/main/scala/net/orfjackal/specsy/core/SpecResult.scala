@@ -1,4 +1,4 @@
-package net.orfjackal.specsy.internal
+package net.orfjackal.specsy.core
 
 case class SpecResult(
         passCount: Int,

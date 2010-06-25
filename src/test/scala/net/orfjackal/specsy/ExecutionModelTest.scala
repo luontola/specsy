@@ -4,7 +4,7 @@ import org.junit.Test
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 import collection.mutable.{Buffer}
-import net.orfjackal.specsy.internal._
+import net.orfjackal.specsy.core._
 
 class ExecutionModelTest {
   val runner = new SpecRunner

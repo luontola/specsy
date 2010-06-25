@@ -3,7 +3,7 @@ package net.orfjackal.specsy
 import org.junit.Test
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
-import net.orfjackal.specsy.internal._
+import net.orfjackal.specsy.core._
 
 class ExecuteOrPostponeTest {
   @Test
