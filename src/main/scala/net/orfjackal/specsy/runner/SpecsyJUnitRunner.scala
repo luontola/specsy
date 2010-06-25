@@ -6,7 +6,7 @@ import net.orfjackal.specsy.internal._
 import net.orfjackal.specsy.Specsy
 import org.junit.runner.notification._
 
-class SpecsyJUnitRunner(testClass: Class[Specsy]) extends Runner {
+class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
   private lazy val result = runSpecs()
 
   // TODO: reconstruct the spec hierarchy
