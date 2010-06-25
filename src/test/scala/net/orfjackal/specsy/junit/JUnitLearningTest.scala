@@ -1,4 +1,4 @@
-package net.orfjackal.specsy.runner
+package net.orfjackal.specsy.junit
 
 import org.junit.Test
 import org.junit.Assert._
@@ -15,21 +15,21 @@ class JUnitLearningTest {
   // execution order of methods within a class is compiler-specific
   val eventsRunOrder1 = Buffer(
     "testRunStarted",
-    "testStarted test1(net.orfjackal.specsy.runner.DummyTest1)",
-    "testFinished test1(net.orfjackal.specsy.runner.DummyTest1)",
-    "testStarted test2(net.orfjackal.specsy.runner.DummyTest2)",
-    "testFinished test2(net.orfjackal.specsy.runner.DummyTest2)",
-    "testStarted test3(net.orfjackal.specsy.runner.DummyTest2)",
-    "testFinished test3(net.orfjackal.specsy.runner.DummyTest2)",
+    "testStarted test1(net.orfjackal.specsy.junit.DummyTest1)",
+    "testFinished test1(net.orfjackal.specsy.junit.DummyTest1)",
+    "testStarted test2(net.orfjackal.specsy.junit.DummyTest2)",
+    "testFinished test2(net.orfjackal.specsy.junit.DummyTest2)",
+    "testStarted test3(net.orfjackal.specsy.junit.DummyTest2)",
+    "testFinished test3(net.orfjackal.specsy.junit.DummyTest2)",
     "testRunFinished")
   val eventsRunOrder2 = Buffer(
     "testRunStarted",
-    "testStarted test1(net.orfjackal.specsy.runner.DummyTest1)",
-    "testFinished test1(net.orfjackal.specsy.runner.DummyTest1)",
-    "testStarted test3(net.orfjackal.specsy.runner.DummyTest2)",
-    "testFinished test3(net.orfjackal.specsy.runner.DummyTest2)",
-    "testStarted test2(net.orfjackal.specsy.runner.DummyTest2)",
-    "testFinished test2(net.orfjackal.specsy.runner.DummyTest2)",
+    "testStarted test1(net.orfjackal.specsy.junit.DummyTest1)",
+    "testFinished test1(net.orfjackal.specsy.junit.DummyTest1)",
+    "testStarted test3(net.orfjackal.specsy.junit.DummyTest2)",
+    "testFinished test3(net.orfjackal.specsy.junit.DummyTest2)",
+    "testStarted test2(net.orfjackal.specsy.junit.DummyTest2)",
+    "testFinished test2(net.orfjackal.specsy.junit.DummyTest2)",
     "testRunFinished")
 
   @Test
@@ -60,14 +60,14 @@ class JUnitLearningTest {
     assertThat(suiteRunner.testCount, is(3))
 
     val desc = suiteRunner.getDescription
-    assertThat(desc.getDisplayName, is("net.orfjackal.specsy.runner.DummySuite"))
+    assertThat(desc.getDisplayName, is("net.orfjackal.specsy.junit.DummySuite"))
 
     // contains the full tree of suites and tests
     val children = desc.getChildren
     assertThat(children.size, is(2))
-    assertThat(children.get(0).getDisplayName, is("net.orfjackal.specsy.runner.DummyTest1"))
+    assertThat(children.get(0).getDisplayName, is("net.orfjackal.specsy.junit.DummyTest1"))
     assertThat(children.get(0).getChildren.size, is(1))
-    assertThat(children.get(1).getDisplayName, is("net.orfjackal.specsy.runner.DummyTest2"))
+    assertThat(children.get(1).getDisplayName, is("net.orfjackal.specsy.junit.DummyTest2"))
     assertThat(children.get(1).getChildren.size, is(2))
   }
 

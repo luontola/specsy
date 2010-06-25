@@ -1,4 +1,4 @@
-package net.orfjackal.specsy.runner
+package net.orfjackal.specsy.junit
 
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._

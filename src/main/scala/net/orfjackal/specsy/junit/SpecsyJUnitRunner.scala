@@ -1,10 +1,10 @@
-package net.orfjackal.specsy.runner
+package net.orfjackal.specsy.junit
 
 import org.junit.runner._
 import scala.collection.mutable.Buffer
 import net.orfjackal.specsy.internal._
 import net.orfjackal.specsy.Specsy
-import org.junit.runner.notification._
+import org.junit.runner.notification.Failure
 
 class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
   private lazy val result = runSpecs()
@@ -33,7 +33,7 @@ class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
     })
   }
 
-  def run(notifier: RunNotifier) {
+  def run(notifier: org.junit.runner.notification.RunNotifier) {
     for ((desc, spec) <- childDescriptions) {
       notifier.fireTestStarted(desc)
       val failure = findFailure(desc, spec)
