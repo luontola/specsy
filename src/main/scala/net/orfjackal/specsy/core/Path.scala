@@ -39,6 +39,7 @@ case class Path(indexes: IndexedSeq[Int]) extends Ordered[Path] {
       if (thisIndex != thatIndex) {
         return thisIndex - thatIndex
       }
+      i += 1
     }
     this.length - that.length
   }
