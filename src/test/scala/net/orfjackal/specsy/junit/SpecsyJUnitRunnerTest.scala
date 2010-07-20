@@ -19,16 +19,23 @@ class SpecsyJUnitRunnerTest {
   @Test
   def reports_the_names_of_executed_specs() {
     val desc = runner.getDescription
+
     assertThat(desc.getClassName, is(classOf[DummySpecWithTwoChildren].getName))
-    assertThat(desc.getChildren.get(0).getMethodName, is("child A"))
-    assertThat(desc.getChildren.get(1).getMethodName, is("child B"))
+
+    val childA = desc.getChildren.get(0)
+    val childB = desc.getChildren.get(1)
+    assertThat(childA.getMethodName, is("child A"))
+    assertThat(childB.getMethodName, is("child B"))
   }
 
   @Ignore("reporting hierarchies not implemented")
   @Test
   def reports_hierarchies_of_deeply_nested_specs() {
     val desc = runner.getDescription
-    assertThat(desc.getChildren.get(0).getChildren.get(0).getMethodName, is("child AA"))
+
+    val childA = desc.getChildren.get(0)
+    val childAA = childA.getChildren.get(0)
+    assertThat(childAA.getMethodName, is("child AA"))
   }
 }
 

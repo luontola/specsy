@@ -4,9 +4,10 @@ import org.junit.Test
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 import net.orfjackal.specsy.core._
+import net.orfjackal.specsy.runner.notification.NullTestClassNotifier
 
 class ReportingResultsTest {
-  val runner = new SpecRunner
+  val runner = new SpecRunner(new NullTestClassNotifier)
 
   @Test
   def reports_the_total_number_of_specs_run() {

@@ -1,10 +1,10 @@
 package net.orfjackal.specsy.junit
 
 import org.junit.runner._
-import scala.collection.mutable.Buffer
 import net.orfjackal.specsy.core._
 import net.orfjackal.specsy.Specsy
 import org.junit.runner.notification.Failure
+import net.orfjackal.specsy.runner.notification.NullTestClassNotifier
 
 class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
   private lazy val result = runSpecs()
@@ -24,7 +24,15 @@ class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
   }
 
   private def runSpecs(): SpecResult = {
-    val runner = new SpecRunner
+    /*
+    val collector = new ResultCollector
+    val suite = new SuiteRunner(collector)
+    suite.add(testClass)
+    suite.run()
+
+    SpecResult(0, 0, Nil, Nil) // TODO
+    */
+    val runner = new SpecRunner(new NullTestClassNotifier)
     runner.run(c => {
       c.bootstrap(testClass.getSimpleName, {
         ContextDealer.prepare(c)
