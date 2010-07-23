@@ -6,8 +6,8 @@ import org.junit._
 import net.orfjackal.specsy.Specsy
 
 class SuiteRunnerTest {
-  val collector = new ResultCollector
-  val runner = new SuiteRunner(collector)
+  val monitor = new SuiteMonitor
+  val runner = new SuiteRunner(monitor)
 
   @Test
   def all_tests_in_the_suite_are_included_in_results() {
@@ -15,7 +15,7 @@ class SuiteRunnerTest {
     runner.add(classOf[DummySpec2])
     runner.run()
 
-    assertThat(collector.visualizedTree, is(List(
+    assertThat(monitor.visualizedTree, is(List(
       classOf[DummySpec1].getName,
       "- DummySpec1",
       "  - child A",

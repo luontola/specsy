@@ -5,7 +5,7 @@ import scala.collection._
 import net.orfjackal.specsy.runner.notification._
 import net.orfjackal.specsy.core.Path
 
-class ResultCollector extends TestSuiteNotifier {
+class SuiteMonitor extends TestSuiteNotifier {
   private val testClasses = new mutable.HashMap[Class[_], TestClassState]()
 
   def visualizedTree: List[String] = {
@@ -62,7 +62,7 @@ class ResultCollector extends TestSuiteNotifier {
   }
 
   private class TestRunState extends TestRunNotifier {
-    private[ResultCollector] val tests = new mutable.HashMap[Path, TestState]
+    private[SuiteMonitor] val tests = new mutable.HashMap[Path, TestState]
 
     def fireTestStarted(path: Path, name: String) {
       initMap(tests, path, new TestState(path, name)).fireTestStarted()

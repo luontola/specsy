@@ -7,16 +7,16 @@ import net.orfjackal.specsy.core._
 import net.orfjackal.specsy.Specsy
 import net.orfjackal.specsy.runner.notification.TestSuiteNotifier
 
-class ResultCollectorTest {
-  private val collector = new ResultCollector
-  private val suite = collector: TestSuiteNotifier
+class SuiteMonitorTest {
+  private val monitor = new SuiteMonitor
+  private val suite = monitor: TestSuiteNotifier
 
   @Test
   def an_empty_suite() {
     suite.fireSuiteStarted()
     suite.fireSuiteFinished()
 
-    assertThat(collector.visualizedTree, is(List[String]()))
+    assertThat(monitor.visualizedTree, is(List[String]()))
   }
 
   @Test
@@ -29,7 +29,7 @@ class ResultCollectorTest {
 
     suite.fireSuiteFinished()
 
-    assertThat(collector.visualizedTree, is(List(
+    assertThat(monitor.visualizedTree, is(List(
       classOf[DummySpec].getName
       )))
   }
@@ -47,7 +47,7 @@ class ResultCollectorTest {
     clazz.fireTestClassFinished()
     suite.fireSuiteFinished()
 
-    assertThat(collector.visualizedTree, is(List(
+    assertThat(monitor.visualizedTree, is(List(
       classOf[DummySpec].getName,
       "- root"
       )))
@@ -68,7 +68,7 @@ class ResultCollectorTest {
     clazz.fireTestClassFinished()
     suite.fireSuiteFinished()
 
-    assertThat(collector.visualizedTree, is(List(
+    assertThat(monitor.visualizedTree, is(List(
       classOf[DummySpec].getName,
       "- root",
       "  - child A"
@@ -96,7 +96,7 @@ class ResultCollectorTest {
     clazz.fireTestClassFinished()
     suite.fireSuiteFinished()
 
-    assertThat(collector.visualizedTree, is(List(
+    assertThat(monitor.visualizedTree, is(List(
       classOf[DummySpec].getName,
       "- root",
       "  - child A",
@@ -121,7 +121,7 @@ class ResultCollectorTest {
     clazz.fireTestClassFinished()
     suite.fireSuiteFinished()
 
-    assertThat(collector.visualizedTree, is(List(
+    assertThat(monitor.visualizedTree, is(List(
       classOf[DummySpec].getName,
       "- root",
       "  - child A",
@@ -156,7 +156,7 @@ class ResultCollectorTest {
 
     suite.fireSuiteFinished()
 
-    assertThat(collector.visualizedTree, is(List(
+    assertThat(monitor.visualizedTree, is(List(
       classOf[DummySpec].getName,
       "- root 1",
       classOf[DummySpec2].getName,
@@ -187,7 +187,7 @@ class ResultCollectorTest {
     clazz.fireTestClassFinished()
     suite.fireSuiteFinished()
 
-    assertThat(collector.visualizedTree, is(List(
+    assertThat(monitor.visualizedTree, is(List(
       classOf[DummySpec].getName,
       "- root",
       "  - child A",
