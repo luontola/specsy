@@ -3,10 +3,9 @@ package net.orfjackal.specsy.runner
 import net.orfjackal.specsy.core.Path
 import java.lang.Throwable
 import scala.collection.immutable.TreeMap
-import java.util.concurrent.BlockingQueue
 import net.orfjackal.specsy.runner.notification._
 
-class TestClassMonitor(runQueue: BlockingQueue[Runnable]) extends SuiteNotifier {
+class TestClassMonitor(runner: SuiteRunner) extends SuiteNotifier {
   private var tests = new TreeMap[Path, TestState]
 
   def testCount: Int = tests.size
@@ -26,7 +25,7 @@ class TestClassMonitor(runQueue: BlockingQueue[Runnable]) extends SuiteNotifier 
   }
 
   def submitTestRun(testRun: Runnable) {
-    runQueue.put(testRun)
+    runner.submitTestRun(testRun)
   }
 
   def fireTestStarted(path: Path): TestNotifier = {

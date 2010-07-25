@@ -5,11 +5,10 @@ import org.hamcrest.CoreMatchers._
 import org.junit._
 import net.orfjackal.specsy.core.Path
 import net.orfjackal.specsy.Specsy
-import java.util.concurrent.LinkedBlockingQueue
 
 class TestClassMonitorTest {
-  val runQueue = new LinkedBlockingQueue[Runnable]
-  val monitor = new TestClassMonitor(runQueue)
+  val unusedRunner = null
+  val monitor = new TestClassMonitor(unusedRunner)
 
   @Test
   def empty_test_class() {
@@ -108,19 +107,6 @@ class TestClassMonitorTest {
       Path(0) -> "child A",
       Path(1) -> "child B"
       )))
-  }
-
-  @Test
-  def submitted_test_runs_are_added_to_the_run_queue() {
-    val testRun = new Runnable {
-      def run {}
-    }
-    assertThat("queue size before", runQueue.size, is(0))
-
-    monitor.submitTestRun(testRun)
-
-    assertThat("queue size after", runQueue.size, is(1))
-    assertThat("submitted item", runQueue.take, is(testRun))
   }
 
   private class DummySpec extends Specsy {
