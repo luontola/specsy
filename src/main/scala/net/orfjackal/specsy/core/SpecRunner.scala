@@ -2,8 +2,18 @@ package net.orfjackal.specsy.core
 
 import scala.collection.mutable._
 import net.orfjackal.specsy.runner.notification._
+import net.orfjackal.specsy.Specsy
 
-class SpecRunner(notifier: SuiteNotifier) {
+class SpecRunner(testClass: Class[_ <: Specsy], notifier: SuiteNotifier) extends Runnable {
+  def run() {
+    run(c => {
+      c.bootstrap(testClass.getName, {
+        ContextDealer.prepare(c)
+        testClass.getConstructor().newInstance() // TODO: may throw exceptions
+      })
+    })
+  }
+
   def run(spec: Context => Unit) {
     val queue = ListBuffer[Path]()
     queue.append(Path.Root)

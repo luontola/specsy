@@ -11,17 +11,10 @@ class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
   private lazy val converter = new ResultToDescriptionConverter(testClass, results)
 
   private def runSpecs() = {
-    // TODO: use the suite runner to run the tests
-    val suiteRunner = new SuiteRunner
-    val monitor = new SuiteMonitor(suiteRunner)
-    val runner = new SpecRunner(monitor)
-
-    val r = runner.run(c => {
-      c.bootstrap(testClass.getSimpleName, {
-        ContextDealer.prepare(c)
-        testClass.getConstructor().newInstance() // TODO: may throw exceptions
-      })
-    })
+    val runner = new SuiteRunner
+    val monitor = new SuiteMonitor(runner)
+    runner.submitTestRun(new SpecRunner(testClass, monitor))
+    runner.await()
     monitor.results
   }
 

@@ -9,7 +9,7 @@ import net.orfjackal.specsy.runner.SuiteMonitor
 class ReportingResultsTest {
   val unusedRunner = null
   val monitor = new SuiteMonitor(unusedRunner)
-  val runner = new SpecRunner(monitor)
+  val runner = new SpecRunner(null, monitor)
 
   @Test
   def reports_the_total_number_of_specs_run() {

@@ -8,7 +8,7 @@ import net.orfjackal.specsy.core._
 import net.orfjackal.specsy.runner.notification.NullSuiteNotifier
 
 class ExecutionModelTest {
-  val runner = new SpecRunner(new NullSuiteNotifier)
+  val runner = new SpecRunner(null, new NullSuiteNotifier)
   val spy = Buffer[String]()
 
   @Test
