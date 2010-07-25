@@ -3,12 +3,12 @@ package net.orfjackal.specsy
 import org.junit.Test
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
-import collection.mutable.{Buffer}
+import collection.mutable.Buffer
 import net.orfjackal.specsy.core._
-import net.orfjackal.specsy.runner.notification.NullTestClassNotifier
+import net.orfjackal.specsy.runner.notification.NullSuiteNotifier
 
 class ExecutionModelTest {
-  val runner = new SpecRunner(new NullTestClassNotifier)
+  val runner = new SpecRunner(new NullSuiteNotifier)
   val spy = Buffer[String]()
 
   @Test

@@ -4,7 +4,7 @@ import org.junit.runner._
 import net.orfjackal.specsy.core._
 import net.orfjackal.specsy.Specsy
 import org.junit.runner.notification.Failure
-import net.orfjackal.specsy.runner.notification.NullTestClassNotifier
+import net.orfjackal.specsy.runner.notification.NullSuiteNotifier
 
 class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
   private lazy val result = runSpecs()
@@ -32,7 +32,7 @@ class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
 
     SpecResult(0, 0, Nil, Nil) // TODO
     */
-    val runner = new SpecRunner(new NullTestClassNotifier)
+    val runner = new SpecRunner(new NullSuiteNotifier)
     runner.run(c => {
       c.bootstrap(testClass.getSimpleName, {
         ContextDealer.prepare(c)

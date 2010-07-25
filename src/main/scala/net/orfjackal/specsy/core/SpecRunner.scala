@@ -1,9 +1,9 @@
 package net.orfjackal.specsy.core
 
 import scala.collection.mutable._
-import net.orfjackal.specsy.runner.notification.TestClassNotifier
+import net.orfjackal.specsy.runner.notification._
 
-class SpecRunner(notifier: TestClassNotifier) {
+class SpecRunner(notifier: SuiteNotifier) {
   private var passCount = 0
   private var failCount = 0
   private var failures = List[(SpecRun, Throwable)]()
@@ -13,7 +13,6 @@ class SpecRunner(notifier: TestClassNotifier) {
     queue.append(Path.Root)
     val executedSpecs = ListBuffer[SpecRun]()
 
-    notifier.fireTestClassStarted()
     while (queue.length > 0) {
       val pathToExecute = queue.remove(0)
       val c = executePath(pathToExecute, spec)
@@ -21,14 +20,13 @@ class SpecRunner(notifier: TestClassNotifier) {
       // TODO: move the responsibility of scheduling postponed executions to some higher layer
       queue.appendAll(c.postponedPaths)
     }
-    notifier.fireTestClassFinished()
 
     // TODO: move the responsibility of collecting results to the notifier implementation
     SpecResult(passCount, failCount, executedSpecs.toList, failures)
   }
 
   private def executePath(path: Path, spec: (Context) => Unit): Context = {
-    val c = new Context(path, notifier.newTestRunNotifier())
+    val c = new Context(path, notifier)
     executeSafely(c, spec)
     saveResults(c)
     c

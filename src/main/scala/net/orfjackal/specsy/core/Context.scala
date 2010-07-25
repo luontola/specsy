@@ -1,7 +1,7 @@
 package net.orfjackal.specsy.core
 
 import Context._
-import net.orfjackal.specsy.runner.notification.TestRunNotifier
+import net.orfjackal.specsy.runner.notification._
 
 object Context {
   abstract sealed class Status
@@ -10,7 +10,7 @@ object Context {
   case object Finished extends Status
 }
 
-class Context(targetPath: Path, notifier: TestRunNotifier) {
+class Context(targetPath: Path, notifier: SuiteNotifier) {
   private var status: Status = NotStarted
   private var current: SpecRun = null
   private var executed: SpecRun = null // TODO: make 'executed' a list?
@@ -55,13 +55,14 @@ class Context(targetPath: Path, notifier: TestRunNotifier) {
   }
 
   private def executeSafely(body: => Unit) {
-    notifier.fireTestStarted(current.path, current.name)
+    notifier.fireTestFound(current.path, current.name, (body _).getClass)
+    val t = notifier.fireTestStarted(current.path)
     try {
       body
     } catch {
       case e => _failures ::= (current, e)
     }
-    notifier.fireTestFinished(current.path)
+    t.fireTestFinished()
   }
 
   private def exitSpec() {
