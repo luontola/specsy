@@ -7,7 +7,8 @@ import org.junit.runner._
 import org.junit._
 
 class SpecsyJUnitRunnerTest {
-  val runner = new SpecsyJUnitRunner(classOf[DummySpecWithTwoChildren])
+  val testClass = classOf[DummySpecWithTwoChildren]
+  val runner = new SpecsyJUnitRunner(testClass)
 
   @Test
   def runs_specs_using_JUnit() {
@@ -15,26 +16,28 @@ class SpecsyJUnitRunnerTest {
     assertThat("run count", result.getRunCount, is(4))
   }
 
-  @Ignore("reporting hierarchies not implemented")
   @Test
   def reports_the_names_of_executed_specs() {
-    val desc = runner.getDescription
+    val root = runner.getDescription
 
-    assertThat(desc.getClassName, is(classOf[DummySpecWithTwoChildren].getName))
+    assertTrue(root.isSuite)
+    assertThat(root.getClassName, is(testClass.getName))
 
-    val childA = desc.getChildren.get(0)
-    val childB = desc.getChildren.get(1)
-    assertThat(childA.getMethodName, is("child A"))
+    val childA = root.getChildren.get(0)
+    val childB = root.getChildren.get(1)
+    assertTrue(childA.isSuite)
+    assertThat(childA.getDisplayName, is("child A"))
+    assertTrue(childB.isTest)
     assertThat(childB.getMethodName, is("child B"))
   }
 
-  @Ignore("reporting hierarchies not implemented")
   @Test
   def reports_hierarchies_of_deeply_nested_specs() {
-    val desc = runner.getDescription
+    val root = runner.getDescription
 
-    val childA = desc.getChildren.get(0)
+    val childA = root.getChildren.get(0)
     val childAA = childA.getChildren.get(0)
+    assertTrue(childAA.isTest)
     assertThat(childAA.getMethodName, is("child AA"))
   }
 }
