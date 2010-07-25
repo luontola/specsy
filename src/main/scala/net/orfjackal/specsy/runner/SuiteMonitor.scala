@@ -5,8 +5,10 @@ import java.lang.Throwable
 import scala.collection.immutable.TreeMap
 import net.orfjackal.specsy.runner.notification._
 
-class TestClassMonitor(runner: SuiteRunner) extends SuiteNotifier {
+class SuiteMonitor(runner: SuiteRunner) extends SuiteNotifier {
   private var tests = new TreeMap[Path, TestState]
+
+  def results: Map[Path, TestResult] = tests
 
   def testCount: Int = tests.size
 
@@ -15,8 +17,6 @@ class TestClassMonitor(runner: SuiteRunner) extends SuiteNotifier {
   def failCount: Int = countTestsWhich(_.isFail)
 
   private def countTestsWhich(p: TestState => Boolean): Int = tests.values.filter(p).size
-
-  def testNames: Map[Path, String] = tests.mapValues(_.name)
 
   def fireTestFound(path: Path, name: String, location: Object) {
     if (!tests.contains(path)) {
@@ -44,8 +44,8 @@ class TestClassMonitor(runner: SuiteRunner) extends SuiteNotifier {
     }
   }
 
-  private class TestState(val path: Path, val name: String, val location: Object) {
-    private var failures = List[Throwable]()
+  private class TestState(val path: Path, val name: String, val location: Object) extends TestResult {
+    var failures = List[Throwable]()
 
     def fireTestStarted() {
     }

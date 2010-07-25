@@ -4,28 +4,37 @@ import org.junit.Test
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 import net.orfjackal.specsy.core._
-import net.orfjackal.specsy.runner.notification.NullSuiteNotifier
+import net.orfjackal.specsy.runner.SuiteMonitor
 
 class ReportingResultsTest {
-  val runner = new SpecRunner(new NullSuiteNotifier)
+  val unusedRunner = null
+  val monitor = new SuiteMonitor(unusedRunner)
+  val runner = new SpecRunner(monitor)
 
   @Test
   def reports_the_total_number_of_specs_run() {
     val result = runner.run(c => {
       c.bootstrap("root", {})
     })
-    assertThat(result.runCount, is(1))
+
+    assertThat("test count", monitor.testCount, is(1))
   }
 
   @Test
-  def there_are_as_many_runs_as_leaf_specs() {
+  def there_are_as_many_runs_as_there_are_leaf_specs() {
+    var runCount = 0
+
     val result = runner.run(c => {
       c.bootstrap("root", {
+        runCount += 1
+
         c.specify("child A", {})
         c.specify("child B", {})
       })
     })
-    assertThat(result.runCount, is(2))
+
+    assertThat("run count", runCount, is(2))
+    assertThat("test count", monitor.testCount, is(3))
   }
 
   @Test
@@ -39,8 +48,9 @@ class ReportingResultsTest {
         })
       })
     })
-    assertThat(result.passCount, is(2))
-    assertThat(result.failCount, is(1))
+
+    assertThat("pass count", monitor.passCount, is(3))
+    assertThat("fail count", monitor.failCount, is(1))
   }
 
   @Test
@@ -54,8 +64,9 @@ class ReportingResultsTest {
         c.specify("child C", {})
       })
     })
-    assertThat(result.passCount, is(2))
-    assertThat(result.failCount, is(1))
+
+    assertThat("pass count", monitor.passCount, is(3))
+    assertThat("fail count", monitor.failCount, is(1))
   }
 
   @Test
@@ -71,12 +82,10 @@ class ReportingResultsTest {
       })
     })
 
-    val failureA = result.failures(0)
-    val failureB = result.failures(1)
-    assertThat(failureA._1.name, is("child A"))
-    assertThat(failureA._2.getMessage, is("failure A"))
-    assertThat(failureB._1.name, is("child B"))
-    assertThat(failureB._2.getMessage, is("failure B"))
+    val childA = monitor.results(Path(0))
+    val childB = monitor.results(Path(1))
+    assertThat(childA.failures.head.getMessage, is("failure A"))
+    assertThat(childB.failures.head.getMessage, is("failure B"))
   }
 
   // TODO: shorten failure stack traces

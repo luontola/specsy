@@ -15,7 +15,6 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
   private var current: SpecRun = null
   private var executed: SpecRun = null // TODO: make 'executed' a list?
   private var postponed = List[Path]()
-  private var _failures = List[(SpecRun, Throwable)]()
 
   def bootstrap(className: String, rootSpec: => Unit) {
     changeStatus(NotStarted, Running)
@@ -56,13 +55,13 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
 
   private def executeSafely(body: => Unit) {
     notifier.fireTestFound(current.path, current.name, (body _).getClass)
-    val t = notifier.fireTestStarted(current.path)
+    val tn = notifier.fireTestStarted(current.path)
     try {
       body
     } catch {
-      case e => _failures ::= (current, e)
+      case e => tn.fireFailure(e)
     }
-    t.fireTestFinished()
+    tn.fireTestFinished()
   }
 
   private def exitSpec() {
@@ -82,11 +81,6 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
   def postponedPaths: List[Path] = {
     assertStatusIs(Finished)
     postponed
-  }
-
-  def failures: List[(SpecRun, Throwable)] = {
-    assertStatusIs(Finished)
-    _failures
   }
 
   private def changeStatus(from: Status, to: Status) {

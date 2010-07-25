@@ -4,11 +4,7 @@ import scala.collection.mutable._
 import net.orfjackal.specsy.runner.notification._
 
 class SpecRunner(notifier: SuiteNotifier) {
-  private var passCount = 0
-  private var failCount = 0
-  private var failures = List[(SpecRun, Throwable)]()
-
-  def run(spec: Context => Unit): SpecResult = {
+  def run(spec: Context => Unit) {
     val queue = ListBuffer[Path]()
     queue.append(Path.Root)
     val executedSpecs = ListBuffer[SpecRun]()
@@ -20,15 +16,11 @@ class SpecRunner(notifier: SuiteNotifier) {
       // TODO: move the responsibility of scheduling postponed executions to some higher layer
       queue.appendAll(c.postponedPaths)
     }
-
-    // TODO: move the responsibility of collecting results to the notifier implementation
-    SpecResult(passCount, failCount, executedSpecs.toList, failures)
   }
 
   private def executePath(path: Path, spec: (Context) => Unit): Context = {
     val c = new Context(path, notifier)
     executeSafely(c, spec)
-    saveResults(c)
     c
   }
 
@@ -39,15 +31,6 @@ class SpecRunner(notifier: SuiteNotifier) {
       case e =>
         e.printStackTrace
         throw new RuntimeException("internal error", e)
-    }
-  }
-
-  private def saveResults(c: Context): Unit = {
-    if (c.failures.isEmpty) {
-      passCount += 1
-    } else {
-      failCount += 1
-      failures = failures ::: c.failures
     }
   }
 }

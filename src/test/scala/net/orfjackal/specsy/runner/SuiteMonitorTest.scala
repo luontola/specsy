@@ -6,9 +6,11 @@ import org.junit._
 import net.orfjackal.specsy.core.Path
 import net.orfjackal.specsy.Specsy
 
-class TestClassMonitorTest {
+class SuiteMonitorTest {
   val unusedRunner = null
-  val monitor = new TestClassMonitor(unusedRunner)
+  val monitor = new SuiteMonitor(unusedRunner)
+
+  private def testNames: Map[Path, String] = monitor.results.mapValues(_.name)
 
   @Test
   def empty_test_class() {
@@ -16,7 +18,7 @@ class TestClassMonitorTest {
     assertThat("pass count", monitor.passCount, is(0))
     assertThat("fail count", monitor.failCount, is(0))
 
-    assertThat("test names", monitor.testNames, is(Map[Path, String]()))
+    assertThat("test names", testNames, is(Map[Path, String]()))
   }
 
   @Test
@@ -29,7 +31,7 @@ class TestClassMonitorTest {
     assertThat("pass count", monitor.passCount, is(1))
     assertThat("fail count", monitor.failCount, is(0))
 
-    assertThat("test names", monitor.testNames, is(Map(
+    assertThat("test names", testNames, is(Map(
       Path() -> "root"
       )))
   }
@@ -45,7 +47,7 @@ class TestClassMonitorTest {
     assertThat("pass count", monitor.passCount, is(0))
     assertThat("fail count", monitor.failCount, is(1))
 
-    assertThat("test names", monitor.testNames, is(Map(
+    assertThat("test names", testNames, is(Map(
       Path() -> "root"
       )))
   }
@@ -65,7 +67,7 @@ class TestClassMonitorTest {
     assertThat("pass count", monitor.passCount, is(2))
     assertThat("fail count", monitor.failCount, is(0))
 
-    assertThat("test names", monitor.testNames, is(Map(
+    assertThat("test names", testNames, is(Map(
       Path() -> "root",
       Path(0) -> "child A"
       )))
@@ -102,7 +104,7 @@ class TestClassMonitorTest {
     assertThat("pass count", monitor.passCount, is(3))
     assertThat("fail count", monitor.failCount, is(0))
 
-    assertThat("test names", monitor.testNames, is(Map(
+    assertThat("test names", testNames, is(Map(
       Path() -> "root",
       Path(0) -> "child A",
       Path(1) -> "child B"

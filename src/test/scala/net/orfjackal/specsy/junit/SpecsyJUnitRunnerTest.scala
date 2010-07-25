@@ -12,7 +12,7 @@ class SpecsyJUnitRunnerTest {
   @Test
   def runs_specs_using_JUnit() {
     val result = new JUnitCore().run(runner)
-    assertThat(result.getRunCount, is(2))
+    assertThat("run count", result.getRunCount, is(4))
   }
 
   @Ignore("reporting hierarchies not implemented")
