@@ -11,7 +11,7 @@ class ReportingResultsTest {
   val monitor = new SuiteMonitor(runner)
 
   private def runSpec(spec: Context => Unit): Any = {
-    runner.submitTestRun(new SpecRunner(spec, monitor))
+    runner.submitTestRun(new SpecRun(spec, monitor))
     runner.await()
   }
 

@@ -2,13 +2,13 @@ package net.orfjackal.specsy.core
 
 import net.orfjackal.specsy.runner.notification._
 
-class SpecRunner(spec: Context => Unit, pathToExecute: Path, notifier: SuiteNotifier) extends Runnable {
+class SpecRun(spec: Context => Unit, pathToExecute: Path, notifier: SuiteNotifier) extends Runnable {
   def this(spec: Context => Unit, notifier: SuiteNotifier) = this (spec, Path.Root, notifier)
 
   def run() {
     val c = executePath(spec, pathToExecute)
     for (postponedPath <- c.postponedPaths) {
-      notifier.submitTestRun(new SpecRunner(spec, postponedPath, notifier))
+      notifier.submitTestRun(new SpecRun(spec, postponedPath, notifier))
     }
   }
 
