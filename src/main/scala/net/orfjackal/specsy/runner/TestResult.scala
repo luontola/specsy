@@ -10,4 +10,6 @@ trait TestResult {
   def location: Object
 
   def failures: List[Throwable]
+
+  def output: String
 }

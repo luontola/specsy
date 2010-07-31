@@ -3,12 +3,13 @@ package net.orfjackal.specsy.runner
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 import org.junit._
-import net.orfjackal.specsy.core.Path
 import net.orfjackal.specsy.Specsy
+import net.orfjackal.specsy.core._
 
 class SuiteMonitorTest {
   val unusedRunner = null
-  val monitor = new SuiteMonitor(unusedRunner)
+  val unusedCapturer = new OutputCapturer(System.out, System.err)
+  val monitor = new SuiteMonitor(unusedRunner, unusedCapturer)
 
   private def testNames: Map[Path, String] = monitor.results.mapValues(_.name)
 

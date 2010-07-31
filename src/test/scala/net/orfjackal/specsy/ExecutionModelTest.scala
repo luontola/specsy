@@ -12,7 +12,8 @@ class ExecutionModelTest {
 
   private def runSpec(spec: Context => Unit): Any = {
     val runner = new SuiteRunner
-    val monitor = new SuiteMonitor(runner)
+    val unusedCapturer = new OutputCapturer(System.out, System.err)
+    val monitor = new SuiteMonitor(runner, unusedCapturer)
     runner.submitTestRun(new SpecRun(spec, monitor))
     runner.await()
   }

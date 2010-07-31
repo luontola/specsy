@@ -1,11 +1,11 @@
 package net.orfjackal.specsy.runner
 
-import net.orfjackal.specsy.core.Path
 import java.lang.Throwable
 import scala.collection.immutable.TreeMap
 import net.orfjackal.specsy.runner.notification._
+import net.orfjackal.specsy.core._
 
-class SuiteMonitor(runner: SuiteRunner) extends SuiteNotifier {
+class SuiteMonitor(runner: SuiteRunner, capturer: OutputCapturer) extends SuiteNotifier {
   private var tests = new TreeMap[Path, TestState]
 
   def results: Map[Path, TestResult] = tests
@@ -47,10 +47,16 @@ class SuiteMonitor(runner: SuiteRunner) extends SuiteNotifier {
   private class TestState(val path: Path, val name: String, val location: Object) extends TestResult {
     var failures = List[Throwable]()
 
+    private var capture: Capture = null
+    var output: String = ""
+
     def fireTestStarted() {
+      capture = capturer.beginCapture()
     }
 
     def fireTestFinished() {
+      capturer.stop()
+      output = capture.toString
     }
 
     def fireFailure(cause: Throwable) {

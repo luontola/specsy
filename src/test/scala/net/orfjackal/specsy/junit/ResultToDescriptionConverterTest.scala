@@ -3,16 +3,17 @@ package net.orfjackal.specsy.junit
 import org.junit._
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
-import net.orfjackal.specsy.core.Path
 import org.junit.runner.Description
 import net.orfjackal.specsy.runner._
+import net.orfjackal.specsy.core._
 
 class ResultToDescriptionConverterTest {
   private val testClass = classOf[DummySpec]
   private class DummySpec {}
 
   val unusedRunner = null
-  val monitor = new SuiteMonitor(unusedRunner)
+  val unusedCapturer = new OutputCapturer(System.out, System.err)
+  val monitor = new SuiteMonitor(unusedRunner, unusedCapturer)
 
   def toDescription(results: Map[Path, TestResult]): Description = {
     val converter = new ResultToDescriptionConverter(testClass, results)
