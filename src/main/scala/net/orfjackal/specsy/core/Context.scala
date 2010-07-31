@@ -13,7 +13,6 @@ object Context {
 class Context(targetPath: Path, notifier: SuiteNotifier) {
   private var status: Status = NotStarted
   private var current: SpecDeclaration = null
-  private var executed: SpecDeclaration = null // TODO: make 'executed' a list? - or is it anymore even needed?
   private var postponed = List[Path]()
 
   def bootstrap(className: String, rootSpec: => Unit) {
@@ -44,8 +43,6 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
 
   private def processSpec(body: => Unit) {
     if (current.shouldExecute) {
-      // TODO: there is no test that this assignment must be first (otherwise the path will be root's path, and IDEA's test runner will get confused)
-      executed = current
       executeSafely(body)
     }
     if (current.shouldPostpone) {
@@ -66,16 +63,6 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
 
   private def exitSpec() {
     current = current.parent
-  }
-
-  def executedSpec: SpecDeclaration = {
-    assertStatusIs(Finished)
-    executed
-  }
-
-  def executedPath: Path = {
-    assertStatusIs(Finished)
-    executed.path
   }
 
   def postponedPaths: List[Path] = {
