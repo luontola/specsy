@@ -29,6 +29,22 @@ class CapturingOutputTest {
     assertThat(result.output, is("printed in test"))
   }
 
-  // TODO: nested specs
-  // TODO: JUnit integration
+  @Test
+  def the_output_of_nested_specs_is_separated() {
+    runSpec(c => {
+      c.bootstrap("root", {
+        out.print("out-root")
+        c.specify("child A", {
+          out.print("out-A")
+        })
+        c.specify("child A", {
+          out.print("out-B")
+        })
+      })
+    })
+
+    assertThat(monitor.results(Path.Root).output, is("out-root"))
+    assertThat(monitor.results(Path(0)).output, is("out-A"))
+    assertThat(monitor.results(Path(1)).output, is("out-B"))
+  }
 }
