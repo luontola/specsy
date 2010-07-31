@@ -1,16 +1,16 @@
 package net.orfjackal.specsy.core
 
-class SpecRun(
+class SpecDeclaration(
         val name: String,
-        val parent: SpecRun,
+        val parent: SpecDeclaration,
         val path: Path,
         targetPath: Path
         ) {
   private var nextChild = path.firstChild
-  private var children = List[SpecRun]()
+  private var children = List[SpecDeclaration]()
 
-  def addChild(childName: String): SpecRun = {
-    val child = new SpecRun(childName, this, pathOfNextChild(), targetPath)
+  def addChild(childName: String): SpecDeclaration = {
+    val child = new SpecDeclaration(childName, this, pathOfNextChild(), targetPath)
     children = child :: children
     child
   }

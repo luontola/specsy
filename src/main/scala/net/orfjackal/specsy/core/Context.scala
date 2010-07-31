@@ -12,8 +12,8 @@ object Context {
 
 class Context(targetPath: Path, notifier: SuiteNotifier) {
   private var status: Status = NotStarted
-  private var current: SpecRun = null
-  private var executed: SpecRun = null // TODO: make 'executed' a list?
+  private var current: SpecDeclaration = null
+  private var executed: SpecDeclaration = null // TODO: make 'executed' a list? - or is it anymore even needed?
   private var postponed = List[Path]()
 
   def bootstrap(className: String, rootSpec: => Unit) {
@@ -27,7 +27,7 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
   }
 
   private def enterRootSpec(name: String) {
-    current = new SpecRun(name, null, Path.Root, targetPath)
+    current = new SpecDeclaration(name, null, Path.Root, targetPath)
   }
 
   def specify(name: String, body: => Unit) {
@@ -68,7 +68,7 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
     current = current.parent
   }
 
-  def executedSpec: SpecRun = {
+  def executedSpec: SpecDeclaration = {
     assertStatusIs(Finished)
     executed
   }
