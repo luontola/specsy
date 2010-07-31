@@ -13,7 +13,7 @@ class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
   private def runSpecs() = {
     val runner = new SuiteRunner
     val monitor = new SuiteMonitor(runner)
-    runner.submitTestRun(new SpecRunner(testClass, monitor))
+    runner.submitTestRun(new SpecClassRunner(testClass, monitor))
     runner.await()
     monitor.results
   }

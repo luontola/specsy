@@ -5,15 +5,21 @@ import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 import collection.mutable.Buffer
 import net.orfjackal.specsy.core._
-import net.orfjackal.specsy.runner.notification.NullSuiteNotifier
+import net.orfjackal.specsy.runner._
 
 class ExecutionModelTest {
-  val runner = new SpecRunner(null, new NullSuiteNotifier)
   val spy = Buffer[String]()
+
+  private def runSpec(spec: Context => Unit): Any = {
+    val runner = new SuiteRunner
+    val monitor = new SuiteMonitor(runner)
+    runner.submitTestRun(new SpecRunner(spec, monitor))
+    runner.await()
+  }
 
   @Test
   def there_is_one_root_spec() {
-    runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {
         spy.append("root")
       })
@@ -24,7 +30,7 @@ class ExecutionModelTest {
 
   @Test
   def the_root_spec_can_contain_multiple_nested_child_specs() {
-    runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {
         spy.append("root")
 
@@ -43,7 +49,7 @@ class ExecutionModelTest {
 
   @Test
   def the_specs_are_executed_one_branch_at_a_time_until_all_are_executed() {
-    runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {
         spy.append("root")
 
@@ -61,7 +67,7 @@ class ExecutionModelTest {
 
   @Test
   def variables_declared_inside_specs_are_isolated_from_the_side_effects_of_sibling_specs() {
-    runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {
         var i = 0
 
@@ -81,7 +87,7 @@ class ExecutionModelTest {
 
   @Test
   def child_specs_are_executed_immediately_where_they_are_declared() {
-    runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {
         var i = 0
 

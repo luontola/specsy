@@ -4,16 +4,20 @@ import org.junit.Test
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 import net.orfjackal.specsy.core._
-import net.orfjackal.specsy.runner.SuiteMonitor
+import net.orfjackal.specsy.runner._
 
 class ReportingResultsTest {
-  val unusedRunner = null
-  val monitor = new SuiteMonitor(unusedRunner)
-  val runner = new SpecRunner(null, monitor)
+  val runner = new SuiteRunner
+  val monitor = new SuiteMonitor(runner)
+
+  private def runSpec(spec: Context => Unit): Any = {
+    runner.submitTestRun(new SpecRunner(spec, monitor))
+    runner.await()
+  }
 
   @Test
   def reports_the_total_number_of_specs_run() {
-    val result = runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {})
     })
 
@@ -24,7 +28,7 @@ class ReportingResultsTest {
   def there_are_as_many_runs_as_there_are_leaf_specs() {
     var runCount = 0
 
-    val result = runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {
         runCount += 1
 
@@ -39,7 +43,7 @@ class ReportingResultsTest {
 
   @Test
   def reports_passed_and_failed_runs() {
-    val result = runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {
         c.specify("child A", {})
         c.specify("child B", {})
@@ -55,7 +59,7 @@ class ReportingResultsTest {
 
   @Test
   def the_rest_of_the_siblings_are_executed_even_when_the_first_sibling_fails() {
-    val result = runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {
         c.specify("child A", {
           throw new AssertionError("a failure")
@@ -71,7 +75,7 @@ class ReportingResultsTest {
 
   @Test
   def reports_the_specs_and_exceptions_that_caused_a_failure() {
-    val result = runner.run(c => {
+    runSpec(c => {
       c.bootstrap("root", {
         c.specify("child A", {
           throw new AssertionError("failure A")
