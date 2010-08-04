@@ -3,7 +3,7 @@ package net.orfjackal.specsy.runner
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 import org.junit._
-import net.orfjackal.specsy.Specsy
+import net.orfjackal.specsy.Spec
 import net.orfjackal.specsy.core._
 
 class SuiteMonitorTest {
@@ -112,7 +112,7 @@ class SuiteMonitorTest {
       )))
   }
 
-  private class DummySpec extends Specsy {
+  private class DummySpec extends Spec {
   }
 }
 

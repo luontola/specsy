@@ -2,11 +2,11 @@ package net.orfjackal.specsy.junit
 
 import org.junit.runner._
 import net.orfjackal.specsy.core._
-import net.orfjackal.specsy.Specsy
+import net.orfjackal.specsy.Spec
 import net.orfjackal.specsy.runner._
 import org.junit.runner.notification.Failure
 
-class SpecsyJUnitRunner(testClass: Class[_ <: Specsy]) extends Runner {
+class SpecsyJUnitRunner(testClass: Class[_ <: Spec]) extends Runner {
   private lazy val results: Map[Path, TestResult] = runSpecs()
   private lazy val converter = new ResultToDescriptionConverter(testClass, results)
 

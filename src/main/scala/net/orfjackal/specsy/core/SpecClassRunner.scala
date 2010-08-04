@@ -1,9 +1,9 @@
 package net.orfjackal.specsy.core
 
 import net.orfjackal.specsy.runner.notification._
-import net.orfjackal.specsy.Specsy
+import net.orfjackal.specsy.Spec
 
-class SpecClassRunner(testClass: Class[_ <: Specsy], notifier: SuiteNotifier) extends Runnable {
+class SpecClassRunner(testClass: Class[_ <: Spec], notifier: SuiteNotifier) extends Runnable {
   def run() {
     runSpec(c => {
       // TODO: pass testClass to the runner so that the test's location will be the test class, and not this closure

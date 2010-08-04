@@ -2,7 +2,7 @@ package net.orfjackal.specsy
 
 import net.orfjackal.specsy.core.ContextDealer
 
-trait Specsy {
+trait Spec {
   private val context = ContextDealer.take()
 
   protected implicit def specify(name: String): NestedSpec = new NestedSpec(name)

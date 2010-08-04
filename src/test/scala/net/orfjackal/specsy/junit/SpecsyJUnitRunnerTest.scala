@@ -2,7 +2,7 @@ package net.orfjackal.specsy.junit
 
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
-import net.orfjackal.specsy.Specsy
+import net.orfjackal.specsy.Spec
 import org.junit.runner._
 import org.junit._
 
@@ -43,7 +43,7 @@ class SpecsyJUnitRunnerTest {
 }
 
 @RunWith(classOf[SpecsyJUnitRunner])
-class DummySpecWithTwoChildren extends Specsy {
+class DummySpecWithTwoChildren extends Spec {
   "child A" >> {
     "child AA" >> {
     }
