@@ -8,6 +8,7 @@ class SpecDeclaration(
         ) {
   private var nextChild = path.firstChild
   private var children = List[SpecDeclaration]()
+  private var _deferred = List[Function0[Unit]]()
 
   def addChild(childName: String): SpecDeclaration = {
     val child = new SpecDeclaration(childName, this, pathOfNextChild(), targetPath)
@@ -20,6 +21,12 @@ class SpecDeclaration(
     nextChild = nextChild.nextSibling
     path
   }
+
+  def addDefer(body: => Unit) {
+    _deferred = (body _) :: _deferred
+  }
+
+  def deferred = _deferred
 
   def shouldExecute: Boolean = isOnTargetPath || (isUnseen && isFirstChild)
 

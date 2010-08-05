@@ -43,26 +43,37 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
 
   private def processSpec(body: => Unit) {
     if (current.shouldExecute) {
-      executeSafely(body)
+      execute(body)
     }
     if (current.shouldPostpone) {
       postponed = current.path :: postponed
     }
   }
 
-  private def executeSafely(body: => Unit) {
+  private def execute(body: => Unit): Unit = {
     notifier.fireTestFound(current.path, current.name, (body _).getClass)
     val tn = notifier.fireTestStarted(current.path)
+
+    executeSafely(body _, tn)
+    current.deferred.foreach(executeSafely(_, tn))
+
+    tn.fireTestFinished()
+  }
+
+  private def executeSafely(body: Function0[Unit], tn: TestNotifier) {
     try {
-      body
+      body.apply()
     } catch {
       case e => tn.fireFailure(e)
     }
-    tn.fireTestFinished()
   }
 
   private def exitSpec() {
     current = current.parent
+  }
+
+  def defer(body: => Unit) {
+    current.addDefer(body)
   }
 
   def postponedPaths: List[Path] = {

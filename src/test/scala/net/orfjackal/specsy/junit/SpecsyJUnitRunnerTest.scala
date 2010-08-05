@@ -44,6 +44,9 @@ class SpecsyJUnitRunnerTest {
 
 @RunWith(classOf[SpecsyJUnitRunner])
 class DummySpecWithTwoChildren extends Spec {
+  defer {
+  }
+
   "child A" >> {
     "child AA" >> {
     }
