@@ -4,33 +4,20 @@ import org.junit.Test
 import org.junit.Assert._
 import org.hamcrest.CoreMatchers._
 import net.orfjackal.specsy.Spec
-import net.orfjackal.specsy.runner.notification._
-import java.lang.Throwable
-import scala.collection.mutable.Buffer
+import net.orfjackal.specsy.runner.SuiteMonitor
 
 class SpecClassRunnerTest {
   @Test
   def exceptions_thrown_by_the_root_spec_are_not_wrapped_in_InvocationTargetException() {
-    val notifier = new FailureLoggingNotifier
-    val runner = new SpecClassRunner(classOf[DummySpecWhoseRootThrowsAnException], notifier)
+    val unusedCapturer = new OutputCapturer(null, null)
+    val monitor = new SuiteMonitor(null, unusedCapturer)
+    val runner = new SpecClassRunner(classOf[DummySpecWhoseRootThrowsAnException], monitor)
 
     runner.run()
 
-    val exception = notifier.failures.head
+    val exception = monitor.results(Path.Root).failures.head
     assertThat(exception, is(classOf[AssertionError]))
     assertThat(exception.getMessage, is("exception in root"))
-  }
-
-  private class FailureLoggingNotifier extends NullSuiteNotifier with TestNotifier {
-    val failures = Buffer[Throwable]()
-
-    override def fireTestStarted(path: Path) = this
-
-    def fireFailure(cause: Throwable) {
-      failures.append(cause)
-    }
-
-    def fireTestFinished() {}
   }
 }
 
