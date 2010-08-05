@@ -12,7 +12,7 @@ class ResultToDescriptionConverterTest {
   private class DummySpec {}
 
   val unusedRunner = null
-  val unusedCapturer = new OutputCapturer(System.out, System.err)
+  val unusedCapturer = new OutputCapturer(null, null)
   val monitor = new SuiteMonitor(unusedRunner, unusedCapturer)
 
   def toDescription(results: Map[Path, TestResult]): Description = {

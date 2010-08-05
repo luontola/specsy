@@ -8,7 +8,7 @@ import net.orfjackal.specsy.runner._
 
 class ReportingResultsTest {
   val runner = new SuiteRunner
-  val unusedCapturer = new OutputCapturer(System.out, System.err)
+  val unusedCapturer = new OutputCapturer(null, null)
   val monitor = new SuiteMonitor(runner, unusedCapturer)
 
   private def runSpec(spec: Context => Unit): Any = {

@@ -8,7 +8,7 @@ import net.orfjackal.specsy.core._
 
 class SuiteMonitorTest {
   val unusedRunner = null
-  val unusedCapturer = new OutputCapturer(System.out, System.err)
+  val unusedCapturer = new OutputCapturer(null, null)
   val monitor = new SuiteMonitor(unusedRunner, unusedCapturer)
 
   private def testNames: Map[Path, String] = monitor.results.mapValues(_.name)
