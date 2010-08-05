@@ -2,6 +2,7 @@ package net.orfjackal.specsy.core
 
 import net.orfjackal.specsy.runner.notification._
 import net.orfjackal.specsy.Spec
+import java.lang.reflect.InvocationTargetException
 
 class SpecClassRunner(testClass: Class[_ <: Spec], notifier: SuiteNotifier) extends Runnable {
   def run() {
@@ -9,7 +10,11 @@ class SpecClassRunner(testClass: Class[_ <: Spec], notifier: SuiteNotifier) exte
       // TODO: pass testClass to the runner so that the test's location will be the test class, and not this closure
       c.bootstrap(testClass.getName, {
         ContextDealer.prepare(c)
-        testClass.getConstructor().newInstance() // TODO: may throw exceptions - unwrap InvocationTargetException to improve error messages
+        try {
+          testClass.getConstructor().newInstance()
+        } catch {
+          case e: InvocationTargetException => throw e.getTargetException
+        }
       })
     })
   }
