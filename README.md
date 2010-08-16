@@ -84,7 +84,7 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
       }
     }
 
-[StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in almost about every child spec. But each child spec can trust that it sees only the modifications of its parent specs, so there are no weird order-dependent test failures - everything just works as expected.
+[StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications of its parent specs, so there are no weird order-dependent test failures - everything just works as expected.
 
     @RunWith(classOf[Specsy])
     class StackSpec extends Spec {
@@ -125,7 +125,7 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
 
 ### "Before" and "After" Blocks
 
-In Specsy, every parent spec acts like the "before" blocks in other testing frameworks. And as for "after" blocks, Specsy has a construct called *defer blocks* (influenced by the [defer statement in Go](http://golang.org/doc/effective_go.html#defer)). Each spec can declare as many or few defer blocks as it wishes, and they will be executed in reverse order when the spec exits.
+In Specsy, every parent spec acts similar to the "before" blocks in other testing frameworks. And as for "after" blocks, Specsy has a construct called *defer blocks* (influenced by the [defer statement in Go](http://golang.org/doc/effective_go.html#defer)). Each spec can declare as many or few defer blocks as it wishes, and they will be executed in reverse order when the spec exits.
 
 [DeferBlocksExampleSpec] shows how the defer blocks can be used:
 
