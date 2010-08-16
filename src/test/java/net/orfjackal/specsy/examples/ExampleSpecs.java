@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
         DeferBlocksExampleSpec.class,
         DeferBlocksExample2Spec.class,
         FibonacciSpec.class,
+        ParameterizedExampleSpec.class,
         StackSpec.class
 })
 public class ExampleSpecs {
