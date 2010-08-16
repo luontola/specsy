@@ -10,6 +10,7 @@ class StackSpec extends Spec {
   val stack = new scala.collection.mutable.Stack[String]
 
   "An empty stack" >> {
+
     "is empty" >> {
       assertTrue(stack.isEmpty)
     }

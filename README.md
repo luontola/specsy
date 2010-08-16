@@ -39,19 +39,19 @@ Then you can create a Specsy spec by extending the [Spec] trait. Annotate the cl
 
     import org.junit.runner.RunWith
     import net.orfjackal.specsy._
-    
+
     @RunWith(classOf[Specsy])
     class HelloWorldSpec extends Spec {
-      
+
       // top-level spec; add your test code here and/or the child specs
-    
+
       "..." >> {
         // first child spec
       }
-      
+
       "..." >> {
         // second child spec
-    
+
         "..." >> {
           // a nested child spec
         }
@@ -72,7 +72,7 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
       val sequenceLength = 10
       val fib = new Fibonacci().sequence(sequenceLength)
       assertThat(fib.length, is(sequenceLength))
-    
+
       "The first two Fibonacci numbers are 0 and 1" >> {
         assertThat(fib(0), is(0))
         assertThat(fib(1), is(1))
@@ -89,8 +89,9 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
     @RunWith(classOf[Specsy])
     class StackSpec extends Spec {
       val stack = new scala.collection.mutable.Stack[String]
-    
+
       "An empty stack" >> {
+
         "is empty" >> {
           assertTrue(stack.isEmpty)
         }
@@ -99,11 +100,11 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
           assertFalse(stack.isEmpty)
         }
       }
-    
+
       "When objects have been pushed onto a stack" >> {
         stack.push("pushed first")
         stack.push("pushed last")
-    
+
         "the object pushed last is popped first" >> {
           val poppedFirst = stack.pop()
           assertThat(poppedFirst, is("pushed last"))
@@ -135,17 +136,17 @@ In Specsy, every parent spec acts like the "before" blocks in other testing fram
       defer {
         assert(dir.delete(), "failed to delete: " + dir)
       }
-    
+
       val file1 = new File(dir, "file 1.txt")
       assert(file1.createNewFile(), "failed to create: " + file1)
       defer {
         assert(file1.delete(), "failed to delete:" + file1)
       }
-    
+
       "..." >> {
         // do something with the files
       }
-    
+
       "..." >> {
         // child specs can also use defer blocks
         val file2 = new File(dir, "file 2.txt")
@@ -153,7 +154,7 @@ In Specsy, every parent spec acts like the "before" blocks in other testing fram
         defer {
           assert(file2.delete(), "failed to delete:" + file2)
         }
-    
+
         // file2 will be deleted when this child spec exits
       }
     }
@@ -164,14 +165,14 @@ The code duplication in the above spec could be removed by extracting a method o
     class DeferBlocksExample2Spec extends Spec {
       val dir = createWithCleanup(new File("a directory"), _.mkdir(), _.delete())
       val file1 = createWithCleanup(new File(dir, "file 1.txt"), _.createNewFile(), _.delete())
-    
+
       "..." >> {
       }
-    
+
       "..." >> {
         val file2 = createWithCleanup(new File(dir, "file 2.txt"), _.createNewFile(), _.delete())
       }
-    
+
       def createWithCleanup(file: File, create: File => Boolean, delete: File => Boolean): File = {
         assert(create(file), "failed to create: " + file)
         defer {
@@ -199,7 +200,7 @@ Because Specsy's spec declarations are implemented as method calls which take a 
         (7, 49),
         (8, 64),
         (9, 81))
-    
+
       for ((n, expectedSquare) <- parameters) {
         "Square of " + n + " is " + expectedSquare >> {
           assertThat(n * n, is(expectedSquare))
