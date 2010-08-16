@@ -155,8 +155,11 @@ In Specsy, every parent spec acts similar to the "before" blocks in other testin
           assert(file2.delete(), "failed to delete:" + file2)
         }
 
-        // file2 will be deleted when this child spec exits
+        // 'file2' will be deleted when this child spec exits
       }
+
+      // will delete first 'file1' and second 'dir'
+      // (or if creating 'file1' failed, then will delete only 'dir')
     }
 
 The code duplication in the above spec could be removed by extracting a method out of it, although it requires knowledge of Scala's more advanced features. [DeferBlocksExample2Spec] does the same thing as above, but with less code:

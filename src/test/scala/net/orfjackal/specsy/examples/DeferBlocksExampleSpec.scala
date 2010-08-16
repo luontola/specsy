@@ -30,6 +30,9 @@ class DeferBlocksExampleSpec extends Spec {
       assert(file2.delete(), "failed to delete:" + file2)
     }
 
-    // file2 will be deleted when this child spec exits
+    // 'file2' will be deleted when this child spec exits
   }
+
+  // will delete first 'file1' and second 'dir'
+  // (or if creating 'file1' failed, then will delete only 'dir')
 }
