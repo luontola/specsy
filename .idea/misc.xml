@@ -5,7 +5,7 @@
   </component>
   <component name="FacetAutodetectingManager">
     <autodetection-disabled>
-      <facet-type id="Scala">
+      <facet-type id="scala">
         <modules>
           <module name="specsy" />
         </modules>
