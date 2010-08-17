@@ -4,10 +4,10 @@ Specsy
 
 Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style testing framework for [Scala](http://www.scala-lang.org/). It allows writing self-documenting tests/specs, and executes them concurrently and safely isolated.
 
-* Mailing list: <http://groups.google.com/group/specsy>
-* Source code: <http://github.com/orfjackal/specsy>
-* License: [Apache License 2.0](http://github.com/orfjackal/specsy/blob/master/LICENSE.txt)
-* Developer: [Esko Luontola](http://www.orfjackal.net/)
+- Mailing list: <http://groups.google.com/group/specsy>
+- Source code: <http://github.com/orfjackal/specsy>
+- License: [Apache License 2.0](http://github.com/orfjackal/specsy/blob/master/LICENSE.txt)
+- Developer: [Esko Luontola](http://www.orfjackal.net/)
 
 
 ### Project Goals
@@ -18,7 +18,7 @@ Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style testing framework f
 
 - **No Forced Words** - In order to let you choose the best possible test names, Specsy does not impose any [predefined words](http://blog.orfjackal.net/2010/05/choice-of-words-in-testing-frameworks.html) on its users.
 
-- **Simplicity** - Specsy contains only the essential features, but does them well. Having a particular assertion syntax is not essential and it's easy to use the assertions of other testing libraries, so Specsy itself does not have assertions.
+- **Simplicity** - Specsy contains only the essential features, but does them well. Having a particular assertion syntax is not essential and it's easy to use the assertions of other testing libraries, so Specsy itself does not have assertions. Also any syntactic sugar is minimized, in order for it to be easy to know what the code does just by looking at it.
 
 - **Parallel Execution** - Running tests [quickly](http://agileinaflash.blogspot.com/2009/02/first.html) is a must for using TDD (my pain threshold for recompile and test execution is about 5-10 seconds). Specsy makes it possible to parallelize the test execution using the maximal number of CPU cores (not yet implemented).
 
@@ -26,7 +26,7 @@ Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style testing framework f
 Quick Start
 -----------
 
-If you use Maven, add the following dependency to your POM file:
+If you use Maven, add the following dependency to your POM file. If you don't use Maven, download the files manually from [Maven Central Repository](http://repo1.maven.org/maven2/net/orfjackal/specsy/specsy/).
 
     <dependency>
         <groupId>net.orfjackal.specsy</groupId>
@@ -125,7 +125,7 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
 
 ### "Before" and "After" Blocks
 
-In Specsy, every parent spec acts similar to the "before" blocks in other testing frameworks. And as for "after" blocks, Specsy has a construct called *defer blocks* (influenced by the [defer statement in Go](http://golang.org/doc/effective_go.html#defer)). Each spec can declare as many or few defer blocks as it wishes, and they will be executed in reverse order when the spec exits.
+In Specsy, every parent spec acts similar to the "before" blocks in other testing frameworks. And as for "after" blocks, Specsy has a construct called *defer blocks* (influenced by [Go's defer statement](http://golang.org/doc/effective_go.html#defer)). Each spec can declare as many or few defer blocks as it wishes, and they will be executed in LIFO order when the spec exits.
 
 [DeferBlocksExampleSpec] shows how the defer blocks can be used:
 
@@ -211,6 +211,7 @@ Because Specsy's spec declarations are implemented as method calls which take a 
       }
     }
 
+Note that the code which declares the specs must be deterministic. Otherwise the test isolation mechanism may not run all specs exactly once.
 
 
 Version History
@@ -221,6 +222,14 @@ Version History
 - Isolated execution model
 - Unlimited nested specs
 - Defer blocks
+- JUnit test runner
+
+
+### Known Issues
+
+- The tests are not yet executed in parallel (a new test runner is needed)
+- The JUnit test runner does not support test frameworks where all tests are not known until they have been executed, so at least IntelliJ IDEA cannot report test progress in real time (a new test runner is needed)
+- An optional non-isolated execution model is planned
 
 
 License
