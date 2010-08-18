@@ -228,7 +228,7 @@ Version History
 ### Known Issues
 
 - The tests are not yet executed in parallel (a new test runner is needed)
-- The JUnit test runner does not support test frameworks where all tests are not known until they have been executed, so at least IntelliJ IDEA cannot report test progress in real time (a new test runner is needed)
+- JUnit's test runner API does not support testing frameworks which do not know beforehand what tests there are, but which know it only after executing the tests, so at least IntelliJ IDEA cannot report test progress in real time (a new test runner is needed)
 - An optional non-isolated execution model is planned
 
 
