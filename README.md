@@ -35,7 +35,7 @@ If you use Maven, add the following dependency to your POM file. If you don't us
         <scope>test</scope>
     </dependency>
 
-Then you can create a Specsy spec by extending the [Spec] trait. Annotate the class with which `@RunWith` to executed it with JUnit. The following shows the structure of a spec:
+Then you can create a Specsy spec by extending the [Spec] trait. Annotate the class with `@RunWith` to execute it with JUnit. The following shows the structure of a spec:
 
     import org.junit.runner.RunWith
     import net.orfjackal.specsy._
