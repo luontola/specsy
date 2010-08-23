@@ -66,7 +66,7 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
 Documentation
 -------------
 
-[FibonacciSpec] shows how to use descriptive [specification-style](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html) test names:
+[FibonacciSpec] is an example of how to use descriptive [specification-style](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html) test names:
 
     @RunWith(classOf[Specsy])
     class FibonacciSpec extends Spec {
@@ -84,6 +84,28 @@ Documentation
         }
       }
     }
+
+
+### Assertions
+
+To use the assertions from JUnit (although they don't always play well with Scala's generics), add the following imports to your test file:
+
+    import org.junit.Assert._
+    import org.hamcrest.CoreMatchers._
+
+To use the assertions from Specs, mix the test class with the [org.specs.SpecsMatchers](http://code.google.com/p/specs/wiki/MatchersGuide#Use_specs_matchers_alone) trait:
+
+    @RunWith(classOf[Specsy])
+    class SomeSpec extends Spec with SpecsMatchers {
+    }
+
+To use the assertions from ScalaTest, mix the test class with the [org.scalatest.matchers.ShouldMatchers](http://www.scalatest.org/scaladoc/doc-1.2/org/scalatest/matchers/ShouldMatchers.html) trait or one of the other matcher traits:
+
+    @RunWith(classOf[Specsy])
+    class SomeSpec extends Spec with ShouldMatchers {
+    }
+
+Any other assertions are also OK. All that is needed is that they throw an exception when the assertion fails.
 
 
 ### Isolated Execution Model
