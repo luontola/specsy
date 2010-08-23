@@ -84,6 +84,9 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
       }
     }
 
+
+### Isolated Execution Model
+
 [StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications of its parent specs, so there are no weird order-dependent test failures - everything just works as expected.
 
     @RunWith(classOf[Specsy])
@@ -121,6 +124,8 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
         }
       }
     }
+
+A rule of thumb is that out of all sibling specs (i.e. child specs with the same parent) always *exactly one sibling spec is executed during a test run*. So when the closure of a spec is executed and Specsy encounters a child spec declaration, it will selectively execute one of its child specs (right where it is declared) and skip the others. Then a fresh instance of the test class is created and executed, until all child specs have been executed.
 
 
 ### "Before" and "After" Blocks
