@@ -229,6 +229,7 @@ Version History
 
 - The tests are not yet executed in parallel (a new test runner is needed)
 - JUnit's test runner API does not support testing frameworks which do not know beforehand what tests there are, but which know it only after executing the tests, so at least IntelliJ IDEA cannot report test progress in real time (a new test runner is needed)
+- In IntelliJ IDEA's Run tool window, you should disable "Hide Passed" and enable "Select First Failed Test When Finished". Otherwise IDEA will fail to show the failed tests
 - An optional non-isolated execution model is planned
 
 
