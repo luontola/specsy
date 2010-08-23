@@ -63,7 +63,8 @@ You can add test code to any of the blocks between curly braces - semantically t
 Specsy does not contain its own assertion syntax, so you can use the assertions from [JUnit](http://www.junit.org/), [Specs](http://code.google.com/p/specs/), [ScalaTest](http://www.artima.com/scalatest/) or any other framework which makes it possible. Refer to the documentation of those frameworks for instructions on how to use their assertions in another framework.
 
 
-### Example Specs
+Documentation
+-------------
 
 [FibonacciSpec] shows how to use descriptive [specification-style](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html) test names:
 
