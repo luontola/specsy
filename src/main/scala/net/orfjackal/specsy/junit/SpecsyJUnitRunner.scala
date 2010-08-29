@@ -21,12 +21,16 @@ class SpecsyJUnitRunner(testClass: Class[_ <: Spec]) extends Runner {
     try {
       System.setOut(capturer.capturedOut)
       System.setErr(capturer.capturedErr)
+      Console.setOut(capturer.capturedOut)
+      Console.setErr(capturer.capturedErr)
 
       runner.submitTestRun(new SpecClassRunner(testClass, monitor))
       runner.await()
     } finally {
       System.setOut(realOut)
       System.setErr(realErr)
+      Console.setOut(realOut)
+      Console.setErr(realErr)
     }
 
     monitor.results

@@ -245,6 +245,10 @@ Note that the code which declares the specs must be deterministic. Otherwise the
 Version History
 ---------------
 
+**1.x.x (2010-xx-xx)**
+
+- Fixed Scala's `println()` not being captured, due to `scala.Console` being unaffected by `java.lang.System.setOut()`
+
 **1.0.0 (2010-08-16)**
 
 - Isolated execution model
