@@ -31,7 +31,7 @@ If you use Maven, add the following dependency to your POM file. If you don't us
     <dependency>
         <groupId>net.orfjackal.specsy</groupId>
         <artifactId>specsy</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
         <scope>test</scope>
     </dependency>
 
@@ -245,7 +245,7 @@ Note that the code which declares the specs must be deterministic. Otherwise the
 Version History
 ---------------
 
-**1.x.x (2010-xx-xx)**
+**1.0.1 (2010-08-29)**
 
 - Fixed Scala's `println()` not being captured, due to `scala.Console` being unaffected by `java.lang.System.setOut()`
 
