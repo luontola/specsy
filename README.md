@@ -247,6 +247,7 @@ Version History
 
 **1.x.x (20xx-xx-xx)**
 
+- Made the `Spec.defer` method public, to allow it to be used from helper classes
 - Renamed the implicit `Spec.specify` method for declaring nested specs, to avoid potential name clashes
 
 **1.0.1 (2010-08-29)**

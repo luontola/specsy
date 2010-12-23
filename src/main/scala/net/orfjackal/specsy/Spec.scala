@@ -5,7 +5,7 @@ import net.orfjackal.specsy.core.ContextDealer
 trait Spec {
   private val context = ContextDealer.take()
 
-  protected def defer(body: => Unit) {
+  def defer(body: => Unit) {
     context.defer(body)
   }
 
