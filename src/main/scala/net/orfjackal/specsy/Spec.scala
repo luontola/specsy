@@ -9,7 +9,7 @@ trait Spec {
     context.defer(body)
   }
 
-  protected implicit def specify(name: String): NestedSpec = new NestedSpec(name)
+  protected implicit def stringToNestedSpec(name: String): NestedSpec = new NestedSpec(name)
 
   protected class NestedSpec(name: String) {
     def >>(body: => Unit) {

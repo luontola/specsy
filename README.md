@@ -245,6 +245,10 @@ Note that the code which declares the specs must be deterministic. Otherwise the
 Version History
 ---------------
 
+**1.x.x (20xx-xx-xx)**
+
+- Renamed the implicit `Spec.specify` method for declaring nested specs, to avoid potential name clashes
+
 **1.0.1 (2010-08-29)**
 
 - Fixed Scala's `println()` not being captured, due to `scala.Console` being unaffected by `java.lang.System.setOut()`
