@@ -18,6 +18,8 @@ public class JavaStackSpecDraft3 extends JSpec3 {
     // Bad:
     // - cannot throw checked exceptions from initializer blocks
     // - reformat might not work in other IDEs
+    // Blocker:
+    // - this syntax might not be feasible, because it's not possible to execute the nested specs selectively (without class loader magic)
 
     private final Deque<String> stack = new ArrayDeque<String>();
 
