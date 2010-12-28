@@ -17,6 +17,10 @@ public class JavaStackSpecDraft2 extends JSpec2 {
     // + reformat works in every IDE
     // Bad:
     // - high syntax noise
+    //
+    // Could also use some other identifier than "spec", to avoid predefined names even more.
+    // Some unpronounceable suggestions: $, _, or some weird Unicode character (not recommended - typing must be easy)
+    // JLS §3.8 Identifiers: http://java.sun.com/docs/books/jls/third_edition/html/lexical.html#40625
 
     private final Deque<String> stack = new ArrayDeque<String>();
 
@@ -65,6 +69,11 @@ public class JavaStackSpecDraft2 extends JSpec2 {
                 };
             }
         };
+
+        new _("example of using a symbol for declaring nested specs") {
+            public void run() throws Throwable {
+            }
+        };
     }
 }
 
@@ -76,6 +85,16 @@ abstract class JSpec2 {
         public final String name;
 
         public spec(String name) {
+            this.name = name;
+        }
+
+        public abstract void run() throws Throwable;
+    }
+
+    protected abstract class _ {
+        public final String name;
+
+        public _(String name) {
             this.name = name;
         }
 
