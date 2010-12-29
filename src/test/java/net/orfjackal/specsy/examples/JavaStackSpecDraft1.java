@@ -15,7 +15,7 @@ public class JavaStackSpecDraft1 {
     // + low syntax noise
     // Bad:
     // - restricted identifier names
-    // - cannot throw checked exceptions from initializer blocks
+    // - cannot throw checked exceptions from initializer blocks of named classes (JLS §8.6 Instance Initializers)
     // - reformat does not work in IDEA (because these are not anonymous inner classes?)
     // - reformat might not work in other IDEs
     // - for the runner to differentiate between nested specs and helper classes, extending/annotating the specs might be needed

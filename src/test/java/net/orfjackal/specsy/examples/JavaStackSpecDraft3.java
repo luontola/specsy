@@ -14,9 +14,10 @@ public class JavaStackSpecDraft3 extends JSpec3 {
     // Good:
     // + string names
     // + low syntax noise
+    // + can throw checked exceptions from anonymous initializer blocks (JLS §8.6 Instance Initializers)
     // + reformat works in IDEA
     // Bad:
-    // - cannot throw checked exceptions from initializer blocks
+    // - cannot throw checked exceptions from initializer blocks of named classes (JLS §8.6), so the root spec would need to be a method
     // - reformat might not work in other IDEs
     // Blocker:
     // - this syntax might not be feasible, because it's not possible to execute the nested specs selectively (without class loader magic)
@@ -52,6 +53,22 @@ public class JavaStackSpecDraft3 extends JSpec3 {
                 assertTrue(stack.isEmpty());
             }};
         }};
+    }
+
+    public void spec() throws Throwable {
+
+        // See JLS §8.6 Instance Initializers
+        // http://java.sun.com/docs/books/jls/third_edition/html/classes.html#246032
+
+        new spec("example of throwing a checked exception in the instance initializer block") {{
+            throwsACheckedException();
+        }};
+    }
+
+    private static void throwsACheckedException() throws Exception {
+        // "It is a compile-time error if an instance initializer cannot complete normally"
+        // so this unconditional throw must be in a method or inside an if block
+        throw new Exception("checked exception");
     }
 }
 
