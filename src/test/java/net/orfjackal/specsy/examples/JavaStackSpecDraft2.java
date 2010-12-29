@@ -17,6 +17,10 @@ public class JavaStackSpecDraft2 extends JSpec2 {
     // + reformat works in every IDE
     // Bad:
     // - high syntax noise
+    //
+    // The "throws Throwable" in run() implementations could be avoided,
+    // but IDEA inserts it automatically and removing it means more work,
+    // so this syntax should be evaluated with it.
 
     private final Deque<String> stack = new ArrayDeque<String>();
 
