@@ -17,13 +17,6 @@ public class JavaStackSpecDraft2 extends JSpec2 {
     // + reformat works in every IDE
     // Bad:
     // - high syntax noise
-    //
-    // Could also use some other identifier than "spec", to avoid predefined names even more.
-    // Some unpronounceable suggestions: $, _, or some weird Unicode character
-    // Typing must be easy, so non-ASCII characters are not feasible. The _ symbol is easier to type
-    // than the $ symbol on both US and Finnish keyboard layout, so that is preferred.
-    //
-    // JLS §3.8 Identifiers: http://java.sun.com/docs/books/jls/third_edition/html/lexical.html#40625
 
     private final Deque<String> stack = new ArrayDeque<String>();
 
@@ -72,6 +65,13 @@ public class JavaStackSpecDraft2 extends JSpec2 {
                 };
             }
         };
+
+        // Could also use some other identifier than "spec", to avoid predefined names even more.
+        // Some unpronounceable suggestions: $, _, or some weird Unicode character
+        // Typing must be easy, so non-ASCII characters are not feasible. The _ symbol is easier to type
+        // than the $ symbol on both US and Finnish keyboard layout, so that is preferred.
+        //
+        // JLS §3.8 Identifiers: http://java.sun.com/docs/books/jls/third_edition/html/lexical.html#40625
 
         new _("example of using a symbol for declaring nested specs") {
             public void run() throws Throwable {
