@@ -46,6 +46,7 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
       execute(body)
     }
     if (current.shouldPostpone) {
+      // TODO: store in FIFO order, to make the order more predictable. See http://groups.google.com/group/specs-users/msg/7c1c544bc7dfc1ed
       postponed = current.path :: postponed
     }
   }
