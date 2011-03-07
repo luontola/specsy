@@ -28,15 +28,15 @@ public class JavaStackSpecDraft4 extends JSpec4 {
 
     public void run() throws Throwable {
 
-        spec("An empty stack", new NestedSpec() {
+        spec("An empty stack", new _() {
             public void run() throws Throwable {
 
-                spec("is empty", new NestedSpec() {
+                spec("is empty", new _() {
                     public void run() throws Throwable {
                         assertTrue(stack.isEmpty());
                     }
                 });
-                spec("After a push, the stack is no longer empty", new NestedSpec() {
+                spec("After a push, the stack is no longer empty", new _() {
                     public void run() throws Throwable {
                         stack.push("a push");
                         assertFalse(stack.isEmpty());
@@ -44,25 +44,25 @@ public class JavaStackSpecDraft4 extends JSpec4 {
                 });
             }
         });
-        spec("When objects have been pushed onto a stack", new NestedSpec() {
+        spec("When objects have been pushed onto a stack", new _() {
             public void run() throws Throwable {
                 stack.push("pushed first");
                 stack.push("pushed last");
 
-                spec("the object pushed last is popped first", new NestedSpec() {
+                spec("the object pushed last is popped first", new _() {
                     public void run() throws Throwable {
                         String poppedFirst = stack.pop();
                         assertThat(poppedFirst, is("pushed last"));
                     }
                 });
-                spec("the object pushed first is popped last", new NestedSpec() {
+                spec("the object pushed first is popped last", new _() {
                     public void run() throws Throwable {
                         stack.pop();
                         String poppedLast = stack.pop();
                         assertThat(poppedLast, is("pushed first"));
                     }
                 });
-                spec("After popping all objects, the stack is empty", new NestedSpec() {
+                spec("After popping all objects, the stack is empty", new _() {
                     public void run() throws Throwable {
                         stack.pop();
                         stack.pop();
@@ -76,12 +76,13 @@ public class JavaStackSpecDraft4 extends JSpec4 {
 
 abstract class JSpec4 {
 
-    protected void spec(String name, NestedSpec nestedSpec) {
+    protected void spec(String name, _ nestedSpec) {
     }
 
     public abstract void run() throws Throwable;
 
-    protected abstract class NestedSpec {
+    // Could also be named more verbosely "NestedSpec"
+    public static abstract class _ {
         public abstract void run() throws Throwable;
     }
 }
