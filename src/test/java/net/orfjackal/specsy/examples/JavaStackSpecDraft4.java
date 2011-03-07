@@ -28,15 +28,15 @@ public class JavaStackSpecDraft4 extends JSpec4 {
 
     public void run() throws Throwable {
 
-        spec("An empty stack", new _() {
+        spec("An empty stack", new NestedSpec() {
             public void run() throws Throwable {
 
-                spec("is empty", new _() {
+                spec("is empty", new NestedSpec() {
                     public void run() throws Throwable {
                         assertTrue(stack.isEmpty());
                     }
                 });
-                spec("After a push, the stack is no longer empty", new _() {
+                spec("After a push, the stack is no longer empty", new NestedSpec() {
                     public void run() throws Throwable {
                         stack.push("a push");
                         assertFalse(stack.isEmpty());
@@ -76,13 +76,16 @@ public class JavaStackSpecDraft4 extends JSpec4 {
 
 abstract class JSpec4 {
 
-    protected void spec(String name, _ nestedSpec) {
+    protected void spec(String name, NestedSpec nestedSpec) {
     }
 
     public abstract void run() throws Throwable;
 
-    // Could also be named more verbosely "NestedSpec"
-    public static abstract class _ {
+    public static abstract class NestedSpec {
         public abstract void run() throws Throwable;
+    }
+
+    // shorthand for NestedSpec
+    public static abstract class _ extends NestedSpec {
     }
 }
