@@ -2,6 +2,7 @@ package net.orfjackal.specsy.core
 
 import Context._
 import net.orfjackal.specsy.runner.notification._
+import scala.collection.mutable.Buffer
 
 object Context {
   abstract sealed class Status
@@ -13,7 +14,7 @@ object Context {
 class Context(targetPath: Path, notifier: SuiteNotifier) {
   private var status: Status = NotStarted
   private var current: SpecDeclaration = null
-  private var postponed = List[Path]()
+  private val postponed = Buffer[Path]()
 
   def bootstrap(className: String, rootSpec: => Unit) {
     changeStatus(NotStarted, Running)
@@ -46,8 +47,7 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
       execute(body)
     }
     if (current.shouldPostpone) {
-      // TODO: store in FIFO order, to make the order more predictable. See http://groups.google.com/group/specs-users/msg/7c1c544bc7dfc1ed
-      postponed = current.path :: postponed
+      postponed += current.path
     }
   }
 
@@ -79,7 +79,7 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
 
   def postponedPaths: List[Path] = {
     assertStatusIs(Finished)
-    postponed
+    postponed.toList
   }
 
   private def changeStatus(from: Status, to: Status) {

@@ -67,6 +67,28 @@ class ExecutionModelTest {
   }
 
   @Test
+  def in_single_threaded_mode_the_child_specs_are_executed_in_declaration_order() {
+    runSpec(c => {
+      c.bootstrap("root", {
+        c.specify("child A", {
+          spy.append("A")
+        })
+        c.specify("child B", {
+          spy.append("B")
+        })
+        c.specify("child C", {
+          spy.append("C")
+        })
+        c.specify("child D", {
+          spy.append("D")
+        })
+      })
+    })
+
+    assertThat(spy, is(Buffer("A", "B", "C", "D")))
+  }
+
+  @Test
   def variables_declared_inside_specs_are_isolated_from_the_side_effects_of_sibling_specs() {
     runSpec(c => {
       c.bootstrap("root", {
