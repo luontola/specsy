@@ -94,5 +94,4 @@ class ReportingResultsTest {
   }
 
   // TODO: shorten failure stack traces
-  // TODO: capture test output
 }
