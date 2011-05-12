@@ -31,7 +31,7 @@ If you use Maven, add the following dependency to your POM file. If you don't us
     <dependency>
         <groupId>net.orfjackal.specsy</groupId>
         <artifactId>specsy</artifactId>
-        <version>1.0.1</version>
+        <version>1.1.0</version>
         <scope>test</scope>
     </dependency>
 
@@ -245,7 +245,7 @@ Note that the code which declares the specs must be deterministic. Otherwise the
 Version History
 ---------------
 
-**1.x.x (20xx-xx-xx)**
+**1.1.0 (2011-05-13)**
 
 - Made the `Spec.defer` method public, to allow it to be used from helper classes
 - Renamed the implicit `Spec.specify` method for declaring nested specs, to avoid potential name clashes
