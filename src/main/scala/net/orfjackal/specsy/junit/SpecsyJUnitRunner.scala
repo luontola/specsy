@@ -13,24 +13,29 @@ class SpecsyJUnitRunner(testClass: Class[_ <: Spec]) extends Runner {
   private def runSpecs() = {
     val realOut = System.out
     val realErr = System.err
+    val captureOutput = System.getProperty("specsy.captureOutput", "false") == "true"
 
     val runner = new SuiteRunner
     val capturer = new OutputCapturer(realOut, realErr)
     val monitor = new SuiteMonitor(runner, capturer)
 
     try {
-      System.setOut(capturer.capturedOut)
-      System.setErr(capturer.capturedErr)
-      Console.setOut(capturer.capturedOut)
-      Console.setErr(capturer.capturedErr)
+      if (captureOutput) {
+        System.setOut(capturer.capturedOut)
+        System.setErr(capturer.capturedErr)
+        Console.setOut(capturer.capturedOut)
+        Console.setErr(capturer.capturedErr)
+      }
 
       runner.submitTestRun(new SpecClassRunner(testClass, monitor))
       runner.await()
     } finally {
-      System.setOut(realOut)
-      System.setErr(realErr)
-      Console.setOut(realOut)
-      Console.setErr(realErr)
+      if (captureOutput) {
+        System.setOut(realOut)
+        System.setErr(realErr)
+        Console.setOut(realOut)
+        Console.setErr(realErr)
+      }
     }
 
     monitor.results

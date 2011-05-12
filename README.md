@@ -250,6 +250,7 @@ Version History
 - Made the `Spec.defer` method public, to allow it to be used from helper classes
 - Renamed the implicit `Spec.specify` method for declaring nested specs, to avoid potential name clashes
 - Execute child specs in the same order as they are declared (when single-threaded)
+- Made output capturing disabled by default. Use the JVM option `-Dspecsy.captureOutput=true` to enable it
 - Upgraded to Scala 2.9.0
 
 **1.0.1 (2010-08-29)**
