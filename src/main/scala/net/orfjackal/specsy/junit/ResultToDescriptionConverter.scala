@@ -3,9 +3,11 @@ package net.orfjackal.specsy.junit
 import net.orfjackal.specsy.core.Path
 import net.orfjackal.specsy.runner.TestResult
 import org.junit.runner.Description
+import scala.collection._
 
 class ResultToDescriptionConverter(testClass: Class[_], results: Map[Path, TestResult]) {
-  private val descriptionsByPath = results.mapValues(resultToDescription).toMap
+  // the map must be strict, because we will modify the instances it contains
+  private val descriptionsByPath = mutable.Map() ++ results.mapValues(resultToDescription)
   addChildrenToParents(descriptionsByPath)
 
   private def resultToDescription(result: TestResult) = {
