@@ -51,7 +51,7 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
     }
   }
 
-  private def execute(body: => Unit): Unit = {
+  private def execute(body: => Unit) {
     notifier.fireTestFound(current.path, current.name, (body _).getClass)
     val tn = notifier.fireTestStarted(current.path)
 
@@ -61,7 +61,7 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
     tn.fireTestFinished()
   }
 
-  private def executeSafely(body: Function0[Unit], tn: TestNotifier) {
+  private def executeSafely(body: () => Unit, tn: TestNotifier) {
     try {
       body.apply()
     } catch {

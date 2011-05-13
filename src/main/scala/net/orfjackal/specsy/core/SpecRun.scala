@@ -18,12 +18,12 @@ class SpecRun(spec: Context => Unit, pathToExecute: Path, notifier: SuiteNotifie
     c
   }
 
-  private def executeSafely(c: Context, spec: Context => Unit): Unit = {
+  private def executeSafely(c: Context, spec: Context => Unit) {
     try {
       spec(c)
     } catch {
       case e =>
-        e.printStackTrace
+        e.printStackTrace()
         throw new RuntimeException("internal error", e)
     }
   }

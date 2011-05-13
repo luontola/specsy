@@ -6,7 +6,7 @@ class OutputCapturer(realOut: PrintStream, realErr: PrintStream) {
   private var capture: Capture = null
 
   val capturedOut = new PrintStream(new OutputStream {
-    def write(b: Int) = {
+    def write(b: Int) {
       if (capture != null) {
         capture.write(b)
       } else {
@@ -15,7 +15,7 @@ class OutputCapturer(realOut: PrintStream, realErr: PrintStream) {
     }
   })
   val capturedErr = new PrintStream(new OutputStream {
-    def write(b: Int) = {
+    def write(b: Int) {
       if (capture != null) {
         capture.write(b)
       } else {

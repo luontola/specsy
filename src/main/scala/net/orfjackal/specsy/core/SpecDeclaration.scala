@@ -8,7 +8,7 @@ class SpecDeclaration(
         ) {
   private var nextChild = path.firstChild
   private var children = List[SpecDeclaration]()
-  private var _deferred = List[Function0[Unit]]()
+  private var _deferred = List[() => Unit]()
 
   def addChild(childName: String): SpecDeclaration = {
     val child = new SpecDeclaration(childName, this, pathOfNextChild(), targetPath)
