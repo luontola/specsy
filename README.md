@@ -6,7 +6,7 @@ Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing 
 
 - Mailing list: <http://groups.google.com/group/specsy>
 - Source code: <http://github.com/orfjackal/specsy>
-- License: [Apache License 2.0](http://github.com/orfjackal/specsy/blob/master/LICENSE.txt)
+- License: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 - Developer: [Esko Luontola](http://www.orfjackal.net/)
 
 
