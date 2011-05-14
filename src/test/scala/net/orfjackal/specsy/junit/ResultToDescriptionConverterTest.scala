@@ -65,4 +65,21 @@ class ResultToDescriptionConverterTest {
     assertThat(actual.getChildren, is(expected.getChildren))
     assertThat(actual, is(expected))
   }
+
+  @Test
+  def descriptions_are_in_spec_declaration_order() {
+    monitor.fireTestFound(Path(), testClass.getName, testClass)
+    monitor.fireTestFound(Path(0), "child A", null)
+    monitor.fireTestFound(Path(1), "child B", null)
+    monitor.fireTestFound(Path(2), "child C", null)
+    monitor.fireTestFound(Path(3), "child D", null)
+    monitor.fireTestFound(Path(4), "child E", null)
+
+    val children = toDescription(monitor.results).getChildren
+    assertThat(children.get(0).getMethodName, is("child A"))
+    assertThat(children.get(1).getMethodName, is("child B"))
+    assertThat(children.get(2).getMethodName, is("child C"))
+    assertThat(children.get(3).getMethodName, is("child D"))
+    assertThat(children.get(4).getMethodName, is("child E"))
+  }
 }

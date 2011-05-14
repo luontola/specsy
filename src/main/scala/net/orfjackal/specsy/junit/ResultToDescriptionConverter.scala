@@ -34,7 +34,7 @@ class ResultToDescriptionConverter(testClass: Class[_], results: Map[Path, TestR
   }
 
   private def addChildrenToParents(descriptionsByPath: Map[Path, Description]) {
-    for ((path, desc) <- descriptionsByPath) {
+    for ((path, desc) <- descriptionsByPath.toList.sortBy(_._1)) {
       if (!path.isRoot) {
         val parentDesc = descriptionsByPath(path.parent)
         parentDesc.addChild(desc)

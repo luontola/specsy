@@ -245,6 +245,10 @@ Note that the code which declares the specs must be deterministic. Otherwise the
 Version History
 ---------------
 
+**1.x.x (2011-xx-xx)**
+
+- Fixed the order of tests in JUnit results
+
 **1.1.0 (2011-05-13)**
 
 - Made the `Spec.defer` method public, to allow it to be used from helper classes
