@@ -273,6 +273,7 @@ Version History
 
 - Fixed the order of tests in JUnit results
 - Added `shareSideEffects()` for a non-isolated execution model
+- Added Scaladocs for the methods in `Spec`
 
 **1.1.0 (2011-05-13)**
 
