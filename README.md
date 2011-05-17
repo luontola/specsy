@@ -35,6 +35,16 @@ If you use Maven, add the following dependency to your POM file. If you don't us
         <scope>test</scope>
     </dependency>
 
+The default artifact is compiled using Scala 2.9.0. If you are using Scala 2.8.1, add the `scala281` classifier to your dependency:
+
+    <dependency>
+        <groupId>net.orfjackal.specsy</groupId>
+        <artifactId>specsy</artifactId>
+        <version>1.1.0</version>
+        <classifier>scala281</classifier>
+        <scope>test</scope>
+    </dependency>
+
 Then you can create a Specsy spec by extending the [Spec] trait. Annotate the class with `@RunWith` to execute it with JUnit. The following shows the structure of a spec:
 
     import org.junit.runner.RunWith
@@ -274,6 +284,7 @@ Version History
 - Fixed the order of tests in JUnit results
 - Added `shareSideEffects()` for a non-isolated execution model
 - Added Scaladocs for the methods in `Spec`
+- Compiled with Scala 2.9.0 and 2.8.1
 
 **1.1.0 (2011-05-13)**
 
