@@ -263,7 +263,7 @@ Because Specsy's spec declarations are implemented as method calls which take a 
       }
     }
 
-Note that the code which declares the specs must be deterministic. Otherwise the test isolation mechanism may not run all specs exactly once. Also here it might be desirable to use `shareSideEffects()` as a performance optimization, assuming that assertions do not have side-effects.
+Note that the code which declares the specs must be deterministic. Otherwise the test isolation mechanism may not run all specs exactly once. Also here it might be desirable to use `shareSideEffects()` as a performance optimization, assuming that the generated specs do not have side-effects.
 
 
 Version History
