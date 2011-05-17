@@ -31,7 +31,7 @@ If you use Maven, add the following dependency to your POM file. If you don't us
     <dependency>
         <groupId>net.orfjackal.specsy</groupId>
         <artifactId>specsy</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
         <scope>test</scope>
     </dependency>
 
@@ -40,7 +40,7 @@ The default artifact is compiled using Scala 2.9.0. If you are using Scala 2.8.1
     <dependency>
         <groupId>net.orfjackal.specsy</groupId>
         <artifactId>specsy</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
         <classifier>scala281</classifier>
         <scope>test</scope>
     </dependency>
@@ -279,7 +279,7 @@ Note that the code which declares the specs must be deterministic. Otherwise the
 Version History
 ---------------
 
-**1.x.x (2011-xx-xx)**
+**1.2.0 (2011-05-17)**
 
 - Fixed the order of tests in JUnit results
 - Added `shareSideEffects()` for a non-isolated execution model
