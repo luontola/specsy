@@ -7,10 +7,11 @@ package net.orfjackal.specsy.examples
 import org.junit.runner.RunWith
 import net.orfjackal.specsy._
 import java.io.File
+import java.util.UUID
 
 @RunWith(classOf[Specsy])
 class DeferBlocksExampleSpec extends Spec {
-  val dir = new File("a directory")
+  val dir = new File("temp-directory-" + UUID.randomUUID())
   assert(dir.mkdir(), "failed to create: " + dir)
   defer {
     assert(dir.delete(), "failed to delete: " + dir)

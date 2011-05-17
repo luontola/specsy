@@ -183,7 +183,7 @@ In Specsy, every parent spec acts similar to the "before" blocks in other testin
 
     @RunWith(classOf[Specsy])
     class DeferBlocksExampleSpec extends Spec {
-      val dir = new File("a directory")
+      val dir = new File("temp-directory-" + UUID.randomUUID())
       assert(dir.mkdir(), "failed to create: " + dir)
       defer {
         assert(dir.delete(), "failed to delete: " + dir)
@@ -218,7 +218,7 @@ The code duplication in the above spec could be removed by extracting a method o
 
     @RunWith(classOf[Specsy])
     class DeferBlocksExample2Spec extends Spec {
-      val dir = createWithCleanup(new File("a directory"), _.mkdir(), _.delete())
+      val dir = createWithCleanup(new File("temp-directory-" + UUID.randomUUID()), _.mkdir(), _.delete())
       val file1 = createWithCleanup(new File(dir, "file 1.txt"), _.createNewFile(), _.delete())
 
       "..." >> {

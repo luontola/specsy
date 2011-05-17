@@ -7,10 +7,11 @@ package net.orfjackal.specsy.examples
 import org.junit.runner.RunWith
 import net.orfjackal.specsy._
 import java.io.File
+import java.util.UUID
 
 @RunWith(classOf[Specsy])
 class DeferBlocksExample2Spec extends Spec {
-  val dir = createWithCleanup(new File("a directory"), _.mkdir(), _.delete())
+  val dir = createWithCleanup(new File("temp-directory-" + UUID.randomUUID()), _.mkdir(), _.delete())
   val file1 = createWithCleanup(new File(dir, "file 1.txt"), _.createNewFile(), _.delete())
 
   "..." >> {
