@@ -9,6 +9,10 @@ import net.orfjackal.specsy.core.ContextDealer
 trait Spec {
   private val context = ContextDealer.take()
 
+  def shareSideEffects() {
+    context.shareSideEffects()
+  }
+
   def defer(body: => Unit) {
     context.defer(body)
   }

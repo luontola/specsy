@@ -77,6 +77,10 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
     current = current.parent
   }
 
+  def shareSideEffects() {
+    current.shareSideEffects()
+  }
+
   def defer(body: => Unit) {
     current.addDefer(body)
   }

@@ -248,6 +248,7 @@ Version History
 **1.x.x (2011-xx-xx)**
 
 - Fixed the order of tests in JUnit results
+- Added `shareSideEffects()`
 
 **1.1.0 (2011-05-13)**
 

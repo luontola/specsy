@@ -4,14 +4,13 @@
 
 package net.orfjackal.specsy.core
 
-class SpecDeclaration(
-        val name: String,
-        val parent: SpecDeclaration,
-        val path: Path,
-        targetPath: Path
-        ) {
+class SpecDeclaration(val name: String,
+                      val parent: SpecDeclaration,
+                      val path: Path,
+                      targetPath: Path) {
   private var nextChild = path.firstChild
   private var children = List[SpecDeclaration]()
+  private var _shareSideEffects = false
   private var _deferred = List[() => Unit]()
 
   def addChild(childName: String): SpecDeclaration = {
@@ -26,15 +25,23 @@ class SpecDeclaration(
     path
   }
 
+  def shareSideEffects() {
+    _shareSideEffects = true
+  }
+
+  private def isShareSideEffects: Boolean = {
+    _shareSideEffects || parent != null && parent.isShareSideEffects
+  }
+
   def addDefer(body: => Unit) {
     _deferred = (body _) :: _deferred
   }
 
   def deferred = _deferred
 
-  def shouldExecute: Boolean = isOnTargetPath || (isUnseen && isFirstChild)
+  def shouldExecute: Boolean = isOnTargetPath || (isUnseen && isFirstChild) || isShareSideEffects
 
-  def shouldPostpone: Boolean = isUnseen && !isFirstChild
+  def shouldPostpone: Boolean = isUnseen && !isFirstChild && !isShareSideEffects
 
   private def isOnTargetPath = path.isOn(targetPath)
 
