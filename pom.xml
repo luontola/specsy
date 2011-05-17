@@ -123,7 +123,8 @@
                 <version>2.6</version>
                 <configuration>
                     <includes>
-                        <include>**/*Test.java</include>
+                        <include>**/*Test.class</include>
+                        <include>**/*Spec.class</include>
                     </includes>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                 </configuration>
