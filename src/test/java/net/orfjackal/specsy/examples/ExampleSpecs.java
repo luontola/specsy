@@ -13,6 +13,7 @@ import org.junit.runners.Suite;
         DeferBlocksExample2Spec.class,
         FibonacciSpec.class,
         ParameterizedExampleSpec.class,
+        ShareSideEffectsExampleSpec.class,
         StackSpec.class
 })
 public class ExampleSpecs {

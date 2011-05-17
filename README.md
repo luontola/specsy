@@ -14,7 +14,7 @@ Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing 
 
 - **Unlimited Nesting** - The specs can be organized into a nested hierarchy. This makes it possible to apply [One Assertion Per Test](http://www.artima.com/weblogs/viewpost.jsp?thread=35578) which [isolates](http://agileinaflash.blogspot.com/2009/02/first.html) the reason for a failure, because the specs are very fine-grained. This flexibility also makes writing [specification-style](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html) tests easier.
 
-- **Isolated Execution** - To make it easy to write [repeatable](http://agileinaflash.blogspot.com/2009/02/first.html) tests, each spec is isolated from the side-effects of its sibling specs. Each spec will see only the side-effects of its parent specs. Note that Specsy discourages writing non-repeatable fat integration tests, so a [Before](http://junit.sourceforge.net/javadoc/org/junit/BeforeClass.html)/[AfterClass](http://junit.sourceforge.net/javadoc/org/junit/AfterClass.html) concept is outside the scope of this project (or at a very low priority - I have some ideas on how it could be done).
+- **Isolated Execution** - To make it easy to write [repeatable](http://agileinaflash.blogspot.com/2009/02/first.html) tests, each spec is isolated from the side-effects of its sibling specs. By default, each spec will see only the side-effects of its parent specs. Note that Specsy discourages writing non-repeatable fat integration tests, so a [Before](http://junit.sourceforge.net/javadoc/org/junit/BeforeClass.html)/[AfterClass](http://junit.sourceforge.net/javadoc/org/junit/AfterClass.html) concept is outside the scope of this project (or at a very low priority - I have some ideas on how it could be done).
 
 - **No Forced Words** - In order to let you choose the best possible test names, Specsy does not impose any [predefined words](http://blog.orfjackal.net/2010/05/choice-of-words-in-testing-frameworks.html) on its users.
 
@@ -151,6 +151,30 @@ Any other assertions are also OK. All that is needed is that they throw an excep
 A rule of thumb is that out of all sibling specs (i.e. child specs with the same parent) always *exactly one sibling spec is executed during a test run*. So when the closure of a spec is executed and Specsy encounters a child spec declaration, it will selectively execute one of its child specs (right where it is declared) and skip the others. Then a fresh instance of the test class is created and executed, until all child specs have been executed.
 
 
+### Non-Isolated Execution Model
+
+In some cases it may be desirable to avoid the isolation of side-effects; perhaps it would make the tests harder to organize (e.g. writing tests for a multi-step process) or it would affect performance too much (e.g. side-effect free parameterized tests). For those situations you may call `shareSideEffects()` which will cause all child specs of the current spec to see each other's side-effects. [ShareSideEffectsExampleSpec] illustrates this:
+
+    @RunWith(classOf[Specsy])
+    class ShareSideEffectsExampleSpec extends Spec {
+      var i = 0
+
+      shareSideEffects()
+      "One" >> {
+        i += 1
+        assertThat(i, is(1))
+      }
+      "Two" >> {
+        i += 1
+        assertThat(i, is(2))
+      }
+      "Three" >> {
+        i += 1
+        assertThat(i, is(3))
+      }
+    }
+
+
 ### "Before" and "After" Blocks
 
 In Specsy, every parent spec acts similar to the "before" blocks in other testing frameworks. And as for "after" blocks, Specsy has a construct called *defer blocks* (influenced by [Go's defer statement](http://golang.org/doc/effective_go.html#defer)). Each spec can declare as many or few defer blocks as it wishes, and they will be executed in LIFO order when the spec exits.
@@ -239,7 +263,7 @@ Because Specsy's spec declarations are implemented as method calls which take a 
       }
     }
 
-Note that the code which declares the specs must be deterministic. Otherwise the test isolation mechanism may not run all specs exactly once.
+Note that the code which declares the specs must be deterministic. Otherwise the test isolation mechanism may not run all specs exactly once. Also here it might be desirable to use `shareSideEffects()` as a performance optimization, assuming that assertions do not have side-effects.
 
 
 Version History
@@ -248,7 +272,7 @@ Version History
 **1.x.x (2011-xx-xx)**
 
 - Fixed the order of tests in JUnit results
-- Added `shareSideEffects()`
+- Added `shareSideEffects()` for a non-isolated execution model
 
 **1.1.0 (2011-05-13)**
 
@@ -275,7 +299,6 @@ Version History
 - The tests are not yet executed in parallel (a new test runner is needed)
 - JUnit's test runner API does not support testing frameworks which do not know beforehand what tests there are, but which know it only after executing the tests, so at least IntelliJ IDEA cannot report test progress in real time (a new test runner is needed)
 - In IntelliJ IDEA's Run tool window, you should disable "Hide Passed" and enable "Select First Failed Test When Finished". Otherwise IDEA will fail to show the failed tests
-- An optional non-isolated execution model is planned
 
 
 License
@@ -286,9 +309,10 @@ This software is released under the Apache License 2.0.
 The license text is at <http://www.apache.org/licenses/LICENSE-2.0>
 
 
-[Spec]:                     http://github.com/orfjackal/specsy/blob/master/src/main/scala/net/orfjackal/specsy/Spec.scala
-[FibonacciSpec]:            http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/FibonacciSpec.scala
-[StackSpec]:                http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/StackSpec.scala
-[DeferBlocksExampleSpec]:   http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/DeferBlocksExampleSpec.scala
-[DeferBlocksExample2Spec]:  http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/DeferBlocksExample2Spec.scala
-[ParameterizedExampleSpec]: http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/ParameterizedExampleSpec.scala
+[Spec]:                         http://github.com/orfjackal/specsy/blob/master/src/main/scala/net/orfjackal/specsy/Spec.scala
+[FibonacciSpec]:                http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/FibonacciSpec.scala
+[StackSpec]:                    http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/StackSpec.scala
+[ShareSideEffectsExampleSpec]:  http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/ShareSideEffectsExampleSpec.scala
+[DeferBlocksExampleSpec]:       http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/DeferBlocksExampleSpec.scala
+[DeferBlocksExample2Spec]:      http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/DeferBlocksExample2Spec.scala
+[ParameterizedExampleSpec]:     http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/ParameterizedExampleSpec.scala
