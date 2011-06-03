@@ -126,7 +126,7 @@ Any other assertions are also OK. All that is needed is that they throw an excep
 
 ### Isolated Execution Model
 
-[StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications of its parent specs, so there are no weird order-dependent test failures - everything just works as expected.
+[StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications of its parent specs, so there are no weird order-dependent test failures - everything just works as expected. Specsy accomplishes this by creating multiple fresh instances of the test class and selectively executing the nested specs.
 
     @RunWith(classOf[Specsy])
     class StackSpec extends Spec {
@@ -164,7 +164,7 @@ Any other assertions are also OK. All that is needed is that they throw an excep
       }
     }
 
-A rule of thumb is that out of all sibling specs (i.e. child specs with the same parent) always *exactly one sibling spec is executed during a test run*. So when the closure of a spec is executed and Specsy encounters a child spec declaration, it will selectively execute one of its child specs (right where it is declared) and skip the others. Then a fresh instance of the test class is created and executed, until all child specs have been executed.
+A rule of thumb is that out of all sibling specs (i.e. child specs with the same parent) always *exactly one sibling spec is executed during a test run*, and each test run has its own instance of the test class. So when the closure of a spec is executed and Specsy encounters a child spec declaration, it will selectively execute one of its child specs (right where it is declared) and skip the others. Then a fresh instance of the test class is created and a different code path is executed, until all child specs have been executed.
 
 
 ### Non-Isolated Execution Model
@@ -173,20 +173,22 @@ In some cases it may be desirable to avoid the isolation of side-effects; perhap
 
     @RunWith(classOf[Specsy])
     class ShareSideEffectsExampleSpec extends Spec {
-      var i = 0
-
+      var counter = 0
+    
+      // Without the call to `shareSideEffects()` the value of `counter` would be `1`
+      // in the asserts of each of the following child specs.
       shareSideEffects()
       "One" >> {
-        i += 1
-        assertThat(i, is(1))
+        counter += 1
+        assertThat(counter, is(1))
       }
       "Two" >> {
-        i += 1
-        assertThat(i, is(2))
+        counter += 1
+        assertThat(counter, is(2))
       }
       "Three" >> {
-        i += 1
-        assertThat(i, is(3))
+        counter += 1
+        assertThat(counter, is(3))
       }
     }
 

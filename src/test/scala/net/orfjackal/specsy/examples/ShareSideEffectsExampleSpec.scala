@@ -11,19 +11,21 @@ import org.hamcrest.CoreMatchers._
 
 @RunWith(classOf[Specsy])
 class ShareSideEffectsExampleSpec extends Spec {
-  var i = 0
+  var counter = 0
 
+  // Without the call to `shareSideEffects()` the value of `counter` would be `1`
+  // in the asserts of each of the following child specs.
   shareSideEffects()
   "One" >> {
-    i += 1
-    assertThat(i, is(1))
+    counter += 1
+    assertThat(counter, is(1))
   }
   "Two" >> {
-    i += 1
-    assertThat(i, is(2))
+    counter += 1
+    assertThat(counter, is(2))
   }
   "Three" >> {
-    i += 1
-    assertThat(i, is(3))
+    counter += 1
+    assertThat(counter, is(3))
   }
 }
