@@ -74,7 +74,7 @@ class ShareSideEffectsTest {
           c.shareSideEffects()
           spy.append("A")
         })
-        c.specify("child A", {
+        c.specify("child B", {
           spy.append("B")
         })
       })
