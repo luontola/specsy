@@ -98,18 +98,24 @@ Documentation
 
 ### Assertions
 
-To use the assertions from JUnit (although they don't always play well with Scala's generics), add the following imports to your test file:
+To use the assertions from [JUnit](http://www.junit.org/), add the following import to your test file:
 
     import org.junit.Assert._
-    import org.hamcrest.CoreMatchers._
 
-To use the assertions from Specs, mix the test class with the [org.specs.SpecsMatchers](http://code.google.com/p/specs/wiki/MatchersGuide#Use_specs_matchers_alone) trait:
+To use the assertions from [Hamcrest](http://code.google.com/p/hamcrest/), add the following imports to your test file:
+
+    import org.hamcrest.MatcherAssert.assertThat
+    import org.hamcrest.Matchers._
+
+To use the assertions from [specs](http://code.google.com/p/specs/), mix in one of the traits mentioned in [specs' matchers guide](http://code.google.com/p/specs/wiki/MatchersGuide#Use_specs_matchers_alone). For example:
 
     @RunWith(classOf[Specsy])
     class SomeSpec extends Spec with SpecsMatchers {
     }
 
-To use the assertions from ScalaTest, mix the test class with the [org.scalatest.matchers.ShouldMatchers](http://www.scalatest.org/scaladoc/doc-1.2/org/scalatest/matchers/ShouldMatchers.html) trait or one of the other matcher traits:
+To use the assertions from [specs2](http://etorreborre.github.com/specs2/), mix in one of the exception throwing traits mentioned in [specs2's mathers guide](http://etorreborre.github.com/specs2/guide/org.specs2.guide.Matchers.html#Reusing+matchers+outside+of+specs2).
+
+To use the assertions from ScalaTest, mix in the [org.scalatest.matchers.ShouldMatchers](http://www.scalatest.org/scaladoc-1.5/org/scalatest/matchers/ShouldMatchers.html) trait or one of the other matcher traits:
 
     @RunWith(classOf[Specsy])
     class SomeSpec extends Spec with ShouldMatchers {
