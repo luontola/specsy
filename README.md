@@ -2,7 +2,9 @@
 Specsy
 ======
 
-Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing framework for [Scala](http://www.scala-lang.org/). Specsy safely isolates mutable state and supports writing self-documenting tests/specifications.
+Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing framework for [Scala](http://www.scala-lang.org/). It safely isolates mutable state and supports writing self-documenting tests/specifications.
+
+Specsy has all the essential features of a unit testing framework and nothing excess. To illustrate Specsy's expressiveness, its public API has only three methods, but they provide functionality that requires about four printed pages of documentation (i.e. this readme file). Specsy even has less production code than this readme file has text.
 
 - Mailing list: <http://groups.google.com/group/specsy>
 - Source code: <http://github.com/orfjackal/specsy>
