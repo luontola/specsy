@@ -192,6 +192,10 @@ In some cases it may be desirable to avoid the isolation of side-effects; perhap
       }
     }
 
+Note that the effects of `shareSideEffects()` (pun intended) are restricted inside the spec (either the root spec or a nested spec) which contains the call to `shareSideEffects()`. So you can mix the isolated and non-isolated modes inside one test class, so that only one subtree of specs is affected by it.
+
+[See here](https://github.com/orfjackal/dimdwarf/blob/e0f109dcd2d81f35b411fd1a2ad75be7ef60ae75/dimdwarf-core/src/test/scala/net/orfjackal/dimdwarf/domain/SimpleTimestampSpec.scala#L64) for a real-life example of using `shareSideEffects()` as a performance optimization for parameterized tests. Actually this is the first use case which drove me to finally implement `shareSideEffects()` (and it took just one hour to implement). Before that I had used Specsy for 9 months without any need for it, even though it had been in my plans already since much earlier in [GoSpec](https://github.com/orfjackal/gospec). So it should very rarely, if ever, be necessary to use the non-isolated execution model.
+
 
 ### "Before" and "After" Blocks
 
