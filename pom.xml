@@ -14,8 +14,8 @@
     <packaging>jar</packaging>
 
     <name>Specsy</name>
-    <description>BDD-style testing framework for Scala</description>
-    <url>http://github.com/orfjackal/specsy</url>
+    <description>BDD-style unit-level testing framework for Scala</description>
+    <url>http://specsy.org/</url>
     <inceptionYear>2010</inceptionYear>
 
     <properties>
