@@ -3,9 +3,9 @@ title: testing framework for Scala
 layout: wikistyle
 ---
 
-Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing framework for [Scala](http://www.scala-lang.org/). It safely isolates mutable state and supports writing self-documenting tests/specifications.
+Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing framework for [Scala](http://www.scala-lang.org/). It safely <em>isolates mutable state</em> and supports writing self-documenting tests/specifications.
 
-Specsy has all the essential features of a unit testing framework and nothing excess. To illustrate Specsy's expressiveness, its public API has only three methods, but they provide functionality that requires about four printed pages of documentation - more than Specsy even has production code.
+Specsy has all the <em>essential features</em> of a unit testing framework and nothing excess. To illustrate Specsy's <em>expressiveness</em>, its public API has only three methods, but they provide functionality that requires about four printed pages of documentation - more than Specsy even has production code.
 
 Refer to the [documentation](documentation.html) to see examples of tests written with Specsy.
 
