@@ -43,7 +43,7 @@ After you have [configured your dependencies](download.html), you can create a S
 
 You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs. Potentially every leaf child spec may be executed in its own thread (not yet implemented - a better test runner than JUnit is needed first).
 
-Specsy does not contain its own assertion syntax, so you can use the assertions from [JUnit](http://www.junit.org/), [Specs](http://code.google.com/p/specs/), [ScalaTest](http://www.artima.com/scalatest/) or any other framework which makes it possible. Refer to the documentation of those frameworks for instructions on how to use their assertions in another framework.
+Specsy does not contain its own assertion syntax, so you can use the assertions from [JUnit](http://www.junit.org/), [Hamcrest](http://code.google.com/p/hamcrest/), [specs](http://code.google.com/p/specs/), [specs2](http://specs2.org/), [ScalaTest](http://www.scalatest.org/) or any other framework which makes it possible. Refer to the documentation of those frameworks for instructions on how to use their assertions in another framework.
 
 
 Naming Tests
@@ -91,7 +91,7 @@ To use the assertions from [specs](http://code.google.com/p/specs/), mix in one 
 
 To use the assertions from [specs2](http://etorreborre.github.com/specs2/), mix in one of the exception throwing traits mentioned in [specs2's mathers guide](http://etorreborre.github.com/specs2/guide/org.specs2.guide.Matchers.html#Reusing+matchers+outside+of+specs2).
 
-To use the assertions from ScalaTest, mix in the [org.scalatest.matchers.ShouldMatchers](http://www.scalatest.org/scaladoc-1.5/org/scalatest/matchers/ShouldMatchers.html) trait or one of the other matcher traits:
+To use the assertions from [ScalaTest](http://www.scalatest.org/), mix in the [org.scalatest.matchers.ShouldMatchers](http://www.scalatest.org/scaladoc-1.5/org/scalatest/matchers/ShouldMatchers.html) trait or one of the other matcher traits:
 
     @RunWith(classOf[Specsy])
     class SomeSpec extends Spec with ShouldMatchers {
