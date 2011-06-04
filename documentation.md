@@ -28,14 +28,14 @@ After you have [configured your dependencies](download.html), you can create a S
 
       // top-level spec; add your test code here and/or the child specs
 
-      "..." >> {
+      "name of the spec" >> {
         // first child spec
       }
 
-      "..." >> {
+      "name of the spec" >> {
         // second child spec
 
-        "..." >> {
+        "name of the spec" >> {
           // a nested child spec
         }
       }
