@@ -10,9 +10,9 @@ Specsy has all the <em>essential features</em> of a unit testing framework and n
 Refer to the [documentation](documentation.html) to see examples of tests written with Specsy.
 
 - Mailing list: <http://groups.google.com/group/specsy>
-- Source code: <http://github.com/orfjackal/specsy>
+- Source code: <https://github.com/orfjackal/specsy>
 - License: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-- Developer: [Esko Luontola](http://www.orfjackal.net/)
+- Developer: [Esko Luontola](https://github.com/orfjackal) ([@orfjackal](http://twitter.com/orfjackal))
 
 
 Project Goals
