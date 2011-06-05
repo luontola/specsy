@@ -5,7 +5,7 @@
 package net.orfjackal.specsy.examples
 
 import org.junit.runner.RunWith
-import net.orfjackal.specsy._
+import net.orfjackal.specsy.{Spec, Specsy}
 
 @RunWith(classOf[Specsy])
 class HelloWorldSpec extends Spec {
