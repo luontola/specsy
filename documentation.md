@@ -21,7 +21,7 @@ Quick Start
 After you have [configured your dependencies](download.html), you can create a Specsy spec by extending the [Spec] trait. Annotate the class with `@RunWith` to execute it with JUnit. The following shows the structure of a spec:
 
     import org.junit.runner.RunWith
-    import net.orfjackal.specsy._
+    import net.orfjackal.specsy.{Spec, Specsy}
 
     @RunWith(classOf[Specsy])
     class HelloWorldSpec extends Spec {
