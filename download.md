@@ -66,7 +66,7 @@ Version History
 - JUnit's test runner API does not support testing frameworks which do not know beforehand what tests there are, but which know it only after executing the tests, so at least IntelliJ IDEA cannot report test progress in real time (a new test runner is needed)
 - In IntelliJ IDEA's Run tool window, you should disable "Hide Passed" and enable "Select First Failed Test When Finished". Otherwise IDEA will fail to show the failed tests. This workaround works at least in IDEA 9, but IDEA 10 appears to have some more issues (a new test runner UI is needed)
 
-All of these issues will ultimately be solved when I finish creating [Jumi](https://github.com/orfjackal/jumi), the next *de facto* test runner for the JVM. :)
+All of these issues will ultimately be solved when I finish creating [Jumi](http://jumi.fi/), the next *de facto* test runner for the JVM. :)
 
 
 License
