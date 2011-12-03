@@ -6,7 +6,7 @@ layout: wikistyle
 Download
 ========
 
-You can download Specsy from the [Maven Central Repository](http://repo1.maven.org/maven2/net/orfjackal/specsy/specsy/).
+You can download Specsy from the [Maven Central Repository](http://repo1.maven.org/maven2/net/orfjackal/specsy/specsy/). The source code is at <https://github.com/orfjackal/specsy>
 
 If you use Maven, add the following dependency to your POM file.
 
