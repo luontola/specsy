@@ -43,7 +43,7 @@ After you have [configured your dependencies](download.html), you can create a S
 
 You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs (see [Isolated Execution Model](#isolated_execution_model)). Potentially every leaf child spec may be executed in its own thread (not yet implemented - a better test runner than JUnit is needed first, i.e. [Jumi](http://jumi.fi/)).
 
-Specsy does not contain its own assertion syntax, so you can use the assertions from [JUnit](http://www.junit.org/), [Hamcrest](http://code.google.com/p/hamcrest/), [specs](http://code.google.com/p/specs/), [specs2](http://specs2.org/), [ScalaTest](http://www.scalatest.org/) or any other framework which makes it possible. Refer to the documentation of those frameworks for instructions on how to use their assertions in another framework.
+Specsy does not contain its own assertion syntax, so you can use the assertions from [JUnit](http://www.junit.org/), [Hamcrest](http://code.google.com/p/hamcrest/), [specs](http://code.google.com/p/specs/), [specs2](http://specs2.org/), [ScalaTest](http://www.scalatest.org/) or any other framework which makes it possible (see [Assertions](#assertions)).
 
 
 Naming Tests
@@ -97,7 +97,7 @@ To use the assertions from [ScalaTest](http://www.scalatest.org/), mix in the [o
     class SomeSpec extends Spec with ShouldMatchers {
     }
 
-Any other assertions are also OK. All that is needed is that they throw an exception when the assertion fails.
+Any other assertions are also OK. All that is needed is that they throw an exception when the assertion fails. Refer to the documentation of other testing frameworks for instructions on how to use their assertions in another framework.
 
 
 Isolated Execution Model
