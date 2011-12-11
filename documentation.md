@@ -68,7 +68,7 @@ Write the name of a test as a string in front of the `>>` operator. It is recomm
       }
     }
 
-You can take advantage of the ability to nest tests when writing the test names, as for example in [StackSpec].
+You can take advantage of the ability to nest tests when writing the test names, for example as in [StackSpec].
 
 
 Assertions
@@ -103,7 +103,7 @@ Any other assertions are also OK. All that is needed is that they throw an excep
 Isolated Execution Model
 ------------------------
 
-[StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications of its parent specs, so there are no weird order-dependent test failures - everything just works as expected. Specsy accomplishes this by creating multiple fresh instances of the test class and selectively executing the nested specs.
+[StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications made in its parent specs, so there are no weird order-dependent test failures - everything just works as expected. Specsy accomplishes this by creating multiple fresh instances of the test class and selectively executing the nested specs.
 
     @RunWith(classOf[Specsy])
     class StackSpec extends Spec {
@@ -170,7 +170,7 @@ In some cases it may be desirable to avoid the isolation of side-effects; perhap
       }
     }
 
-Note that the effects of `shareSideEffects()` (pun intended) are restricted inside the spec (either the root spec or a nested spec) which contains the call to `shareSideEffects()`. So you can mix the isolated and non-isolated modes inside one test class, so that only one subtree of specs is affected by it.
+Note that the effects of `shareSideEffects()` (pun intended) are restricted inside the subtree of the current spec, after the call to `shareSideEffects()`. The subtree can start from the root spec (if `shareSideEffects()` is called at the top level before all nested specs), or it can start from *any* nested spec. So you can mix the isolated and non-isolated modes inside one test class, so that only one subtree of specs is affected by it (or any number of subtrees, for that matter).
 
 [See here](https://github.com/orfjackal/dimdwarf/blob/e0f109dcd2d81f35b411fd1a2ad75be7ef60ae75/dimdwarf-core/src/test/scala/net/orfjackal/dimdwarf/domain/SimpleTimestampSpec.scala#L64) for a real-life example of using `shareSideEffects()` as a performance optimization for parameterized tests. Actually this is the first use case which drove me to finally implement `shareSideEffects()` (and it took just one hour to implement). Before that I had used Specsy for 9 months without any need for it, even though it had been in my plans already since much earlier in [GoSpec](https://github.com/orfjackal/gospec). So it should very rarely, if ever, be necessary to use the non-isolated execution model.
 
