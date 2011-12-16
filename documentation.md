@@ -13,6 +13,8 @@ Documentation
 - [Non-Isolated Execution Model](#nonisolated_execution_model)
 - [“Before” and “After” Blocks](#before_and_after_blocks)
 - [Parameterized Tests](#parameterized_tests)
+- [Executing Tests Only in Some Environments](#executing_tests_only_in_some_environments)
+- [“Pending Until Fixed”](#pending_until_fixed)
 
 
 Quick Start
@@ -268,6 +270,91 @@ Because Specsy's spec declarations are implemented as method calls which take a 
 Note that the code which declares the specs must be deterministic. Otherwise the test isolation mechanism may not run all specs exactly once. Also here it might be desirable to use `shareSideEffects()` as a performance optimization, assuming that the generated specs do not have side-effects.
 
 
+Executing Tests Only in Some Environments
+-----------------------------------------
+
+Since in Specsy every spec is a closure, it is very easy to customize how individual specs are run. For example, let's say that some of the tests require Java 7 to be able to run. You can write a helper method such as the `worksOnlyOnJava7` in [EnvironmentFilterExampleSpec], as shown below, and mark/surround the closures of affected specs with it.
+
+    @RunWith(classOf[Specsy])
+    class EnvironmentFilterExampleSpec extends Spec {
+
+      "This test is run every time" >> {
+        // Test code...
+      }
+
+      "This test is run only under Java 7 and greater" >> worksOnlyOnJava7 {
+        // Test code... For example something which does custom class loading
+        // and requires the URLClassLoader.close() method which was added in Java 7.
+      }
+
+      // This can also be used at the top level, if many/all tests work only on Java 7.
+      // Just surround all tests and variable/field declarations into a closure.
+      worksOnlyOnJava7 {
+
+        "This requires Java 7" >> {
+          // Test code...
+        }
+        "This also requires Java 7" >> {
+          // Test code...
+        }
+      }
+
+
+      private def worksOnlyOnJava7(closure: => Unit) {
+        if (isJava7) {
+          closure
+        }
+      }
+
+      private def isJava7: Boolean = {
+        try {
+          classOf[URLClassLoader].getMethod("close")
+          true
+        } catch {
+          case e: NoSuchMethodException => false
+        }
+      }
+    }
+
+
+“Pending Until Fixed”
+---------------------
+
+A common situation in Acceptance Test Driven Development (ATDD) is that you have an acceptance test which is not yet passing, until you implement the feature specified by that acceptance test, but that might take a long time. In that situation it can be useful to make the test so that if the test throws an exception, then you don't fail it but consider it to be pending, but if the test does *not* throw an exception and the feature is complete, then you fail it so that you would remember to remove the pending-until-fixed tag.
+
+Specsy does not (yet) have a concept of "pending", but you can achieve almost the same thing by making the test pass and by having the `pendingUntilFixed` method in a helper class which all tests use, so that it's easy to seach for all its usages to find out which tests are pending. [PendingUntilFixedExampleSpec] illustrates this:
+
+    @RunWith(classOf[Specsy])
+    class PendingUntilFixedExampleSpec extends Spec {
+
+      "An acceptance test for an already implemented feature" >> {
+        // Test code...
+      }
+
+      "An acceptance test whose feature has not yet been implemented" >> AcceptanceTestHelpers.pendingUntilFixed {
+        // Test code which is still failing...
+        assert(false, "this feature is not implemented")
+      }
+    }
+
+    object AcceptanceTestHelpers {
+
+      // When this method is in a helper class, it's easy to find all pending tests
+      // by searching for all usages of this method with your IDE.
+      def pendingUntilFixed(closure: => Unit) {
+        try {
+          closure
+        } catch {
+          case e =>
+            System.err.println("This test is pending until fixed:")
+            e.printStackTrace()
+            return // test is pending
+        }
+        throw new AssertionError("This test would now pass. Remove the 'pendingUntilFixed' tag.")
+      }
+    }
+
+
 [Spec]:                         http://github.com/orfjackal/specsy/blob/master/src/main/scala/net/orfjackal/specsy/Spec.scala
 [FibonacciSpec]:                http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/FibonacciSpec.scala
 [StackSpec]:                    http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/StackSpec.scala
@@ -275,3 +362,5 @@ Note that the code which declares the specs must be deterministic. Otherwise the
 [DeferBlocksExampleSpec]:       http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/DeferBlocksExampleSpec.scala
 [DeferBlocksExample2Spec]:      http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/DeferBlocksExample2Spec.scala
 [ParameterizedExampleSpec]:     http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/ParameterizedExampleSpec.scala
+[EnvironmentFilterExampleSpec]: http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/EnvironmentFilterExampleSpec.scala
+[PendingUntilFixedExampleSpec]: http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/PendingUntilFixedExampleSpec.scala
