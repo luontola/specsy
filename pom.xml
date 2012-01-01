@@ -4,161 +4,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
+        <groupId>org.specsy</groupId>
+        <artifactId>parent</artifactId>
+        <version>2.0-SNAPSHOT</version>
+        <relativePath>parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>org.specsy</groupId>
-    <artifactId>specsy</artifactId>
-    <version>2.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <artifactId>project</artifactId>
+    <packaging>pom</packaging>
 
-    <name>Specsy</name>
-    <description>BDD-style unit-level testing framework for Scala</description>
-    <url>http://specsy.org/</url>
-    <inceptionYear>2010</inceptionYear>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
-
-    <licenses>
-        <license>
-            <name>Apache License 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>Esko Luontola</name>
-            <url>http://www.orfjackal.net/</url>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git:git://github.com/orfjackal/specsy.git</connection>
-        <developerConnection>scm:git:git@github.com:orfjackal/specsy.git</developerConnection>
-        <url>http://github.com/orfjackal/specsy/tree</url>
-    </scm>
-
-    <dependencies>
-
-        <!-- Scala -->
-
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>2.9.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-            <version>2.9.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Testing -->
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit-dep</artifactId>
-            <version>4.10</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.hamcrest</groupId>
-                    <artifactId>hamcrest-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-library</artifactId>
-            <version>1.3.RC2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.0-rc1</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-        <plugins>
-
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.scala-tools</groupId>
-                <artifactId>maven-scala-plugin</artifactId>
-                <version>2.15.2</version>
-                <configuration>
-                    <jvmArgs>
-                        <jvmArg>-Xmx512m</jvmArg>
-                    </jvmArgs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>scala-compile-first</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>scala-test-compile</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.8.1</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.class</include>
-                        <include>**/*Spec.class</include>
-                    </includes>
-                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
+    <modules>
+        <module>specsy-core</module>
+        <module>parent</module>
+    </modules>
 
 </project>

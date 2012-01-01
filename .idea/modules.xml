@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/specsy.iml" filepath="$PROJECT_DIR$/specsy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/parent.iml" filepath="$PROJECT_DIR$/parent/parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/project.iml" filepath="$PROJECT_DIR$/project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/specsy-core/specsy-core.iml" filepath="$PROJECT_DIR$/specsy-core/specsy-core.iml" />
     </modules>
   </component>
 </project>
