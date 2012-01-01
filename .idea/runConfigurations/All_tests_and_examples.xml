@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="All tests" type="JUnit" factoryName="JUnit">
+  <configuration default="false" name="All tests and examples" type="JUnit" factoryName="JUnit">
     <extension name="coverage" enabled="true" merge="false" per_test_coverage_enabled="false" track_test_folders="true" runner="idea">
       <pattern>
-        <option name="PATTERN" value="net.orfjackal.*" />
+        <option name="PATTERN" value="org.specsy.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
