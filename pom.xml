@@ -14,8 +14,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>specsy-core</module>
         <module>parent</module>
+        <module>specsy-core</module>
+        <module>specsy-scala</module>
+        <module>specsy-examples</module>
     </modules>
 
 </project>

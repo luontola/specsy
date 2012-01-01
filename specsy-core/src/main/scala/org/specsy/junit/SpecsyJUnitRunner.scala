@@ -1,4 +1,4 @@
-// Copyright © 2010-2011, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -6,11 +6,10 @@ package org.specsy.junit
 
 import org.junit.runner._
 import org.specsy.core._
-import org.specsy.Spec
 import org.specsy.runner._
 import org.junit.runner.notification.Failure
 
-class SpecsyJUnitRunner(testClass: Class[_ <: Spec]) extends Runner {
+class SpecsyJUnitRunner(testClass: Class[_]) extends Runner {
   private lazy val results: Map[Path, TestResult] = runSpecs()
   private lazy val converter = new ResultToDescriptionConverter(testClass, results)
 

@@ -1,11 +1,11 @@
-// Copyright © 2010-2011, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
 package org.specsy.examples
 
 import org.junit.runner.RunWith
-import org.specsy._
+import org.specsy.scala._
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
 import org.junit.Assert._
