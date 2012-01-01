@@ -4,8 +4,8 @@
 
 package net.orfjackal.specsy.runner
 
-import org.junit.Assert._
-import org.hamcrest.CoreMatchers._
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers._
 import org.junit._
 import scala.collection.mutable.Buffer
 

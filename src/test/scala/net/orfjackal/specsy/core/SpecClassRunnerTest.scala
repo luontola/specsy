@@ -5,8 +5,9 @@
 package net.orfjackal.specsy.core
 
 import org.junit.Test
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers._
 import org.junit.Assert._
-import org.hamcrest.CoreMatchers._
 import net.orfjackal.specsy.Spec
 import net.orfjackal.specsy.runner.SuiteMonitor
 
@@ -20,7 +21,7 @@ class SpecClassRunnerTest {
     runner.run()
 
     val exception = monitor.results(Path.Root).failures.head
-    assertThat(exception, is(classOf[AssertionError]))
+    assertTrue("not an AssertionError: " + exception, exception.isInstanceOf[AssertionError])
     assertThat(exception.getMessage, is("exception in root"))
   }
 }

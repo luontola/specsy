@@ -6,8 +6,9 @@ package net.orfjackal.specsy.examples
 
 import org.junit.runner.RunWith
 import net.orfjackal.specsy._
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers._
 import org.junit.Assert._
-import org.hamcrest.CoreMatchers._
 
 @RunWith(classOf[Specsy])
 class StackSpec extends Spec {

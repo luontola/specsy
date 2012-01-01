@@ -5,8 +5,8 @@
 package net.orfjackal.specsy.junit
 
 import org.junit.Test
-import org.junit.Assert._
-import org.hamcrest.CoreMatchers._
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers._
 import org.junit.runner._
 import org.junit.runners.Suite
 import org.junit.runner.notification._
@@ -42,7 +42,8 @@ class JUnitLearningTest {
     core.addListener(new SpyRunListener)
     val result = core.run(classOf[DummyTest1], classOf[DummyTest2])
 
-    assertThat(events, is(anyOf(equalTo(eventsRunOrder1), equalTo(eventsRunOrder2))))
+    assertThat(events.toString, List(eventsRunOrder1, eventsRunOrder2).contains(events)) // XXX: workaround for the compiler bug https://issues.scala-lang.org/browse/SI-4090
+    //assertThat(events, is(anyOf(equalTo(eventsRunOrder1), equalTo(eventsRunOrder2))))
     assertThat(result.getRunCount, is(3))
   }
 
@@ -54,7 +55,8 @@ class JUnitLearningTest {
 
     // the suite itself is not seen by the RunListener
     // - the output is exactly the same as when running individual test classes
-    assertThat(events, is(anyOf(equalTo(eventsRunOrder1), equalTo(eventsRunOrder2))))
+    assertThat(events.toString, List(eventsRunOrder1, eventsRunOrder2).contains(events)) // XXX: workaround for the compiler bug https://issues.scala-lang.org/browse/SI-4090
+    //assertThat(events, is(anyOf(equalTo(eventsRunOrder1), equalTo(eventsRunOrder2))))
     assertThat(result.getRunCount, is(3))
   }
 

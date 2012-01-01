@@ -5,8 +5,8 @@
 package net.orfjackal.specsy.core
 
 import org.junit.Test
-import org.junit.Assert._
-import org.hamcrest.CoreMatchers._
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers._
 import java.io._
 
 class OutputCapturerTest {

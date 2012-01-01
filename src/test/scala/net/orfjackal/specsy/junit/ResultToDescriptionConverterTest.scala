@@ -5,14 +5,15 @@
 package net.orfjackal.specsy.junit
 
 import org.junit._
-import org.junit.Assert._
-import org.hamcrest.CoreMatchers._
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers._
 import org.junit.runner.Description
 import net.orfjackal.specsy.runner._
 import net.orfjackal.specsy.core._
 
 class ResultToDescriptionConverterTest {
   private val testClass = classOf[DummySpec]
+
   private class DummySpec {}
 
   val unusedRunner = null

@@ -4,8 +4,9 @@
 
 package net.orfjackal.specsy.junit
 
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers._
 import org.junit.Assert._
-import org.hamcrest.CoreMatchers._
 import net.orfjackal.specsy.Spec
 import org.junit.runner._
 import org.junit._

@@ -4,8 +4,8 @@
 
 package net.orfjackal.specsy.runner
 
-import org.junit.Assert._
-import org.hamcrest.CoreMatchers._
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers._
 import org.junit._
 import net.orfjackal.specsy.Spec
 import net.orfjackal.specsy.core._
@@ -38,7 +38,7 @@ class SuiteMonitorTest {
 
     assertThat("test names", testNames, is(Map(
       Path() -> "root"
-      )))
+    )))
   }
 
   @Test
@@ -54,7 +54,7 @@ class SuiteMonitorTest {
 
     assertThat("test names", testNames, is(Map(
       Path() -> "root"
-      )))
+    )))
   }
 
   @Test
@@ -75,7 +75,7 @@ class SuiteMonitorTest {
     assertThat("test names", testNames, is(Map(
       Path() -> "root",
       Path(0) -> "child A"
-      )))
+    )))
   }
 
   @Test
@@ -113,7 +113,7 @@ class SuiteMonitorTest {
       Path() -> "root",
       Path(0) -> "child A",
       Path(1) -> "child B"
-      )))
+    )))
   }
 
   private class DummySpec extends Spec {
