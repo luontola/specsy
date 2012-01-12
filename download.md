@@ -72,6 +72,6 @@ All of these issues will ultimately be solved when I finish creating [Jumi](http
 License
 -------
 
-Copyright © 2010-2011 Esko Luontola <[www.orfjackal.net](http://www.orfjackal.net/)>  
+Copyright © 2010-{{ site.time | date: "%Y" }} Esko Luontola <[www.orfjackal.net](http://www.orfjackal.net/)>  
 This software is released under the Apache License 2.0.  
 The license text is at <http://www.apache.org/licenses/LICENSE-2.0>
