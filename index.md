@@ -1,7 +1,7 @@
 ---
-title: testing framework for Scala
-layout: wikistyle
+layout: page
 ---
+{% include JB/setup %}
 
 Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing framework for [Scala](http://www.scala-lang.org/). It safely <em>isolates mutable state</em> and supports writing self-documenting tests/specifications.
 

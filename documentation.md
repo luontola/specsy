@@ -1,10 +1,9 @@
 ---
 title: Documentation
-layout: wikistyle
+layout: page
+group: navigation
 ---
-
-Documentation
-=============
+{% include JB/setup %}
 
 - [Quick Start](#quick_start)
 - [Naming Tests](#naming_tests)

@@ -1,10 +1,9 @@
 ---
 title: Download
-layout: wikistyle
+layout: page
+group: navigation
 ---
-
-Download
-========
+{% include JB/setup %}
 
 You can download Specsy from the [Maven Central Repository](http://repo1.maven.org/maven2/net/orfjackal/specsy/specsy/). The source code is at <https://github.com/orfjackal/specsy>
 
