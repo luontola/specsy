@@ -116,7 +116,7 @@ Any other assertions are also OK. All that is needed is that they throw an excep
 Isolated Execution Model
 ------------------------
 
-[StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications made in its parent specs, so there are no weird order-dependent test failures - everything just works as expected. Specsy accomplishes this by creating multiple fresh instances of the test class and selectively executing the nested specs.
+[StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications made in its parent specs, so there are no weird order-dependent test failures - everything just works as expected. It's kind of like *lexical scoping* applied to side-effects. Specsy accomplishes this by creating multiple fresh instances of the test class and selectively executing the nested specs.
 
 <pre class="brush: scala">
 @RunWith(classOf[Specsy])
