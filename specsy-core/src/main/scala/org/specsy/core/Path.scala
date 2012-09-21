@@ -37,4 +37,6 @@ case class Path(id: TestId) extends Ordered[Path] {
   def compare(that: Path): Int = {
     this.id.compareTo(that.id)
   }
+
+  def toTestId: TestId = id
 }

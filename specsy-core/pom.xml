@@ -32,6 +32,11 @@
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!-- TODO: remove me - use Jumi as the test runner (jumi-api, compile scope) -->
         <dependency>

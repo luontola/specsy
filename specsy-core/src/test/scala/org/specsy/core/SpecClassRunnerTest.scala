@@ -1,28 +1,42 @@
-// Copyright © 2010-2011, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
 package org.specsy.core
 
 import org.junit.Test
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers._
-import org.junit.Assert._
 import org.specsy.Spec
-import org.specsy.runner.SuiteMonitor
+import org.specsy.jumi.JumiSuiteNotifierAdapter
+import fi.jumi.core.runs.{RunId, RunIdSequence, DefaultSuiteNotifier}
+import fi.jumi.actors.ActorRef
+import fi.jumi.core.runners.TestClassListener
+import fi.jumi.api.drivers.TestId
+import fi.jumi.core.util.SpyListener
+import org.apache.commons.io.output.NullOutputStream
+import java.nio.charset.StandardCharsets
 
 class SpecClassRunnerTest {
   @Test
   def exceptions_thrown_by_the_root_spec_are_not_wrapped_in_InvocationTargetException() {
-    val unusedCapturer = new OutputCapturer(null, null)
-    val monitor = new SuiteMonitor(null, unusedCapturer)
-    val runner = new SpecClassRunner(classOf[DummySpecWhoseRootThrowsAnException], monitor)
+    val spy = new SpyListener(classOf[TestClassListener])
+    val listener = spy.getListener
+    val capturer = new fi.jumi.core.output.OutputCapturer(new NullOutputStream, new NullOutputStream, StandardCharsets.UTF_8)
+    val notifier = new JumiSuiteNotifierAdapter(
+      new DefaultSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), capturer), null)
+    val runner = new SpecClassRunner(classOf[DummySpecWhoseRootThrowsAnException], notifier)
 
+    listener.onTestFound(TestId.ROOT, classOf[DummySpecWhoseRootThrowsAnException].getName)
+    listener.onRunStarted(new RunId(1))
+    listener.onTestStarted(new RunId(1), TestId.ROOT)
+
+    // TODO: this is the thing we are interested in; refactor this test to make it clear
+    listener.onFailure(new RunId(1), TestId.ROOT, new AssertionError("exception in root"))
+
+    listener.onTestFinished(new RunId(1), TestId.ROOT)
+    listener.onRunFinished(new RunId(1))
+    spy.replay()
     runner.run()
-
-    val exception = monitor.results(Path.Root).failures.head
-    assertTrue("not an AssertionError: " + exception, exception.isInstanceOf[AssertionError])
-    assertThat(exception.getMessage, is("exception in root"))
+    spy.verify()
   }
 }
 
