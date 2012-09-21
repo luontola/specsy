@@ -14,7 +14,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-public class BootstrapTest {
+public class ExamplesBootstrapTest {
 
     // TODO: remove this boostrap when Jumi can be run without it
 

@@ -23,8 +23,10 @@ class DeferBlocksExample2Spec extends ScalaSpecsy {
   }
 
   def createWithCleanup(file: File, create: File => Boolean, delete: File => Boolean): File = {
+    println("Creating " + file)
     assert(create(file), "failed to create: " + file)
     defer {
+      println("Deleting " + file)
       assert(delete(file), "failed to delete: " + file)
     }
     file
