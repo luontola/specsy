@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: fi.jumi:jumi-core:test-jar:tests:0.1.196">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/fi/jumi/jumi-core/0.1.196/jumi-core-0.1.196-tests.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/fi/jumi/jumi-core/0.1.196/jumi-core-0.1.196-test-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/fi/jumi/jumi-core/0.1.196/jumi-core-0.1.196-test-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

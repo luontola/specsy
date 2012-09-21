@@ -19,6 +19,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="specsy-core" />
+    <orderEntry type="library" name="Maven: fi.jumi:jumi-api:0.1.196" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.9.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: junit:junit-dep:4.10" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.scala-lang:scala-compiler:2.9.1" level="project" />

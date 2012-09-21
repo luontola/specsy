@@ -71,6 +71,24 @@
     <dependencyManagement>
         <dependencies>
 
+            <!-- Jumi -->
+
+            <dependency>
+                <groupId>fi.jumi</groupId>
+                <artifactId>jumi-api</artifactId>
+                <version>0.1.196</version>
+            </dependency>
+            <dependency>
+                <groupId>fi.jumi</groupId>
+                <artifactId>jumi-core</artifactId>
+                <version>0.1.196</version>
+            </dependency>
+            <dependency>
+                <groupId>fi.jumi</groupId>
+                <artifactId>jumi-core</artifactId>
+                <version>0.1.196</version>
+                <type>test-jar</type>
+            </dependency>
 
             <!-- Scala -->
 

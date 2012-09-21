@@ -15,6 +15,24 @@
 
     <dependencies>
 
+        <!-- Jumi -->
+
+        <dependency>
+            <groupId>fi.jumi</groupId>
+            <artifactId>jumi-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fi.jumi</groupId>
+            <artifactId>jumi-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>fi.jumi</groupId>
+            <artifactId>jumi-core</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
         <!-- TODO: remove me - use Jumi as the test runner (jumi-api, compile scope) -->
         <dependency>
             <groupId>junit</groupId>
