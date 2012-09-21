@@ -4,10 +4,11 @@
 
 package org.specsy.core
 
-import org.specsy.runner.notification._
 import java.lang.reflect.InvocationTargetException
+import fi.jumi.api.drivers
+import java.util.concurrent.Executor
 
-class SpecClassRunner(testClass: Class[_], notifier: SuiteNotifier) extends Runnable {
+class SpecClassRunner(testClass: Class[_], notifier: drivers.SuiteNotifier, executor: Executor) extends Runnable {
   def run() {
     runSpec(c => {
       // TODO: pass testClass to the runner so that the test's location will be the test class, and not this closure
@@ -23,7 +24,7 @@ class SpecClassRunner(testClass: Class[_], notifier: SuiteNotifier) extends Runn
   }
 
   private def runSpec(spec: Context => Unit) {
-    val runner = new SpecRun(spec, notifier)
+    val runner = new SpecRun(spec, notifier, executor)
     runner.run()
   }
 }

@@ -1,12 +1,12 @@
-// Copyright © 2010-2011, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
 package org.specsy.core
 
 import Context._
-import org.specsy.runner.notification._
 import scala.collection.mutable.Buffer
+import fi.jumi.api.drivers.{TestNotifier, SuiteNotifier}
 
 object Context {
   abstract sealed class Status
@@ -56,8 +56,8 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
   }
 
   private def execute(body: => Unit) {
-    notifier.fireTestFound(current.path, current.name, (body _).getClass)
-    val tn = notifier.fireTestStarted(current.path)
+    notifier.fireTestFound(current.path.toTestId, current.name)
+    val tn = notifier.fireTestStarted(current.path.toTestId)
 
     executeSafely(body _, tn)
     current.deferred.foreach(executeSafely(_, tn))

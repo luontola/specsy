@@ -5,7 +5,6 @@
 package org.specsy.core
 
 import org.junit.Test
-import org.specsy.jumi.JumiSuiteNotifierAdapter
 import fi.jumi.core.runs.{RunId, RunIdSequence, DefaultSuiteNotifier}
 import fi.jumi.actors.ActorRef
 import fi.jumi.core.runners.TestClassListener
@@ -20,11 +19,11 @@ class SpecClassRunnerTest {
     val spy = new SpyListener(classOf[TestClassListener])
     val listener = spy.getListener
     val capturer = new fi.jumi.core.output.OutputCapturer(new NullOutputStream, new NullOutputStream, StandardCharsets.UTF_8)
-    val notifier = new JumiSuiteNotifierAdapter(
-      new DefaultSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), capturer), null)
-    val runner = new SpecClassRunner(classOf[DummySpecWhoseRootThrowsAnException], notifier)
+    val notifier = new DefaultSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), capturer)
+    val testClass = classOf[DummySpecWhoseRootThrowsAnException]
+    val runner = new SpecClassRunner(testClass, notifier, null)
 
-    listener.onTestFound(TestId.ROOT, classOf[DummySpecWhoseRootThrowsAnException].getName)
+    listener.onTestFound(TestId.ROOT, testClass.getName)
     listener.onRunStarted(new RunId(1))
     listener.onTestStarted(new RunId(1), TestId.ROOT)
 

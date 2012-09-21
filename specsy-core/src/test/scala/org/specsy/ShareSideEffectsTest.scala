@@ -4,7 +4,6 @@
 
 package org.specsy
 
-import jumi.JumiSuiteNotifierAdapter
 import org.junit.Test
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
@@ -21,7 +20,7 @@ class ShareSideEffectsTest {
     val bench = new TestBench()
     bench.setDriverFinder(new StubDriverFinder(new Driver {
       def findTests(testClass: Class[_], notifier: SuiteNotifier, executor: Executor) {
-        executor.execute(new SpecRun(spec, new JumiSuiteNotifierAdapter(notifier, executor)))
+        executor.execute(new SpecRun(spec, notifier, executor))
       }
     }))
     bench.run(getClass)
