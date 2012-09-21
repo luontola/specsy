@@ -12,18 +12,18 @@ import fi.jumi.api.drivers.TestId
 import fi.jumi.core.util.SpyListener
 import org.apache.commons.io.output.NullOutputStream
 import java.nio.charset.StandardCharsets
+import fi.jumi.core.output.OutputCapturer
 
 class SpecClassRunnerTest {
   @Test
   def exceptions_thrown_by_the_root_spec_are_not_wrapped_in_InvocationTargetException() {
     val spy = new SpyListener(classOf[TestClassListener])
     val listener = spy.getListener
-    val capturer = new fi.jumi.core.output.OutputCapturer(new NullOutputStream, new NullOutputStream, StandardCharsets.UTF_8)
+    val capturer = new OutputCapturer(new NullOutputStream, new NullOutputStream, StandardCharsets.UTF_8)
     val notifier = new DefaultSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), capturer)
-    val testClass = classOf[DummySpecWhoseRootThrowsAnException]
-    val runner = new SpecClassRunner(testClass, notifier, null)
+    val runner = new SpecClassRunner(classOf[DummySpecWhoseRootThrowsAnException], notifier, null)
 
-    listener.onTestFound(TestId.ROOT, testClass.getName)
+    listener.onTestFound(TestId.ROOT, "DummySpecWhoseRootThrowsAnException")
     listener.onRunStarted(new RunId(1))
     listener.onTestStarted(new RunId(1), TestId.ROOT)
 

@@ -90,6 +90,13 @@
                 <type>test-jar</type>
             </dependency>
 
+            <!-- TODO: remove this boostrap when Jumi can be run without it -->
+            <dependency>
+                <groupId>fi.jumi</groupId>
+                <artifactId>jumi-launcher</artifactId>
+                <version>0.1.196</version>
+            </dependency>
+
             <!-- Scala -->
 
             <dependency>

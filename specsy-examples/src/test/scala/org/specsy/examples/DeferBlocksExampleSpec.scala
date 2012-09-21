@@ -4,13 +4,14 @@
 
 package org.specsy.examples
 
-import org.specsy.scala._
+import fi.jumi.api.RunVia
+import org.specsy.Specsy
+import org.specsy.scala.ScalaSpecsy
 import java.io.File
 import java.util.UUID
-import fi.jumi.api.RunVia
 
 @RunVia(classOf[Specsy])
-class DeferBlocksExampleSpec extends Spec {
+class DeferBlocksExampleSpec extends ScalaSpecsy {
   val dir = new File("temp-directory-" + UUID.randomUUID())
   assert(dir.mkdir(), "failed to create: " + dir)
   defer {

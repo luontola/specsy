@@ -4,13 +4,14 @@
 
 package org.specsy.examples
 
-import org.specsy.scala._
+import fi.jumi.api.RunVia
+import org.specsy.Specsy
+import org.specsy.scala.ScalaSpecsy
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
-import fi.jumi.api.RunVia
 
 @RunVia(classOf[Specsy])
-class ShareSideEffectsExampleSpec extends Spec {
+class ShareSideEffectsExampleSpec extends ScalaSpecsy {
   var counter = 0
 
   // Without the call to `shareSideEffects()` the value of `counter` would be `1`

@@ -4,18 +4,12 @@
 
 package org.specsy.core
 
-import fi.jumi.api.drivers
 import java.util.concurrent.Executor
+import fi.jumi.api.drivers.SuiteNotifier
 
-class SpecRun(spec: Context => Unit,
-              pathToExecute: Path,
-              notifier: drivers.SuiteNotifier,
-              executor: Executor) extends Runnable {
+class SpecRun(spec: Context => Unit, pathToExecute: Path, notifier: SuiteNotifier, executor: Executor) extends Runnable {
 
-  def this(spec: Context => Unit,
-           notifier: drivers.SuiteNotifier,
-           executor: Executor) =
-    this(spec, Path.Root, notifier, executor)
+  def this(spec: Context => Unit, notifier: SuiteNotifier, executor: Executor) = this(spec, Path.Root, notifier, executor)
 
   def run() {
     val c = executePath(spec, pathToExecute)

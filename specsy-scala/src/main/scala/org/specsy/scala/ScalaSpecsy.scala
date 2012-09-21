@@ -6,7 +6,8 @@ package org.specsy.scala
 
 import org.specsy.core.ContextDealer
 
-trait Spec {
+trait ScalaSpecsy {
+
   private val context = ContextDealer.take()
 
   /**

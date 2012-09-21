@@ -22,6 +22,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- TODO: remove this boostrap when Jumi can be run without it -->
+        <dependency>
+            <groupId>fi.jumi</groupId>
+            <artifactId>jumi-launcher</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Scala -->
 
         <dependency>

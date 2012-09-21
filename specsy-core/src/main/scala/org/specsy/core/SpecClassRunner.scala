@@ -5,14 +5,13 @@
 package org.specsy.core
 
 import java.lang.reflect.InvocationTargetException
-import fi.jumi.api.drivers
 import java.util.concurrent.Executor
+import fi.jumi.api.drivers.SuiteNotifier
 
-class SpecClassRunner(testClass: Class[_], notifier: drivers.SuiteNotifier, executor: Executor) extends Runnable {
+class SpecClassRunner(testClass: Class[_], notifier: SuiteNotifier, executor: Executor) extends Runnable {
   def run() {
     runSpec(c => {
-      // TODO: pass testClass to the runner so that the test's location will be the test class, and not this closure
-      c.bootstrap(testClass.getName, {
+      c.bootstrap(testClass.getSimpleName, {
         ContextDealer.prepare(c)
         try {
           testClass.getConstructor().newInstance()

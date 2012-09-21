@@ -4,12 +4,13 @@
 
 package org.specsy.examples
 
-import org.specsy.scala._
-import java.net.URLClassLoader
 import fi.jumi.api.RunVia
+import org.specsy.Specsy
+import org.specsy.scala.ScalaSpecsy
+import java.net.URLClassLoader
 
 @RunVia(classOf[Specsy])
-class EnvironmentFilterExampleSpec extends Spec {
+class EnvironmentFilterExampleSpec extends ScalaSpecsy {
 
   "This test is run every time" >> {
     // Test code...
