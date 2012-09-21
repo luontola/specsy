@@ -1,56 +1,40 @@
-// Copyright © 2010-2011, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
 package org.specsy.core
 
+import fi.jumi.api.drivers.TestId
+
 object Path {
-  def apply(indexes: Int*): Path = Path(IndexedSeq(indexes: _*))
+  def apply(indexes: Int*): Path = Path(TestId.of(indexes: _*))
 
   val Root: Path = Path()
 }
 
-case class Path(indexes: IndexedSeq[Int]) extends Ordered[Path] {
-  for (i <- indexes) {
-    require(i >= 0, "all indexes must be >= 0, but was " + indexes)
-  }
+case class Path(id: TestId) extends Ordered[Path] {
 
-  def isRoot: Boolean = length == 0
+  def isRoot: Boolean = id.isRoot
 
-  def parent: Path = Path(indexes.dropRight(1))
+  def parent: Path =
+    if (id.isRoot) {
+      this // XXX: fix usages so that they don't try to get root's parent
+    } else {
+      Path(id.getParent)
+    }
 
-  def isFirstChild: Boolean = lastIndex == 0
+  def isFirstChild: Boolean = id.isFirstChild
 
-  def firstChild: Path = childAtIndex(0)
+  def firstChild: Path = Path(id.getFirstChild)
 
-  def nextSibling: Path = parent.childAtIndex(lastIndex + 1)
-
-  private def childAtIndex(index: Int): Path = Path(indexes :+ index)
+  def nextSibling: Path = Path(id.getNextSibling)
 
   def isOn(that: Path): Boolean =
-    this == that.prefixOfLength(this.length)
+    this.id == that.id || this.id.isAncestorOf(that.id)
 
-  def isBeyond(that: Path): Boolean =
-    that.isOn(this) && this.length > that.length
-
-  private def prefixOfLength(len: Int) = Path(indexes.take(len))
+  def isBeyond(that: Path): Boolean = this.id.isDescendantOf(that.id)
 
   def compare(that: Path): Int = {
-    var i = 0
-    while (i < this.length && i < that.length) {
-      val thisIndex = this.indexAt(i)
-      val thatIndex = that.indexAt(i)
-      if (thisIndex != thatIndex) {
-        return thisIndex - thatIndex
-      }
-      i += 1
-    }
-    this.length - that.length
+    this.id.compareTo(that.id)
   }
-
-  def length = indexes.length
-
-  def indexAt(i: Int): Int = indexes(i)
-
-  private def lastIndex = indexes.last
 }
