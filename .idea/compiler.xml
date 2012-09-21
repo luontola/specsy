@@ -15,10 +15,27 @@
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
-    <annotationProcessing enabled="false" useClasspath="true" />
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_STRING" value="-target 1.7" />
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="false">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <processorPath useClasspath="true" />
+        <module name="parent" />
+        <module name="project" />
+        <module name="specsy-core" />
+        <module name="specsy-examples" />
+        <module name="specsy-scala" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="parent" target="1.7" />
+      <module name="project" target="1.7" />
+      <module name="specsy-core" target="1.7" />
+      <module name="specsy-examples" target="1.7" />
+      <module name="specsy-scala" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
