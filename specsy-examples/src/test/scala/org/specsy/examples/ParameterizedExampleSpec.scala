@@ -4,12 +4,12 @@
 
 package org.specsy.examples
 
-import org.junit.runner.RunWith
 import org.specsy.scala._
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
+import fi.jumi.api.RunVia
 
-@RunWith(classOf[Specsy])
+@RunVia(classOf[Specsy])
 class ParameterizedExampleSpec extends Spec {
   val parameters = List(
     (0, 0),

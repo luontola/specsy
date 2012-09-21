@@ -4,12 +4,12 @@
 
 package org.specsy.examples
 
-import org.junit.runner.RunWith
 import org.specsy.scala._
 import java.io.File
 import java.util.UUID
+import fi.jumi.api.RunVia
 
-@RunWith(classOf[Specsy])
+@RunVia(classOf[Specsy])
 class DeferBlocksExample2Spec extends Spec {
   val dir = createWithCleanup(new File("temp-directory-" + UUID.randomUUID()), _.mkdir(), _.delete())
   val file1 = createWithCleanup(new File(dir, "file 1.txt"), _.createNewFile(), _.delete())

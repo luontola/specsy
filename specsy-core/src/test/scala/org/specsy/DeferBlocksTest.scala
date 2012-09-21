@@ -9,7 +9,6 @@ import org.junit.Test
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
 import org.specsy.core._
-import org.specsy.runner._
 import collection.mutable.Buffer
 import fi.jumi.core.testbench.{StubDriverFinder, TestBench}
 import fi.jumi.api.drivers.{TestId, SuiteNotifier, Driver}
@@ -18,10 +17,6 @@ import fi.jumi.core.results.{NullRunVisitor, SuiteEventDemuxer}
 import fi.jumi.core.runs.RunId
 
 class DeferBlocksTest {
-  val runner = new SuiteRunner
-  val unusedCapturer = new OutputCapturer(null, null)
-  val monitor = new SuiteMonitor(runner, unusedCapturer)
-
   val spy = Buffer[String]()
 
   private def runSpec(spec: Context => Unit): SuiteEventDemuxer = {
@@ -33,11 +28,6 @@ class DeferBlocksTest {
     }))
     bench.run(getClass)
   }
-
-  //  private def runSpec(spec: Context => Unit): Any = {
-  //    runner.submitTestRun(new SpecRun(spec, monitor))
-  //    runner.await()
-  //  }
 
   // Defer blocks in Specsy behave the same way as in the Go programming language.
   // See http://golang.org/doc/effective_go.html#defer

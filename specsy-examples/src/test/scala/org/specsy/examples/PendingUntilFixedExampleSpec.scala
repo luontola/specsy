@@ -4,10 +4,10 @@
 
 package org.specsy.examples
 
-import org.junit.runner.RunWith
 import org.specsy.scala._
+import fi.jumi.api.RunVia
 
-@RunWith(classOf[Specsy])
+@RunVia(classOf[Specsy])
 class PendingUntilFixedExampleSpec extends Spec {
 
   "An acceptance test for an already implemented feature" >> {

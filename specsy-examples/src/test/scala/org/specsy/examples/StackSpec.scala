@@ -4,13 +4,13 @@
 
 package org.specsy.examples
 
-import org.junit.runner.RunWith
 import org.specsy.scala._
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
 import org.junit.Assert._
+import fi.jumi.api.RunVia
 
-@RunWith(classOf[Specsy])
+@RunVia(classOf[Specsy])
 class StackSpec extends Spec {
   val stack = new scala.collection.mutable.Stack[String]
 

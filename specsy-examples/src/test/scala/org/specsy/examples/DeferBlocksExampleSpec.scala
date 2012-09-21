@@ -4,12 +4,12 @@
 
 package org.specsy.examples
 
-import org.junit.runner.RunWith
 import org.specsy.scala._
 import java.io.File
 import java.util.UUID
+import fi.jumi.api.RunVia
 
-@RunWith(classOf[Specsy])
+@RunVia(classOf[Specsy])
 class DeferBlocksExampleSpec extends Spec {
   val dir = new File("temp-directory-" + UUID.randomUUID())
   assert(dir.mkdir(), "failed to create: " + dir)

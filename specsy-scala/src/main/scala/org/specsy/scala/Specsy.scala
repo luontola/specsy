@@ -4,6 +4,11 @@
 
 package org.specsy.scala
 
-import org.specsy.junit.SpecsyJUnitRunner
+import fi.jumi.api.drivers.{SuiteNotifier, Driver}
+import java.util.concurrent.Executor
 
-class Specsy(testClass: Class[_ <: Spec]) extends SpecsyJUnitRunner(testClass)
+class Specsy extends Driver {
+  def findTests(testClass: Class[_], notifier: SuiteNotifier, executor: Executor) {
+    // TODO
+  }
+}

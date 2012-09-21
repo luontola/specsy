@@ -5,7 +5,6 @@
 package org.specsy.core
 
 import org.junit.Test
-import org.specsy.Spec
 import org.specsy.jumi.JumiSuiteNotifierAdapter
 import fi.jumi.core.runs.{RunId, RunIdSequence, DefaultSuiteNotifier}
 import fi.jumi.actors.ActorRef
@@ -40,6 +39,6 @@ class SpecClassRunnerTest {
   }
 }
 
-class DummySpecWhoseRootThrowsAnException extends Spec {
+class DummySpecWhoseRootThrowsAnException {
   throw new AssertionError("exception in root")
 }
