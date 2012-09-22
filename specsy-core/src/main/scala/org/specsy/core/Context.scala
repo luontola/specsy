@@ -31,7 +31,7 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
   }
 
   private def enterRootSpec(name: String) {
-    current = new SpecDeclaration(name, null, Path.Root, targetPath)
+    current = new SpecDeclaration(name, null, Path.ROOT, targetPath)
   }
 
   def specify(name: String, body: => Unit) {

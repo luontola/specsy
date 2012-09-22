@@ -9,7 +9,7 @@ import fi.jumi.api.drivers.SuiteNotifier
 
 class SpecRun(spec: Context => Unit, pathToExecute: Path, notifier: SuiteNotifier, executor: Executor) extends Runnable {
 
-  def this(spec: Context => Unit, notifier: SuiteNotifier, executor: Executor) = this(spec, Path.Root, notifier, executor)
+  def this(spec: Context => Unit, notifier: SuiteNotifier, executor: Executor) = this(spec, Path.ROOT, notifier, executor)
 
   def run() {
     val c = executePath(spec, pathToExecute)
