@@ -43,7 +43,7 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
   }
 
   private def enterSpec(name: String) {
-    current = current.addChild(name)
+    current = current.nextChild(name)
   }
 
   private def processSpec(body: => Unit) {
@@ -59,15 +59,20 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
     notifier.fireTestFound(current.path.toTestId, current.name)
     val tn = notifier.fireTestStarted(current.path.toTestId)
 
-    executeSafely(body _, tn)
+    executeSafely(new Closure {
+      def run() {
+        body
+      }
+    }, tn)
+    import scala.collection.JavaConversions._
     current.deferred.foreach(executeSafely(_, tn))
 
     tn.fireTestFinished()
   }
 
-  private def executeSafely(body: () => Unit, tn: TestNotifier) {
+  private def executeSafely(body: Closure, tn: TestNotifier) {
     try {
-      body.apply()
+      body.run()
     } catch {
       case e => tn.fireFailure(e)
     }
@@ -82,7 +87,11 @@ class Context(targetPath: Path, notifier: SuiteNotifier) {
   }
 
   def defer(body: => Unit) {
-    current.addDefer(body)
+    current.addDefer(new Closure {
+      def run() {
+        body
+      }
+    })
   }
 
   def postponedPaths: List[Path] = {
