@@ -2,7 +2,7 @@
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
-package org.specsy.core
+package org.specsy.bootstrap
 
 import org.junit.Test
 import fi.jumi.core.runs.{RunId, RunIdSequence, DefaultSuiteNotifier}
@@ -13,15 +13,17 @@ import fi.jumi.core.util.SpyListener
 import org.apache.commons.io.output.NullOutputStream
 import java.nio.charset.StandardCharsets
 import fi.jumi.core.output.OutputCapturer
+import org.specsy.core.SpecRun
 
-class SpecClassRunnerTest {
+class ClassSpecTest {
+
   @Test
   def exceptions_thrown_by_the_root_spec_are_not_wrapped_in_InvocationTargetException() {
     val spy = new SpyListener(classOf[TestClassListener])
     val listener = spy.getListener
     val capturer = new OutputCapturer(new NullOutputStream, new NullOutputStream, StandardCharsets.UTF_8)
     val notifier = new DefaultSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), capturer)
-    val runner = new SpecClassRunner(classOf[DummySpecWhoseRootThrowsAnException], notifier, null)
+    val runner = new SpecRun(new ClassSpec(classOf[DummySpecWhoseRootThrowsAnException]), notifier, null)
 
     listener.onTestFound(TestId.ROOT, "DummySpecWhoseRootThrowsAnException")
     listener.onRunStarted(new RunId(1))

@@ -5,7 +5,8 @@
 package org.specsy;
 
 import fi.jumi.api.drivers.*;
-import org.specsy.core.SpecClassRunner;
+import org.specsy.bootstrap.ClassSpec;
+import org.specsy.core.SpecRun;
 
 import java.util.concurrent.Executor;
 
@@ -13,6 +14,6 @@ public class Specsy extends Driver {
 
     @Override
     public void findTests(Class<?> testClass, SuiteNotifier notifier, Executor executor) {
-        executor.execute(new SpecClassRunner(testClass, notifier, executor));
+        executor.execute(new SpecRun(new ClassSpec(testClass), notifier, executor));
     }
 }

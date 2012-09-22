@@ -4,7 +4,8 @@
 
 package org.specsy.scala
 
-import org.specsy.core.{Closure, ContextDealer}
+import org.specsy.bootstrap.ContextDealer
+import org.specsy.core.Closure
 
 trait ScalaSpecsy {
 
