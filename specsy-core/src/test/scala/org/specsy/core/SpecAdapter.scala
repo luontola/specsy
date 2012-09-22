@@ -4,9 +4,7 @@
 
 package org.specsy.core
 
-
 class SpecAdapter(spec: Context => Unit) extends Spec {
-
   def run(context: Context) {
     spec(context)
   }
