@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <description>
-        Specsy is a BDD-style unit-level testing framework for Scala/Groovy/Java.
+        Specsy is a BDD-style unit-level testing framework for Java/Scala/Groovy.
         It safely isolates mutable state and supports writing self-documenting tests/specifications.
     </description>
     <url>http://specsy.org/</url>
@@ -70,6 +70,17 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.specsy</groupId>
+                <artifactId>specsy-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.specsy</groupId>
+                <artifactId>specsy-scala</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!-- Jumi -->
 

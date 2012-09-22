@@ -21,6 +21,9 @@
             <groupId>fi.jumi</groupId>
             <artifactId>jumi-api</artifactId>
         </dependency>
+
+        <!-- Testing / Jumi -->
+
         <dependency>
             <groupId>fi.jumi</groupId>
             <artifactId>jumi-core</artifactId>
@@ -38,24 +41,17 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- TODO: remove me - use Jumi as the test runner (jumi-api, compile scope) -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit-dep</artifactId>
-            <scope>provided</scope>
-        </dependency>
+        <!-- Testing / Scala -->
 
-        <!-- Scala -->
-
-        <!-- TODO: change scope to "test" - use Scala only in the tests -->
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-compiler</artifactId>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -67,15 +63,6 @@
                 <groupId>org.scala-tools</groupId>
                 <artifactId>maven-scala-plugin</artifactId>
                 <executions>
-                    <execution>
-                        <id>scala-compile-first</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                            <!-- TODO: remove me - use Scala in only the tests -->
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
                     <execution>
                         <id>scala-test-compile</id>
                         <phase>process-test-resources</phase>

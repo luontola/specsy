@@ -16,9 +16,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.specsy</groupId>
             <artifactId>specsy-scala</artifactId>
-            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
 
