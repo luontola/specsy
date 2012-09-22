@@ -12,6 +12,7 @@ class SpecRun(spec: Context => Unit, pathToExecute: Path, notifier: SuiteNotifie
   def this(spec: Context => Unit, notifier: SuiteNotifier, executor: Executor) = this(spec, Path.ROOT, notifier, executor)
 
   def run() {
+    import scala.collection.JavaConversions._
     val c = executePath(spec, pathToExecute)
     for (postponedPath <- c.postponedPaths) {
       executor.execute(new SpecRun(spec, postponedPath, notifier, executor))

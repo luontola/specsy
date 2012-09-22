@@ -11,12 +11,14 @@ import fi.jumi.api.drivers.SuiteNotifier
 class SpecClassRunner(testClass: Class[_], notifier: SuiteNotifier, executor: Executor) extends Runnable {
   def run() {
     runSpec(c => {
-      c.bootstrap(testClass.getSimpleName, {
-        ContextDealer.prepare(c)
-        try {
-          testClass.getConstructor().newInstance()
-        } catch {
-          case e: InvocationTargetException => throw e.getTargetException
+      c.bootstrap(testClass.getSimpleName, new Closure {
+        def run() {
+          ContextDealer.prepare(c)
+          try {
+            testClass.getConstructor().newInstance()
+          } catch {
+            case e: InvocationTargetException => throw e.getTargetException
+          }
         }
       })
     })

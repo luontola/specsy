@@ -16,6 +16,7 @@ import fi.jumi.core.results.{NullRunVisitor, SuiteEventDemuxer}
 import fi.jumi.core.runs.RunId
 
 class DeferBlocksTest {
+
   val spy = Buffer[String]()
 
   private def runSpec(spec: Context => Unit): SuiteEventDemuxer = {
@@ -82,15 +83,22 @@ class DeferBlocksTest {
 
   @Test
   def all_defer_blocks_are_executed_despite_exceptions_and_all_exceptions_are_reported() {
+    // XXX: We cannot throw the exception directly in the block passed to defer, because
+    // exception throwing has a type Nothing, which can be passed as a `Closure`,
+    // which in turn results in the the eager `defer(Closure)` instead of `defer(=>Unit)`.
+    def fail(message: String) {
+      throw new Throwable(message)
+    }
+
     val results = runSpec(c => {
       c.bootstrap("root", {
         c.defer {
-          throw new AssertionError("first defer")
+          fail("first defer")
         }
         c.defer {
-          throw new AssertionError("second defer")
+          fail("second defer")
         }
-        throw new AssertionError("root")
+        fail("root")
       })
     })
 

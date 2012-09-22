@@ -66,7 +66,7 @@ public class SpecDeclaration {
     }
 
     public Iterable<Closure> deferred() {
-        return deferred;
+        return Collections.unmodifiableCollection(deferred);
     }
 
 
@@ -80,15 +80,15 @@ public class SpecDeclaration {
         return isUnseen() && !isFirstChild() && !isShareSideEffects();
     }
 
-    protected boolean isOnTargetPath() {
+    private boolean isOnTargetPath() {
         return path.isOn(targetPath);
     }
 
-    protected boolean isUnseen() {
+    private boolean isUnseen() {
         return path.isBeyond(targetPath);
     }
 
-    protected boolean isFirstChild() {
+    private boolean isFirstChild() {
         return path.isFirstChild();
     }
 }

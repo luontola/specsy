@@ -4,7 +4,7 @@
 
 package org.specsy.scala
 
-import org.specsy.core.ContextDealer
+import org.specsy.core.{Closure, ContextDealer}
 
 trait ScalaSpecsy {
 
@@ -22,17 +22,23 @@ trait ScalaSpecsy {
    * All deferred closures will be executed in LIFO order when the current spec exits.
    */
   def defer(body: => Unit) {
-    context.defer(body)
+    context.defer(new ClosureAdapter(body))
   }
 
-  protected implicit def stringToNestedSpec(name: String): NestedSpec = new NestedSpec(name)
+  protected implicit def String_to_NestedSpec(name: String): NestedSpec = new NestedSpec(name)
 
   protected class NestedSpec(name: String) {
     /**
      * Declares a child spec.
      */
     def >>(body: => Unit) {
-      context.specify(name, body)
+      context.specify(name, new ClosureAdapter(body))
     }
+  }
+}
+
+private class ClosureAdapter(body: => Unit) extends Closure {
+  def run() {
+    body
   }
 }
