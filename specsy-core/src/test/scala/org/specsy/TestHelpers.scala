@@ -10,10 +10,17 @@ import fi.jumi.api.drivers.{SuiteNotifier, Driver}
 import java.util.concurrent.Executor
 import org.specsy.core.{SpecRun, Context}
 import org.specsy.util.{FunctionSpec, RichContext}
+import collection.mutable
+import org.hamcrest.MatcherAssert._
+import org.hamcrest.Matchers._
 
 trait TestHelpers {
 
-  implicit def Context_to_RichContext(context: Context): RichContext = new RichContext(context)
+  val spy = mutable.Buffer[String]()
+
+  def assertSpyContains(expected: String*) {
+    assertThat(spy, is(Seq(expected: _*)))
+  }
 
   def runSpec(spec: Context => Unit): SuiteEventDemuxer = {
     val bench = new TestBench()
@@ -24,4 +31,6 @@ trait TestHelpers {
     }))
     bench.run(getClass)
   }
+
+  implicit def Context_to_RichContext(context: Context): RichContext = new RichContext(context)
 }

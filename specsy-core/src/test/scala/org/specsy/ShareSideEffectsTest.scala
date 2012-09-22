@@ -5,13 +5,8 @@
 package org.specsy
 
 import org.junit.Test
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers._
-import collection.mutable.Buffer
 
 class ShareSideEffectsTest extends TestHelpers {
-
-  val spy = Buffer[String]()
 
   @Test
   def children_are_affected() {
@@ -29,7 +24,7 @@ class ShareSideEffectsTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("root", "A", "B")))
+    assertSpyContains("root", "A", "B")
   }
 
   @Test
@@ -52,7 +47,7 @@ class ShareSideEffectsTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("root", "A", "AA", "AB")))
+    assertSpyContains("root", "A", "AA", "AB")
   }
 
   @Test
@@ -71,6 +66,6 @@ class ShareSideEffectsTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("root", "A", "root", "B")))
+    assertSpyContains("root", "A", "root", "B")
   }
 }

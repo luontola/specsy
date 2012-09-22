@@ -8,15 +8,15 @@ import org.specsy.core.Context
 
 class RichContext(context: Context) {
 
-  def bootstrap(className: String, rootSpec: => Unit) {
+  def bootstrap[U](className: String, rootSpec: => U) {
     context.bootstrap(className, new ByNameClosure(rootSpec))
   }
 
-  def specify(name: String, body: => Unit) {
+  def specify[U](name: String, body: => U) {
     context.specify(name, new ByNameClosure(body))
   }
 
-  def defer(body: => Unit) {
+  def defer[U](body: => U) {
     context.defer(new ByNameClosure(body))
   }
 }

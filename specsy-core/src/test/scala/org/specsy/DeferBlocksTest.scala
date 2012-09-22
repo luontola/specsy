@@ -7,14 +7,12 @@ package org.specsy
 import org.junit.Test
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
-import collection.mutable.Buffer
 import fi.jumi.api.drivers.TestId
 import fi.jumi.core.results.NullRunVisitor
 import fi.jumi.core.runs.RunId
+import collection.mutable
 
 class DeferBlocksTest extends TestHelpers {
-
-  val spy = Buffer[String]()
 
   // Defer blocks in Specsy behave the same way as in the Go programming language.
   // See http://golang.org/doc/effective_go.html#defer
@@ -30,7 +28,7 @@ class DeferBlocksTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("spec", "defer")))
+    assertSpyContains("spec", "defer")
   }
 
   @Test
@@ -49,7 +47,7 @@ class DeferBlocksTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("child defer", "root defer")))
+    assertSpyContains("child defer", "root defer")
   }
 
   @Test
@@ -65,7 +63,7 @@ class DeferBlocksTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("second defer", "first defer")))
+    assertSpyContains("second defer", "first defer")
   }
 
   @Test
@@ -82,7 +80,7 @@ class DeferBlocksTest extends TestHelpers {
       })
     })
 
-    val failures = Buffer[Throwable]()
+    val failures = mutable.Buffer[Throwable]()
     results.visitAllRuns(new NullRunVisitor {
       override def onFailure(runId: RunId, testClass: String, testId: TestId, cause: Throwable) {
         failures.append(cause)
@@ -108,7 +106,7 @@ class DeferBlocksTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("root defer")))
+    assertSpyContains("root defer")
   }
 
 

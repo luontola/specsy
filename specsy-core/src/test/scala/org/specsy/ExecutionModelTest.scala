@@ -5,13 +5,8 @@
 package org.specsy
 
 import org.junit.Test
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers._
-import collection.mutable.Buffer
 
 class ExecutionModelTest extends TestHelpers {
-
-  val spy = Buffer[String]()
 
   @Test
   def there_is_one_root_spec() {
@@ -21,7 +16,7 @@ class ExecutionModelTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("root")))
+    assertSpyContains("root")
   }
 
   @Test
@@ -40,7 +35,7 @@ class ExecutionModelTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("root", "A", "AA")))
+    assertSpyContains("root", "A", "AA")
   }
 
   @Test
@@ -58,7 +53,7 @@ class ExecutionModelTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("root", "A", "root", "B")))
+    assertSpyContains("root", "A", "root", "B")
   }
 
   @Test
@@ -80,7 +75,7 @@ class ExecutionModelTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("A", "B", "C", "D")))
+    assertSpyContains("A", "B", "C", "D")
   }
 
   @Test
@@ -100,7 +95,7 @@ class ExecutionModelTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("A1", "B1")))
+    assertSpyContains("A1", "B1")
   }
 
   @Test
@@ -120,6 +115,6 @@ class ExecutionModelTest extends TestHelpers {
       })
     })
 
-    assertThat(spy, is(Buffer("A0", "B1")))
+    assertSpyContains("A0", "B1")
   }
 }
