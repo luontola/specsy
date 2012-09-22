@@ -10,6 +10,7 @@ import org.hamcrest.Matchers._
 import org.specsy.core._
 
 class ExecuteOrPostponeTest {
+
   @Test
   def specs_are_executed_when_on_target_path() {
     val currentPath = Path.of()
@@ -46,15 +47,15 @@ class ExecuteOrPostponeTest {
   }
 
   private def shouldExecute(currentPath: Path, targetPath: Path) {
-    shouldExecuteOrPostpone(currentPath, targetPath, true, false)
+    shouldExecuteOrPostpone(currentPath, targetPath, shouldExecute = true, shouldPostpone = false)
   }
 
   private def shouldPostpone(currentPath: Path, targetPath: Path) {
-    shouldExecuteOrPostpone(currentPath, targetPath, false, true)
+    shouldExecuteOrPostpone(currentPath, targetPath, shouldExecute = false, shouldPostpone = true)
   }
 
   private def shouldIgnore(currentPath: Path, targetPath: Path) {
-    shouldExecuteOrPostpone(currentPath, targetPath, false, false)
+    shouldExecuteOrPostpone(currentPath, targetPath, shouldExecute = false, shouldPostpone = false)
   }
 
   private def shouldExecuteOrPostpone(currentPath: Path, targetPath: Path, shouldExecute: Boolean, shouldPostpone: Boolean) {

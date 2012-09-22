@@ -8,23 +8,10 @@ import org.junit.Test
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
 import collection.mutable.Buffer
-import org.specsy.core._
-import fi.jumi.core.testbench.{StubDriverFinder, TestBench}
-import fi.jumi.api.drivers.{SuiteNotifier, Driver}
-import java.util.concurrent.Executor
 
-class ShareSideEffectsTest {
+class ShareSideEffectsTest extends TestHelpers {
+
   val spy = Buffer[String]()
-
-  private def runSpec(spec: Context => Unit): Any = {
-    val bench = new TestBench()
-    bench.setDriverFinder(new StubDriverFinder(new Driver {
-      def findTests(testClass: Class[_], notifier: SuiteNotifier, executor: Executor) {
-        executor.execute(new SpecRun(new SpecAdapter(spec), notifier, executor))
-      }
-    }))
-    bench.run(getClass)
-  }
 
   @Test
   def children_are_affected() {

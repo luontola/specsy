@@ -7,27 +7,14 @@ package org.specsy
 import org.junit.Test
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
-import org.specsy.core._
 import collection.mutable.Buffer
-import fi.jumi.core.testbench.{StubDriverFinder, TestBench}
-import fi.jumi.api.drivers.{TestId, SuiteNotifier, Driver}
-import java.util.concurrent.Executor
-import fi.jumi.core.results.{NullRunVisitor, SuiteEventDemuxer}
+import fi.jumi.api.drivers.TestId
+import fi.jumi.core.results.NullRunVisitor
 import fi.jumi.core.runs.RunId
 
-class DeferBlocksTest {
+class DeferBlocksTest extends TestHelpers {
 
   val spy = Buffer[String]()
-
-  private def runSpec(spec: Context => Unit): SuiteEventDemuxer = {
-    val bench = new TestBench()
-    bench.setDriverFinder(new StubDriverFinder(new Driver {
-      def findTests(testClass: Class[_], notifier: SuiteNotifier, executor: Executor) {
-        executor.execute(new SpecRun(new SpecAdapter(spec), notifier, executor))
-      }
-    }))
-    bench.run(getClass)
-  }
 
   // Defer blocks in Specsy behave the same way as in the Go programming language.
   // See http://golang.org/doc/effective_go.html#defer
@@ -83,13 +70,6 @@ class DeferBlocksTest {
 
   @Test
   def all_defer_blocks_are_executed_despite_exceptions_and_all_exceptions_are_reported() {
-    // XXX: We cannot throw the exception directly in the block passed to defer, because
-    // exception throwing has a type Nothing, which can be passed as a `Closure`,
-    // which in turn results in the the eager `defer(Closure)` instead of `defer(=>Unit)`.
-    def fail(message: String) {
-      throw new Throwable(message)
-    }
-
     val results = runSpec(c => {
       c.bootstrap("root", {
         c.defer {
@@ -123,11 +103,19 @@ class DeferBlocksTest {
         }
 
         c.specify("child", {
-          throw new AssertionError()
+          fail("child")
         })
       })
     })
 
     assertThat(spy, is(Buffer("root defer")))
+  }
+
+
+  // XXX: We cannot throw the exception directly in the block passed to defer, because
+  // exception throwing has a type Nothing, which can be passed as a `Closure`,
+  // which in turn results in the the eager `defer(Closure)` instead of `defer(=>Unit)`.
+  private def fail(message: String) {
+    throw new Throwable(message)
   }
 }

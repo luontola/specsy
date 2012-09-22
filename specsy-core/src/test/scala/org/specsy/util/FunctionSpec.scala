@@ -2,8 +2,12 @@
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
-package org.specsy
+package org.specsy.util
 
-package object core {
-  implicit def Context_to_RichContext(context: Context): RichContext = new RichContext(context)
+import org.specsy.core.{Spec, Context}
+
+class FunctionSpec(spec: Context => Unit) extends Spec {
+  def run(context: Context) {
+    spec(context)
+  }
 }

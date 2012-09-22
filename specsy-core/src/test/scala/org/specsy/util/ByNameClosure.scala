@@ -2,10 +2,12 @@
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
-package org.specsy.core
+package org.specsy.util
 
-class SpecAdapter(spec: Context => Unit) extends Spec {
-  def run(context: Context) {
-    spec(context)
+import org.specsy.core.Closure
+
+class ByNameClosure(body: => Unit) extends Closure {
+  def run() {
+    body
   }
 }
