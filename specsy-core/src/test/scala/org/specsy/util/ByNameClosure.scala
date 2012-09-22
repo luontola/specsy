@@ -6,8 +6,8 @@ package org.specsy.util
 
 import org.specsy.core.Closure
 
-class ByNameClosure(body: => Unit) extends Closure {
+class ByNameClosure(closure: => Unit) extends Closure {
   def run() {
-    body
+    closure
   }
 }

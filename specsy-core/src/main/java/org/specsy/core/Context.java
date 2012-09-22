@@ -46,11 +46,11 @@ public class Context {
         current = new SpecDeclaration(name, null, Path.ROOT, targetPath);
     }
 
-    public void specify(String name, Closure body) {
+    public void specify(String name, Closure spec) {
         assertStatusIs(RUNNING);
 
         enterSpec(name);
-        processSpec(body);
+        processSpec(spec);
         exitSpec();
     }
 
@@ -58,9 +58,9 @@ public class Context {
         current = current.nextChild(name);
     }
 
-    private void processSpec(Closure body) {
+    private void processSpec(Closure spec) {
         if (current.shouldExecute()) {
-            execute(body);
+            execute(spec);
         }
         if (current.shouldPostpone()) {
             postponed.add(current.path());
@@ -73,11 +73,11 @@ public class Context {
 
     // executing
 
-    private void execute(Closure body) {
+    private void execute(Closure spec) {
         notifier.fireTestFound(current.path().toTestId(), current.name());
         TestNotifier tn = notifier.fireTestStarted(current.path().toTestId());
 
-        executeSafely(body, tn);
+        executeSafely(spec, tn);
         for (Closure deferBlock : current.deferred()) {
             executeSafely(deferBlock, tn);
         }
@@ -85,9 +85,9 @@ public class Context {
         tn.fireTestFinished();
     }
 
-    private void executeSafely(Closure body, TestNotifier tn) {
+    private void executeSafely(Closure closure, TestNotifier tn) {
         try {
-            body.run();
+            closure.run();
         } catch (Throwable t) {
             tn.fireFailure(t);
         }
@@ -101,8 +101,8 @@ public class Context {
 
     // deferring
 
-    public void defer(Closure body) {
-        current.addDefer(body);
+    public void defer(Closure block) {
+        current.addDefer(block);
     }
 
     public Iterable<Path> postponedPaths() {

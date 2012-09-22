@@ -61,8 +61,8 @@ public class SpecDeclaration {
 
     // deferring
 
-    public void addDefer(Closure body) {
-        deferred.addFirst(body);
+    public void addDefer(Closure block) {
+        deferred.addFirst(block);
     }
 
     public Iterable<Closure> deferred() {

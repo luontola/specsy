@@ -12,11 +12,11 @@ class RichContext(context: Context) {
     context.bootstrap(className, new ByNameClosure(rootSpec))
   }
 
-  def specify[U](name: String, body: => U) {
-    context.specify(name, new ByNameClosure(body))
+  def specify[U](name: String, spec: => U) {
+    context.specify(name, new ByNameClosure(spec))
   }
 
-  def defer[U](body: => U) {
-    context.defer(new ByNameClosure(body))
+  def defer[U](block: => U) {
+    context.defer(new ByNameClosure(block))
   }
 }

@@ -22,8 +22,8 @@ trait ScalaSpecsy {
    * Defers the execution of a piece of code until the end of the current spec.
    * All deferred closures will be executed in LIFO order when the current spec exits.
    */
-  def defer(body: => Unit) {
-    context.defer(new ClosureAdapter(body))
+  def defer(block: => Unit) {
+    context.defer(new ByNameClosure(block))
   }
 
   protected implicit def String_to_NestedSpec(name: String): NestedSpec = new NestedSpec(name)
@@ -32,14 +32,14 @@ trait ScalaSpecsy {
     /**
      * Declares a child spec.
      */
-    def >>(body: => Unit) {
-      context.specify(name, new ClosureAdapter(body))
+    def >>(spec: => Unit) {
+      context.specify(name, new ByNameClosure(spec))
     }
   }
 }
 
-private class ClosureAdapter(body: => Unit) extends Closure {
+private class ByNameClosure(closure: => Unit) extends Closure {
   def run() {
-    body
+    closure
   }
 }
