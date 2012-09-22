@@ -25,7 +25,7 @@ class SpecClassRunner(testClass: Class[_], notifier: SuiteNotifier, executor: Ex
   }
 
   private def runSpec(spec: Context => Unit) {
-    val runner = new SpecRun(spec, notifier, executor)
+    val runner = new SpecRun(new SpecAdapter(spec), notifier, executor)
     runner.run()
   }
 }

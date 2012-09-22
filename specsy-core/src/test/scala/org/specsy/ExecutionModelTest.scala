@@ -20,7 +20,7 @@ class ExecutionModelTest {
     val bench = new TestBench()
     bench.setDriverFinder(new StubDriverFinder(new Driver {
       def findTests(testClass: Class[_], notifier: SuiteNotifier, executor: Executor) {
-        executor.execute(new SpecRun(spec, notifier, executor))
+        executor.execute(new SpecRun(new SpecAdapter(spec), notifier, executor))
       }
     }))
     bench.run(getClass)
