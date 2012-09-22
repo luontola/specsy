@@ -22,7 +22,7 @@ public class Context {
     private final SuiteNotifier notifier;
 
     private Status status = NOT_STARTED;
-    private SpecDeclaration current = null;
+    private SpecContext current = null;
     private final List<Path> postponed = new ArrayList<>();
 
     public Context(Path targetPath, SuiteNotifier notifier) {
@@ -43,7 +43,7 @@ public class Context {
     }
 
     private void enterRootSpec(String name) {
-        current = new SpecDeclaration(name, null, Path.ROOT, targetPath);
+        current = new SpecContext(name, null, Path.ROOT, targetPath);
     }
 
     public void specify(String name, Closure spec) {

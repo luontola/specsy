@@ -59,7 +59,7 @@ class ExecuteOrPostponeTest {
   }
 
   private def shouldExecuteOrPostpone(currentPath: Path, targetPath: Path, shouldExecute: Boolean, shouldPostpone: Boolean) {
-    val spec = new SpecDeclaration(null, null, currentPath, targetPath)
+    val spec = new SpecContext(null, null, currentPath, targetPath)
     assertThat("shouldExecute", spec.shouldExecute, is(shouldExecute))
     assertThat("shouldPostpone", spec.shouldPostpone, is(shouldPostpone))
   }

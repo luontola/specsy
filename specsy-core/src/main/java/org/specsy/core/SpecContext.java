@@ -6,10 +6,10 @@ package org.specsy.core;
 
 import java.util.*;
 
-public class SpecDeclaration {
+public class SpecContext {
 
     private final String name;
-    private final SpecDeclaration parent;
+    private final SpecContext parent;
     private final Path path;
     private final Path targetPath;
 
@@ -17,7 +17,7 @@ public class SpecDeclaration {
     private boolean shareSideEffects;
     private final Deque<Closure> deferred = new ArrayDeque<>();
 
-    public SpecDeclaration(String name, SpecDeclaration parent, Path path, Path targetPath) {
+    public SpecContext(String name, SpecContext parent, Path path, Path targetPath) {
         this.name = name;
         this.parent = parent;
         this.path = path;
@@ -33,12 +33,12 @@ public class SpecDeclaration {
         return path;
     }
 
-    public SpecDeclaration parent() {
+    public SpecContext parent() {
         return parent;
     }
 
-    public SpecDeclaration nextChild(String childName) {
-        return new SpecDeclaration(childName, this, pathOfNextChild(), targetPath);
+    public SpecContext nextChild(String childName) {
+        return new SpecContext(childName, this, pathOfNextChild(), targetPath);
     }
 
     private Path pathOfNextChild() {
