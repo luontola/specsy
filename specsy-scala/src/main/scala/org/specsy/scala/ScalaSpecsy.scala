@@ -11,11 +11,15 @@ trait ScalaSpecsy {
 
   private val context = ContextDealer.take()
 
-  /**
-   * Makes all child specs of the current spec able to see each other's side-effects.
-   */
-  def shareSideEffects() {
-    context.shareSideEffects()
+  protected implicit def String_to_NestedSpec(name: String): NestedSpec = new NestedSpec(name)
+
+  protected class NestedSpec(name: String) {
+    /**
+     * Declares a child spec.
+     */
+    def >>(spec: => Unit) {
+      context.specify(name, new ScalaClosure(spec))
+    }
   }
 
   /**
@@ -26,15 +30,11 @@ trait ScalaSpecsy {
     context.defer(new ScalaClosure(block))
   }
 
-  protected implicit def String_to_NestedSpec(name: String): NestedSpec = new NestedSpec(name)
-
-  protected class NestedSpec(name: String) {
-    /**
-     * Declares a child spec.
-     */
-    def >>(spec: => Unit) {
-      context.specify(name, new ScalaClosure(spec))
-    }
+  /**
+   * Makes all child specs of the current spec able to see each other's side-effects.
+   */
+  def shareSideEffects() {
+    context.shareSideEffects()
   }
 }
 
