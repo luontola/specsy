@@ -4,42 +4,67 @@
 
 package org.specsy.bootstrap
 
-import org.junit.Test
-import fi.jumi.core.runs.{RunId, RunIdSequence, DefaultSuiteNotifier}
-import fi.jumi.actors.ActorRef
+import org.junit.{Before, Test}
+import fi.jumi.core.runs.RunId
 import fi.jumi.core.runners.TestClassListener
 import fi.jumi.api.drivers.TestId
-import fi.jumi.core.util.SpyListener
-import org.apache.commons.io.output.NullOutputStream
-import java.nio.charset.StandardCharsets
-import fi.jumi.core.output.OutputCapturer
-import org.specsy.core.SpecRun
+import org.specsy.core.{Path, Context, Closure}
+import org.specsy.GlobalSpy
+import org.mockito.Mockito._
+import org.mockito.Matchers.{eq => is, _}
+import org.specsy.util.FakeSuiteNotifier
 
 class ClassSpecTest {
 
+  private val listener = mock(classOf[TestClassListener])
+  private val notifier = new FakeSuiteNotifier(listener)
+  private val context = new Context(Path.ROOT, notifier)
+
+  @Before
+  def resetSpy() {
+    GlobalSpy.reset()
+  }
+
   @Test
-  def exceptions_thrown_by_the_root_spec_are_not_wrapped_in_InvocationTargetException() {
-    val spy = new SpyListener(classOf[TestClassListener])
-    val listener = spy.getListener
-    val capturer = new OutputCapturer(new NullOutputStream, new NullOutputStream, StandardCharsets.UTF_8)
-    val notifier = new DefaultSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), capturer)
-    val runner = new SpecRun(new ClassSpec(classOf[DummySpecWhoseRootThrowsAnException]), notifier, null)
+  def passes_the_context_to_the_spec_through_ContextDealer() {
+    runSpec(classOf[ContextAcquiringSpec])
 
-    listener.onTestFound(TestId.ROOT, "DummySpecWhoseRootThrowsAnException")
-    listener.onRunStarted(new RunId(1))
-    listener.onTestStarted(new RunId(1), TestId.ROOT)
+    GlobalSpy.assertContains("context: " + context)
+  }
 
-    // TODO: this is the thing we are interested in; refactor this test to make it clear
-    listener.onFailure(new RunId(1), TestId.ROOT, new AssertionError("exception in root"))
+  @Test
+  def exceptions_thrown_by_the_constructor_are_not_wrapped_in_InvocationTargetException() {
+    runSpec(classOf[ExceptionFromConstructorSpec])
 
-    listener.onTestFinished(new RunId(1), TestId.ROOT)
-    listener.onRunFinished(new RunId(1))
-    spy.replay()
-    runner.run()
-    spy.verify()
+    verify(listener).onFailure(is(new RunId(1)), is(TestId.ROOT), isA(classOf[DummyException]))
+  }
+
+  @Test
+  def executes_the_run_method_of_specs_implementing_Closure() {
+    runSpec(classOf[ClosureImplementingSpec])
+
+    GlobalSpy.assertContains("run executed")
+  }
+
+  private def runSpec(testClass: Class[_]) {
+    val spec = new ClassSpec(testClass)
+    spec.run(context)
   }
 }
 
-class DummySpecWhoseRootThrowsAnException {
-  throw new AssertionError("exception in root")
+class ContextAcquiringSpec {
+  val context = ContextDealer.take()
+  GlobalSpy.add("context: " + context)
+}
+
+class ExceptionFromConstructorSpec {
+  throw new DummyException()
+}
+
+class DummyException extends RuntimeException
+
+class ClosureImplementingSpec extends Closure {
+  def run() {
+    GlobalSpy.add("run executed")
+  }
 }

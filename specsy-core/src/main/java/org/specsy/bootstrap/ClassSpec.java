@@ -22,10 +22,14 @@ public class ClassSpec implements Spec {
             @Override
             public void run() throws Throwable {
                 ContextDealer.prepare(context);
+                Object spec;
                 try {
-                    testClass.getConstructor().newInstance();
+                    spec = testClass.getConstructor().newInstance();
                 } catch (InvocationTargetException e) {
                     throw e.getTargetException();
+                }
+                if (spec instanceof Closure) {
+                    ((Closure) spec).run();
                 }
             }
         });

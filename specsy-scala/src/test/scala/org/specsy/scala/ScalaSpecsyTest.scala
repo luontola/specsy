@@ -8,12 +8,12 @@ import org.specsy.{GlobalSpy, SpecsyContract, Specsy}
 import fi.jumi.api.RunVia
 
 class ScalaSpecsyTest extends SpecsyContract {
-  val testClass = classOf[DummyScalaSpecsyTest]
+  val testClass = classOf[DummyScalaSpec]
 }
 
 @RunVia(classOf[Specsy])
-class DummyScalaSpecsyTest extends ScalaSpecsy {
-  var i = 0
+class DummyScalaSpec extends ScalaSpecsy {
+  var counter = 0
 
   "name of a spec" >> {
     GlobalSpy.add("spec executed")
@@ -30,22 +30,22 @@ class DummyScalaSpecsyTest extends ScalaSpecsy {
 
   "isolated" >> {
     "mutation 1" >> {
-      i += 1
+      counter += 1
     }
     "mutation 2" >> {
-      i += 1
+      counter += 1
     }
-    GlobalSpy.add("isolated: " + i)
+    GlobalSpy.add("isolated: " + counter)
   }
 
   "non-isolated" >> {
     shareSideEffects()
     "mutation 1" >> {
-      i += 1
+      counter += 1
     }
     "mutation 2" >> {
-      i += 1
+      counter += 1
     }
-    GlobalSpy.add("non-isolated: " + i)
+    GlobalSpy.add("non-isolated: " + counter)
   }
 }

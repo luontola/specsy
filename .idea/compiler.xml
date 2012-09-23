@@ -26,6 +26,7 @@
         <module name="project" />
         <module name="specsy-core" />
         <module name="specsy-examples" />
+        <module name="specsy-java" />
         <module name="specsy-scala" />
       </profile>
     </annotationProcessing>
@@ -34,6 +35,7 @@
       <module name="project" target="1.7" />
       <module name="specsy-core" target="1.7" />
       <module name="specsy-examples" target="1.7" />
+      <module name="specsy-java" target="1.7" />
       <module name="specsy-scala" target="1.7" />
     </bytecodeTargetLevel>
   </component>
