@@ -26,6 +26,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
+    <prerequisites>
+        <maven>3.0.4</maven>
+    </prerequisites>
+
     <licenses>
         <license>
             <name>Apache License 2.0</name>
@@ -163,7 +167,6 @@
 
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -172,7 +175,6 @@
 
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.8.1</version>
                 <configuration>
                     <includes>
                         <include>**/*Test.class</include>
@@ -184,7 +186,6 @@
 
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -202,6 +203,51 @@
             <plugins>
 
                 <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.8.1</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.3.1</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.1</version>
+                </plugin>
+
+                <plugin>
                     <groupId>org.scala-tools</groupId>
                     <artifactId>maven-scala-plugin</artifactId>
                     <version>2.15.2</version>
@@ -210,6 +256,12 @@
                             <jvmArg>-Xmx512m</jvmArg>
                         </jvmArgs>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>0.28</version>
                 </plugin>
 
             </plugins>
@@ -224,7 +276,6 @@
                     <plugin>
                         <groupId>org.pitest</groupId>
                         <artifactId>pitest-maven</artifactId>
-                        <version>0.28</version>
                         <executions>
                             <execution>
                                 <goals>
