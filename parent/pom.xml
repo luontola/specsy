@@ -216,4 +216,47 @@
         </pluginManagement>
     </build>
 
+    <profiles>
+        <profile>
+            <id>coverage-report</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <version>0.28</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>mutationCoverage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <threads>4</threads>
+                            <jvmArgs>
+                                <arg>-ea</arg>
+                                <!-- XXX: PIT doesn't generate correct stack map frames for Java 7 -->
+                                <arg>-XX:-UseSplitVerifier</arg>
+                            </jvmArgs>
+                            <targetClasses>
+                                <pattern>org.specsy.*</pattern>
+                            </targetClasses>
+                            <targetTests>
+                                <pattern>org.specsy.*</pattern>
+                            </targetTests>
+                            <failWhenNoMutations>false</failWhenNoMutations>
+                            <timestampedReports>false</timestampedReports>
+                            <mutators>
+                                <mutator>ALL</mutator>
+                            </mutators>
+                            <detectInlinedCode>true</detectInlinedCode>
+                            <mutateStaticInitializers>true</mutateStaticInitializers>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
