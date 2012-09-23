@@ -19,8 +19,9 @@ public class ExamplesBootstrapTest {
     // TODO: remove this boostrap when Jumi can be run without it
 
     private static final boolean DEBUG = false;
+    private static final long TIMEOUT = 15 * 1000;
 
-    @Test
+    @Test(timeout = TIMEOUT)
     public void run_using_Jumi() throws Exception {
         List<Class<? extends ScalaSpecsy>> testClasses = Arrays.asList(
                 DeferBlocksExample2Spec.class,
