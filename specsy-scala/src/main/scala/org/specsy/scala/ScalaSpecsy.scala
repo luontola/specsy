@@ -23,7 +23,7 @@ trait ScalaSpecsy {
    * All deferred closures will be executed in LIFO order when the current spec exits.
    */
   def defer(block: => Unit) {
-    context.defer(new ByNameClosure(block))
+    context.defer(new ScalaClosure(block))
   }
 
   protected implicit def String_to_NestedSpec(name: String): NestedSpec = new NestedSpec(name)
@@ -33,12 +33,12 @@ trait ScalaSpecsy {
      * Declares a child spec.
      */
     def >>(spec: => Unit) {
-      context.specify(name, new ByNameClosure(spec))
+      context.specify(name, new ScalaClosure(spec))
     }
   }
 }
 
-private class ByNameClosure(closure: => Unit) extends Closure {
+private class ScalaClosure(closure: => Unit) extends Closure {
   def run() {
     closure
   }

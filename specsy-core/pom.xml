@@ -22,25 +22,6 @@
             <artifactId>jumi-api</artifactId>
         </dependency>
 
-        <!-- Testing / Jumi -->
-
-        <dependency>
-            <groupId>fi.jumi</groupId>
-            <artifactId>jumi-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>fi.jumi</groupId>
-            <artifactId>jumi-core</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!-- Testing / Scala -->
 
         <!-- XXX: cannot use `test` scope because otherwise IDEA cannot compile the tests -->
@@ -59,6 +40,18 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-tests</id>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.scala-tools</groupId>

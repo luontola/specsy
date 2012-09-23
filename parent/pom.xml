@@ -52,6 +52,8 @@
 
     <dependencies>
 
+        <!-- Testing -->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
@@ -70,6 +72,26 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Integration Testing with Jumi -->
+
+        <dependency>
+            <groupId>fi.jumi</groupId>
+            <artifactId>jumi-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>fi.jumi</groupId>
+            <artifactId>jumi-core</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -80,6 +102,13 @@
                 <artifactId>specsy-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.specsy</groupId>
+                <artifactId>specsy-core</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+            </dependency>
+
             <dependency>
                 <groupId>org.specsy</groupId>
                 <artifactId>specsy-scala</artifactId>
@@ -93,6 +122,7 @@
                 <artifactId>jumi-api</artifactId>
                 <version>0.1.196</version>
             </dependency>
+
             <dependency>
                 <groupId>fi.jumi</groupId>
                 <artifactId>jumi-core</artifactId>

@@ -20,6 +20,13 @@
             <artifactId>specsy-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.specsy</groupId>
+            <artifactId>specsy-core</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Scala -->
 
         <!-- TODO: separate modules for each Scala version, but with shared source directories -->
