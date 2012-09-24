@@ -7,12 +7,7 @@ package org.specsy.util
 import fi.jumi.core.runs.{RunIdSequence, DefaultSuiteNotifier}
 import fi.jumi.core.runners.TestClassListener
 import fi.jumi.actors.ActorRef
-import fi.jumi.core.output.OutputCapturer
-import org.apache.commons.io.output.NullOutputStream
-import java.nio.charset.StandardCharsets
 
 class FakeSuiteNotifier(listener: TestClassListener)
-        extends DefaultSuiteNotifier(
-          ActorRef.wrap(listener),
-          new RunIdSequence(),
-          new OutputCapturer(new NullOutputStream, new NullOutputStream, StandardCharsets.UTF_8))
+        extends DefaultSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), new SilentOutputCapturer())
+
