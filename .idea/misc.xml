@@ -28,7 +28,10 @@
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/specsy-scala_2.10.0-M7/pom.xml" />
+        <option value="$PROJECT_DIR$/specsy-scala_2.10/pom.xml" />
+        <option value="$PROJECT_DIR$/specsy-scala_2.7/pom.xml" />
+        <option value="$PROJECT_DIR$/specsy-scala_2.8/pom.xml" />
+        <option value="$PROJECT_DIR$/specsy-scala_2.9/pom.xml" />
       </set>
     </option>
   </component>
