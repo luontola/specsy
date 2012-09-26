@@ -4,12 +4,8 @@
 
 package org.specsy.scala
 
-import org.specsy.{GlobalSpy, SpecsyContract, Specsy}
+import org.specsy.{GlobalSpy, Specsy}
 import fi.jumi.api.RunVia
-
-class ScalaSpecsyTest extends SpecsyContract {
-  val testClass = classOf[DummyScalaSpec]
-}
 
 @RunVia(classOf[Specsy])
 class DummyScalaSpec extends ScalaSpecsy {
