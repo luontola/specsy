@@ -8,7 +8,6 @@ import fi.jumi.core.config.*;
 import fi.jumi.launcher.*;
 import fi.jumi.launcher.ui.*;
 import org.junit.Test;
-import org.specsy.scala.ScalaSpecsy;
 
 import java.io.*;
 import java.nio.file.*;
@@ -23,7 +22,7 @@ public class ExamplesBootstrapTest {
 
     @Test(timeout = TIMEOUT)
     public void run_using_Jumi() throws Exception {
-        List<Class<? extends ScalaSpecsy>> testClasses = Arrays.asList(
+        List<Class<?>> testClasses = Arrays.<Class<?>>asList(
                 DeferBlocksExample2Spec.class,
                 DeferBlocksExampleSpec.class,
                 EnvironmentFilterExampleSpec.class,
@@ -34,7 +33,7 @@ public class ExamplesBootstrapTest {
                 ShareSideEffectsExampleSpec.class,
                 StackSpec.class
         );
-        for (Class<? extends ScalaSpecsy> testClass : testClasses) {
+        for (Class<?> testClass : testClasses) {
             runTests(testClass);
             System.out.println();
         }
