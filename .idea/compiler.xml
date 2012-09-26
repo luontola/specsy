@@ -27,7 +27,11 @@
         <module name="specsy-core" />
         <module name="specsy-examples" />
         <module name="specsy-java" />
-        <module name="specsy-scala" />
+        <module name="specsy-scala-parent" />
+        <module name="specsy-scala_2.10.0-M7" />
+        <module name="specsy-scala_2.7.7" />
+        <module name="specsy-scala_2.8.2" />
+        <module name="specsy-scala_2.9.2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -37,6 +41,11 @@
       <module name="specsy-examples" target="1.7" />
       <module name="specsy-java" target="1.7" />
       <module name="specsy-scala" target="1.7" />
+      <module name="specsy-scala-parent" target="1.7" />
+      <module name="specsy-scala_2.10.0-M7" target="1.7" />
+      <module name="specsy-scala_2.7.7" target="1.7" />
+      <module name="specsy-scala_2.8.2" target="1.7" />
+      <module name="specsy-scala_2.9.2" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

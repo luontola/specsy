@@ -7,7 +7,11 @@
       <module fileurl="file://$PROJECT_DIR$/specsy-core/specsy-core.iml" filepath="$PROJECT_DIR$/specsy-core/specsy-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/specsy-examples/specsy-examples.iml" filepath="$PROJECT_DIR$/specsy-examples/specsy-examples.iml" />
       <module fileurl="file://$PROJECT_DIR$/specsy-java/specsy-java.iml" filepath="$PROJECT_DIR$/specsy-java/specsy-java.iml" />
-      <module fileurl="file://$PROJECT_DIR$/specsy-scala/specsy-scala.iml" filepath="$PROJECT_DIR$/specsy-scala/specsy-scala.iml" />
+      <module fileurl="file://$PROJECT_DIR$/specsy-scala-parent/specsy-scala-parent.iml" filepath="$PROJECT_DIR$/specsy-scala-parent/specsy-scala-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/specsy-scala_2.10/specsy-scala_2.10.0-M7.iml" filepath="$PROJECT_DIR$/specsy-scala_2.10/specsy-scala_2.10.0-M7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/specsy-scala_2.7/specsy-scala_2.7.7.iml" filepath="$PROJECT_DIR$/specsy-scala_2.7/specsy-scala_2.7.7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/specsy-scala_2.8/specsy-scala_2.8.2.iml" filepath="$PROJECT_DIR$/specsy-scala_2.8/specsy-scala_2.8.2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/specsy-scala_2.9/specsy-scala_2.9.2.iml" filepath="$PROJECT_DIR$/specsy-scala_2.9/specsy-scala_2.9.2.iml" />
     </modules>
   </component>
 </project>

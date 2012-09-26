@@ -10,8 +10,8 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>specsy-scala</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>specsy-scala-parent</artifactId>
+    <packaging>pom</packaging>
 
     <dependencies>
 
@@ -29,7 +29,6 @@
 
         <!-- Scala -->
 
-        <!-- TODO: separate modules for each Scala version, but with shared source directories -->
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
@@ -43,6 +42,9 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>../specsy-scala-parent/src/main/java</sourceDirectory>
+        <testSourceDirectory>../specsy-scala-parent/src/test/java</testSourceDirectory>
+
         <plugins>
 
             <plugin>
