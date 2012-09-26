@@ -10,6 +10,6 @@ public class ScalaSpecsyTest extends SpecsyContract {
 
     @Override
     public Class<?> testClass() {
-        return DummyScalaSpec.class;
+        return ScalaSpecsyExample.class;
     }
 }

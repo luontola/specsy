@@ -10,6 +10,6 @@ public class JavaSpecsyTest extends SpecsyContract {
 
     @Override
     public Class<?> testClass() {
-        return DummyJavaSpec.class;
+        return JavaSpecsyExample.class;
     }
 }

@@ -9,7 +9,7 @@ import org.specsy.*;
 import org.specsy.core.Closure;
 
 @RunVia(Specsy.class)
-public class DummyJavaSpec extends JavaSpecsy {
+public class JavaSpecsyExample extends JavaSpecsy {
 
     private int counter = 0;
 

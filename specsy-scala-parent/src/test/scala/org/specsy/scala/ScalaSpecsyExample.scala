@@ -8,7 +8,7 @@ import org.specsy.{GlobalSpy, Specsy}
 import fi.jumi.api.RunVia
 
 @RunVia(classOf[Specsy])
-class DummyScalaSpec extends ScalaSpecsy {
+class ScalaSpecsyExample extends ScalaSpecsy {
   var counter = 0
 
   "name of a spec" >> {
