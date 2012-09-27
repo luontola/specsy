@@ -2,7 +2,7 @@
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
-package org.specsy.examples
+package org.specsy.scala.examples
 
 import fi.jumi.api.RunVia
 import org.specsy.Specsy
@@ -29,7 +29,7 @@ object AcceptanceTestHelpers {
     try {
       closure
     } catch {
-      case e =>
+      case e: Throwable =>
         System.err.println("This test is pending until fixed:")
         e.printStackTrace()
         return // test is pending

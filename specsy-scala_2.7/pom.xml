@@ -17,4 +17,31 @@
         <scala.version>2.7.7</scala.version>
     </properties>
 
+    <build>
+        <plugins>
+
+            <!-- The examples use syntax and APIs which require Scala 2.8+ -->
+
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>org/specsy/scala/examples/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <testExcludes>
+                        <exclude>org/specsy/scala/examples/**</exclude>
+                    </testExcludes>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
 </project>
