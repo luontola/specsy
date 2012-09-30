@@ -15,11 +15,14 @@ class GroovySpecsyExample extends GroovySpecsy {
 
   @Override
   void run() {
+
+    // Conventional syntax
     spec("name of a spec") {
       GlobalSpy.add("spec executed")
     }
 
-    spec("defer blocks") {
+    // Shorthand syntax, using some Groovy sugar
+    spec "defer blocks", {
       defer {
         GlobalSpy.add("defer 1")
       }
@@ -28,22 +31,22 @@ class GroovySpecsyExample extends GroovySpecsy {
       }
     }
 
-    spec("isolated") {
-      spec("mutation 1") {
+    spec "isolated", {
+      spec "mutation 1", {
         counter += 1
       }
-      spec("mutation 2") {
+      spec "mutation 2", {
         counter += 1
       }
       GlobalSpy.add("isolated: " + counter)
     }
 
-    spec("non-isolated") {
+    spec "non-isolated", {
       shareSideEffects()
-      spec("mutation 1") {
+      spec "mutation 1", {
         counter += 1
       }
-      spec("mutation 2") {
+      spec "mutation 2", {
         counter += 1
       }
       GlobalSpy.add("non-isolated: " + counter)

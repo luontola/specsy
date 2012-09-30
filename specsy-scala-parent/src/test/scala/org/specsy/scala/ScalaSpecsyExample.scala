@@ -11,7 +11,7 @@ import fi.jumi.api.RunVia
 class ScalaSpecsyExample extends ScalaSpecsy {
   var counter = 0
 
-  // Conservative syntax, similar to other languages
+  // Conservative syntax
   spec("name of a spec") {
     GlobalSpy.add("spec executed")
   }
