@@ -32,6 +32,14 @@ Continue to the [documentation](documentation.html) to find out how to use Specs
 Version History
 ---------------
 
+**2.0.0 (Coming Soon!)**
+
+- Runs using the [Jumi](http://jumi.fi/) test runner, fixing all previously known issues (e.g. it now runs tests in parallel and reports test execution in real time)
+- Rewrote the core in Java to support multiple programming languages through thin language-specific frontends
+- Supports Scala, version 2.7.7 upwards
+- Supports Groovy, all versions
+- Supports Java, version 7 upwards (lambdas are recommended for more tolerable syntax noise)
+
 **1.2.0 (2011-05-17)**
 
 - Fixed the order of tests in JUnit results
@@ -57,15 +65,6 @@ Version History
 - Unlimited nested specs
 - Defer blocks
 - JUnit test runner
-
-
-### Known Issues
-
-- The tests are not yet executed in parallel (a new test runner is needed)
-- JUnit's test runner API does not support testing frameworks which do not know beforehand what tests there are, but which know it only after executing the tests, so at least IntelliJ IDEA cannot report test progress in real time (a new test runner is needed)
-- In IntelliJ IDEA's Run tool window, you should disable "Hide Passed" and enable "Select First Failed Test When Finished". Otherwise IDEA will fail to show the failed tests. This workaround works at least in IDEA 9, but IDEA 10 appears to have some more issues (a new test runner UI is needed)
-
-All of these issues will ultimately be solved when I finish creating [Jumi](http://jumi.fi/), the next *de facto* test runner for the JVM. :)
 
 
 License
