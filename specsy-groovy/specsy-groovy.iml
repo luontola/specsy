@@ -13,13 +13,13 @@
     <orderEntry type="module" module-name="specsy-core" />
     <orderEntry type="library" name="Maven: fi.jumi:jumi-api:0.1.196" level="project" />
     <orderEntry type="module" module-name="specsy-core" scope="TEST" />
-    <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy:2.0.4" level="project" />
-    <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-tree:4.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm:4.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-commons:4.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-util:4.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-analysis:4.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy:2.0.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: antlr:antlr:2.7.7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.ow2.asm:asm-tree:4.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.ow2.asm:asm:4.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.ow2.asm:asm-commons:4.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.ow2.asm:asm-util:4.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.ow2.asm:asm-analysis:4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit-dep:4.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-library:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
