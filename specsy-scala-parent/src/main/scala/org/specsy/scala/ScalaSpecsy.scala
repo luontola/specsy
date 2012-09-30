@@ -11,6 +11,13 @@ trait ScalaSpecsy {
 
   private val context = ContextDealer.take()
 
+  /**
+   * Declares a child spec.
+   */
+  def spec(name: String)(spec: => Unit) {
+    context.spec(name, new ScalaClosure(spec))
+  }
+
   protected implicit def String_to_NestedSpec(name: String): NestedSpec = new NestedSpec(name)
 
   protected class NestedSpec(name: String) {

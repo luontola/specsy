@@ -11,10 +11,12 @@ import fi.jumi.api.RunVia
 class ScalaSpecsyExample extends ScalaSpecsy {
   var counter = 0
 
-  "name of a spec" >> {
+  // Conservative syntax, similar to other languages
+  spec("name of a spec") {
     GlobalSpy.add("spec executed")
   }
 
+  // Shorthand syntax, using some Scala magic
   "defer blocks" >> {
     defer {
       GlobalSpy.add("defer 1")
