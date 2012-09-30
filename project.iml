@@ -4,6 +4,10 @@
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/specsy-scala_2.10/target" />
+      <excludeFolder url="file://$MODULE_DIR$/specsy-scala_2.7/target" />
+      <excludeFolder url="file://$MODULE_DIR$/specsy-scala_2.8/target" />
+      <excludeFolder url="file://$MODULE_DIR$/specsy-scala_2.9/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
