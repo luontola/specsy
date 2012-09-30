@@ -21,7 +21,7 @@ public abstract class JavaSpecsy implements Closure {
      * Declares a child spec.
      */
     public void spec(String name, Closure spec) {
-        context.specify(name, spec);
+        context.spec(name, spec);
     }
 
     /**

@@ -15,10 +15,10 @@ class ShareSideEffectsTest extends TestHelpers {
         c.shareSideEffects()
         spy.append("root")
 
-        c.specify("child A", {
+        c.spec("child A", {
           spy.append("A")
         })
-        c.specify("child A", {
+        c.spec("child A", {
           spy.append("B")
         })
       })
@@ -34,13 +34,13 @@ class ShareSideEffectsTest extends TestHelpers {
         c.shareSideEffects()
         spy.append("root")
 
-        c.specify("child A", {
+        c.spec("child A", {
           spy.append("A")
 
-          c.specify("child AA", {
+          c.spec("child AA", {
             spy.append("AA")
           })
-          c.specify("child AB", {
+          c.spec("child AB", {
             spy.append("AB")
           })
         })
@@ -56,11 +56,11 @@ class ShareSideEffectsTest extends TestHelpers {
       c.bootstrap("root", {
         spy.append("root")
 
-        c.specify("child A", {
+        c.spec("child A", {
           c.shareSideEffects()
           spy.append("A")
         })
-        c.specify("child B", {
+        c.spec("child B", {
           spy.append("B")
         })
       })

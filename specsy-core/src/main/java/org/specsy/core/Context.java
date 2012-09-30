@@ -46,7 +46,7 @@ public class Context {
         current = new SpecContext(name, null, Path.ROOT, targetPath);
     }
 
-    public void specify(String name, Closure spec) {
+    public void spec(String name, Closure spec) {
         assertStatusIs(RUNNING);
 
         enterSpec(name);

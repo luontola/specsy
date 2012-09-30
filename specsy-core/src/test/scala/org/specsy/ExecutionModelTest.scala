@@ -25,10 +25,10 @@ class ExecutionModelTest extends TestHelpers {
       c.bootstrap("root", {
         spy.append("root")
 
-        c.specify("child A", {
+        c.spec("child A", {
           spy.append("A")
 
-          c.specify("child AA", {
+          c.spec("child AA", {
             spy.append("AA")
           })
         })
@@ -44,10 +44,10 @@ class ExecutionModelTest extends TestHelpers {
       c.bootstrap("root", {
         spy.append("root")
 
-        c.specify("child A", {
+        c.spec("child A", {
           spy.append("A")
         })
-        c.specify("child B", {
+        c.spec("child B", {
           spy.append("B")
         })
       })
@@ -60,16 +60,16 @@ class ExecutionModelTest extends TestHelpers {
   def in_single_threaded_mode_the_child_specs_are_executed_in_declaration_order() {
     runSpec(c => {
       c.bootstrap("root", {
-        c.specify("child A", {
+        c.spec("child A", {
           spy.append("A")
         })
-        c.specify("child B", {
+        c.spec("child B", {
           spy.append("B")
         })
-        c.specify("child C", {
+        c.spec("child C", {
           spy.append("C")
         })
-        c.specify("child D", {
+        c.spec("child D", {
           spy.append("D")
         })
       })
@@ -84,11 +84,11 @@ class ExecutionModelTest extends TestHelpers {
       c.bootstrap("root", {
         var i = 0
 
-        c.specify("child A", {
+        c.spec("child A", {
           i += 1
           spy.append("A" + i)
         })
-        c.specify("child B", {
+        c.spec("child B", {
           i += 1
           spy.append("B" + i)
         })
@@ -104,12 +104,12 @@ class ExecutionModelTest extends TestHelpers {
       c.bootstrap("root", {
         var i = 0
 
-        c.specify("child A", {
+        c.spec("child A", {
           spy.append("A" + i)
         })
         i += 1
 
-        c.specify("child B", {
+        c.spec("child B", {
           spy.append("B" + i)
         })
       })

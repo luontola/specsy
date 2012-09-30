@@ -39,7 +39,7 @@ class DeferBlocksTest extends TestHelpers {
           spy.append("root defer")
         }
 
-        c.specify("child", {
+        c.spec("child", {
           c.defer {
             spy.append("child defer")
           }
@@ -100,7 +100,7 @@ class DeferBlocksTest extends TestHelpers {
           spy.append("root defer")
         }
 
-        c.specify("child", {
+        c.spec("child", {
           fail("child")
         })
       })

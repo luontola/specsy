@@ -18,7 +18,7 @@ trait ScalaSpecsy {
      * Declares a child spec.
      */
     def >>(spec: => Unit) {
-      context.specify(name, new ScalaClosure(spec))
+      context.spec(name, new ScalaClosure(spec))
     }
   }
 
