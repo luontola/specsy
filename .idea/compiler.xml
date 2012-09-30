@@ -25,6 +25,7 @@
         <module name="parent" />
         <module name="project" />
         <module name="specsy-core" />
+        <module name="specsy-groovy" />
         <module name="specsy-java" />
         <module name="specsy-scala-parent" />
       </profile>
@@ -34,6 +35,7 @@
       <module name="project" target="1.7" />
       <module name="specsy-core" target="1.7" />
       <module name="specsy-examples" target="1.7" />
+      <module name="specsy-groovy" target="1.7" />
       <module name="specsy-java" target="1.7" />
       <module name="specsy-scala" target="1.7" />
       <module name="specsy-scala-parent" target="1.7" />
