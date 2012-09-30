@@ -30,6 +30,7 @@ public class Context {
         this.notifier = notifier;
     }
 
+
     // control flow
 
     public void bootstrap(String className, Closure rootSpec) {
@@ -71,6 +72,7 @@ public class Context {
         current = current.parent();
     }
 
+
     // executing
 
     private void execute(Closure spec) {
@@ -93,11 +95,6 @@ public class Context {
         }
     }
 
-    // side-effects
-
-    public void shareSideEffects() {
-        current.shareSideEffects();
-    }
 
     // deferring
 
@@ -109,6 +106,14 @@ public class Context {
         assertStatusIs(FINISHED);
         return Collections.unmodifiableCollection(postponed);
     }
+
+
+    // sharing side-effects
+
+    public void shareSideEffects() {
+        current.shareSideEffects();
+    }
+
 
     // status
 

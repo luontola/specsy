@@ -48,17 +48,6 @@ public class SpecContext {
     }
 
 
-    // sharing side-effects
-
-    public void shareSideEffects() {
-        shareSideEffects = true;
-    }
-
-    public boolean isShareSideEffects() {
-        return shareSideEffects || parent != null && parent.isShareSideEffects();
-    }
-
-
     // deferring
 
     public void addDefer(Closure block) {
@@ -67,6 +56,17 @@ public class SpecContext {
 
     public Iterable<Closure> deferred() {
         return Collections.unmodifiableCollection(deferred);
+    }
+
+
+    // sharing side-effects
+
+    public void shareSideEffects() {
+        shareSideEffects = true;
+    }
+
+    public boolean isShareSideEffects() {
+        return shareSideEffects || parent != null && parent.isShareSideEffects();
     }
 
 
