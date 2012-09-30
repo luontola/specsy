@@ -11,6 +11,7 @@ import fi.jumi.api.drivers.TestId
 import fi.jumi.core.results.NullRunVisitor
 import fi.jumi.core.runs.RunId
 import collection.mutable
+import util.TestHelpers
 
 class DeferBlocksTest extends TestHelpers {
 
@@ -71,12 +72,12 @@ class DeferBlocksTest extends TestHelpers {
     val results = runSpec(c => {
       c.bootstrap("root", {
         c.defer {
-          fail("first defer")
+          throw new Throwable("first defer")
         }
         c.defer {
-          fail("second defer")
+          throw new Throwable("second defer")
         }
-        fail("root")
+        throw new Throwable("root")
       })
     })
 
@@ -101,19 +102,11 @@ class DeferBlocksTest extends TestHelpers {
         }
 
         c.spec("child", {
-          fail("child")
+          throw new Throwable("child")
         })
       })
     })
 
     assertSpyContains("root defer")
-  }
-
-
-  // XXX: We cannot throw the exception directly in the block passed to defer, because
-  // exception throwing has a type Nothing, which can be passed as a `Closure`,
-  // which in turn results in the the eager `defer(Closure)` instead of `defer(=>Unit)`.
-  private def fail(message: String) {
-    throw new Throwable(message)
   }
 }

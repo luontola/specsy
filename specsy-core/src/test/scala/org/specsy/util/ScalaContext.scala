@@ -6,17 +6,21 @@ package org.specsy.util
 
 import org.specsy.core.Context
 
-class RichContext(context: Context) {
+class ScalaContext(context: Context) {
 
-  def bootstrap[U](className: String, rootSpec: => U) {
+  def bootstrap(className: String, rootSpec: => Unit) {
     context.bootstrap(className, new ByNameClosure(rootSpec))
   }
 
-  def spec[U](name: String, spec: => U) {
+  def spec(name: String, spec: => Unit) {
     context.spec(name, new ByNameClosure(spec))
   }
 
-  def defer[U](block: => U) {
+  def defer(block: => Unit) {
     context.defer(new ByNameClosure(block))
+  }
+
+  def shareSideEffects() {
+    context.shareSideEffects()
   }
 }

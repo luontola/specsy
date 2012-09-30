@@ -5,6 +5,7 @@
 package org.specsy
 
 import org.junit.Test
+import util.TestHelpers
 
 class ExecutionModelTest extends TestHelpers {
 

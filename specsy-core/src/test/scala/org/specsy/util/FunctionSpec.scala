@@ -6,8 +6,8 @@ package org.specsy.util
 
 import org.specsy.core.{Spec, Context}
 
-class FunctionSpec(spec: Context => Unit) extends Spec {
+class FunctionSpec(spec: ScalaContext => Unit) extends Spec {
   def run(context: Context) {
-    spec(context)
+    spec(new ScalaContext(context))
   }
 }
