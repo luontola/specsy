@@ -109,9 +109,9 @@ class SomeSpec extends ScalaSpecsy with SpecsMatchers {
 }
 </pre>
 
-To use the assertions from [specs2](http://etorreborre.github.com/specs2/), mix in one of the exception throwing traits mentioned in [specs2's mathers guide](http://etorreborre.github.com/specs2/guide/org.specs2.guide.Matchers.html#Reusing+matchers+outside+of+specs2).
+To use the assertions from [specs2](http://etorreborre.github.com/specs2/), mix in one of the exception throwing traits mentioned in [specs2's mathers guide](http://etorreborre.github.com/specs2/guide/org.specs2.guide.Matchers.html#Outside+specs2).
 
-To use the assertions from [ScalaTest](http://www.scalatest.org/), mix in the [org.scalatest.matchers.ShouldMatchers](http://www.scalatest.org/scaladoc-1.5/org/scalatest/matchers/ShouldMatchers.html) trait or one of the other matcher traits:
+To use the assertions from [ScalaTest](http://www.scalatest.org/), mix in the [org.scalatest.matchers.ShouldMatchers](http://doc.scalatest.org/1.8/index.html#org.scalatest.matchers.ShouldMatchers) trait or one of the other matcher traits:
 
 <pre class="brush: scala">
 @RunVia(classOf[Specsy])
