@@ -19,14 +19,23 @@ group: navigation
 Quick Start
 -----------
 
-After you have [configured your dependencies](download.html), you can create a Specsy spec by extending the [Spec] trait. Annotate the class with `@RunWith` to execute it with JUnit. The following shows the structure of a spec:
+After you have [configured your dependencies](download.html), you can create a Specsy spec by extending the language specific base class, as shown below. Annotate the class with `@RunVia` to execute it using [Jumi](http://jumi.fi/).
+
+Here are examples of the language specific syntax for all of Specsy's API:
+
+- [Scala](https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/ScalaSpecsyExample.scala)
+- [Groovy](https://github.com/orfjackal/specsy/blob/master/specsy-groovy/src/test/java/org/specsy/groovy/GroovySpecsyExample.groovy)
+- [Java](https://github.com/orfjackal/specsy/blob/master/specsy-java/src/test/java/org/specsy/java/JavaSpecsyExample.java)
+
+For the rest of this documentation we will use the Scala version's shorthand syntax. The following shows the structure of a spec:
 
 <pre class="brush: scala">
-import org.junit.runner.RunWith
-import net.orfjackal.specsy.{Spec, Specsy}
+import fi.jumi.api.RunVia
+import org.specsy.Specsy
+import org.specsy.scala.ScalaSpecsy
 
-@RunWith(classOf[Specsy])
-class HelloWorldSpec extends Spec {
+@RunVia(classOf[Specsy])
+class HelloWorldSpec extends ScalaSpecsy {
 
   // top-level spec; add your test code here and/or the child specs
 
@@ -44,7 +53,7 @@ class HelloWorldSpec extends Spec {
 }
 </pre>
 
-You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs (see [Isolated Execution Model](#isolated_execution_model)). Potentially every leaf child spec may be executed in its own thread (not yet implemented - a better test runner than JUnit is needed first, i.e. [Jumi](http://jumi.fi/)).
+You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs (see [Isolated Execution Model](#isolated_execution_model)). The test runner can run each leaf child spec in its own thread.
 
 Specsy does not contain its own assertion syntax, so you can use the assertions from [JUnit](http://www.junit.org/), [Hamcrest](http://code.google.com/p/hamcrest/), [specs](http://code.google.com/p/specs/), [specs2](http://specs2.org/), [ScalaTest](http://www.scalatest.org/) or any other framework which makes it possible (see [Assertions](#assertions)).
 
@@ -52,11 +61,11 @@ Specsy does not contain its own assertion syntax, so you can use the assertions 
 Naming Tests
 ------------
 
-Write the name of a test as a string in front of the `>>` operator. It is recommended to name the tests using full sentences which describe features. [FibonacciSpec] is an example of how to use descriptive [specification-style](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html) test names:
+It is recommended to name the tests using full sentences which describe features. [FibonacciSpec] is an example of how to use descriptive [specification-style](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html) test names:
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class FibonacciSpec extends Spec {
+@RunVia(classOf[Specsy])
+class FibonacciSpec extends ScalaSpecsy {
   val sequenceLength = 10
   val fib = new Fibonacci().sequence(sequenceLength)
   assertThat(fib.length, is(sequenceLength))
@@ -95,8 +104,8 @@ import org.hamcrest.Matchers._
 To use the assertions from [specs](http://code.google.com/p/specs/), mix in one of the traits mentioned in [specs' matchers guide](http://code.google.com/p/specs/wiki/MatchersGuide#Use_specs_matchers_alone). For example:
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class SomeSpec extends Spec with SpecsMatchers {
+@RunVia(classOf[Specsy])
+class SomeSpec extends ScalaSpecsy with SpecsMatchers {
 }
 </pre>
 
@@ -105,8 +114,8 @@ To use the assertions from [specs2](http://etorreborre.github.com/specs2/), mix 
 To use the assertions from [ScalaTest](http://www.scalatest.org/), mix in the [org.scalatest.matchers.ShouldMatchers](http://www.scalatest.org/scaladoc-1.5/org/scalatest/matchers/ShouldMatchers.html) trait or one of the other matcher traits:
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class SomeSpec extends Spec with ShouldMatchers {
+@RunVia(classOf[Specsy])
+class SomeSpec extends ScalaSpecsy with ShouldMatchers {
 }
 </pre>
 
@@ -119,8 +128,8 @@ Isolated Execution Model
 [StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications made in its parent specs, so there are no weird order-dependent test failures - everything just works as expected. It's kind of like *lexical scoping* applied to side-effects. Specsy accomplishes this by creating multiple fresh instances of the test class and selectively executing the nested specs.
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class StackSpec extends Spec {
+@RunVia(classOf[Specsy])
+class StackSpec extends ScalaSpecsy {
   val stack = new scala.collection.mutable.Stack[String]
 
   "An empty stack" >> {
@@ -165,8 +174,8 @@ Non-Isolated Execution Model
 In some cases it may be desirable to avoid the isolation of side-effects; perhaps it would make the tests harder to organize (e.g. writing tests for a multi-step process) or it would affect performance too much (e.g. side-effect free parameterized tests). For those situations you may call `shareSideEffects()` which will cause all child specs of the current spec to see each other's side-effects. [ShareSideEffectsExampleSpec] illustrates this:
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class ShareSideEffectsExampleSpec extends Spec {
+@RunVia(classOf[Specsy])
+class ShareSideEffectsExampleSpec extends ScalaSpecsy {
   var counter = 0
 
   // Without the call to `shareSideEffects()` the value of `counter` would be `1`
@@ -200,18 +209,18 @@ In Specsy, every parent spec acts similar to the "before" blocks in other testin
 [DeferBlocksExampleSpec] shows how the defer blocks can be used:
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class DeferBlocksExampleSpec extends Spec {
-  val dir = new File("temp-directory-" + UUID.randomUUID())
-  assert(dir.mkdir(), "failed to create: " + dir)
+@RunVia(classOf[Specsy])
+class DeferBlocksExampleSpec extends ScalaSpecsy {
+  val dir = Paths.get("temp-directory-" + UUID.randomUUID())
+  Files.createDirectory(dir)
   defer {
-    assert(dir.delete(), "failed to delete: " + dir)
+    Files.delete(dir)
   }
 
-  val file1 = new File(dir, "file 1.txt")
-  assert(file1.createNewFile(), "failed to create: " + file1)
+  val file1 = dir.resolve("file 1.txt")
+  Files.createFile(file1)
   defer {
-    assert(file1.delete(), "failed to delete:" + file1)
+    Files.delete(file1)
   }
 
   "..." >> {
@@ -220,10 +229,10 @@ class DeferBlocksExampleSpec extends Spec {
 
   "..." >> {
     // child specs can also use defer blocks
-    val file2 = new File(dir, "file 2.txt")
-    assert(file2.createNewFile(), "failed to create: " + file2)
+    val file2 = dir.resolve("file 2.txt")
+    Files.createFile(file2)
     defer {
-      assert(file2.delete(), "failed to delete:" + file2)
+      Files.delete(file2)
     }
 
     // 'file2' will be deleted when this child spec exits
@@ -237,24 +246,26 @@ class DeferBlocksExampleSpec extends Spec {
 The code duplication in the above spec could be removed by extracting a method out of it, although it requires knowledge of Scala's more advanced features. [DeferBlocksExample2Spec] does the same thing as above, but with less code:
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class DeferBlocksExample2Spec extends Spec {
-  val dir = createWithCleanup(new File("temp-directory-" + UUID.randomUUID()), _.mkdir(), _.delete())
-  val file1 = createWithCleanup(new File(dir, "file 1.txt"), _.createNewFile(), _.delete())
+@RunVia(classOf[Specsy])
+class DeferBlocksExample2Spec extends ScalaSpecsy {
+  val dir = createWithCleanup(Paths.get("temp-directory-" + UUID.randomUUID()), Files.createDirectory(_))
+  val file1 = createWithCleanup(dir.resolve("file 1.txt"), Files.createFile(_))
 
   "..." >> {
   }
 
   "..." >> {
-    val file2 = createWithCleanup(new File(dir, "file 2.txt"), _.createNewFile(), _.delete())
+    val file2 = createWithCleanup(dir.resolve("file 2.txt"), Files.createFile(_))
   }
 
-  def createWithCleanup(file: File, create: File => Boolean, delete: File => Boolean): File = {
-    assert(create(file), "failed to create: " + file)
+  def createWithCleanup(path: Path, create: Path => Any): Path = {
+    println("Creating " + path)
+    create(path)
     defer {
-      assert(delete(file), "failed to delete: " + file)
+      println("Deleting " + path)
+      Files.delete(path)
     }
-    file
+    path
   }
 }
 </pre>
@@ -263,11 +274,11 @@ class DeferBlocksExample2Spec extends Spec {
 Parameterized Tests
 -------------------
 
-Because Specsy's spec declarations are implemented as method calls which take a closure as a parameter (see [Spec]), it's simple to use the framework for parameterized tests. [ParameterizedExampleSpec] shows how to do it:
+Because Specsy's spec declarations are implemented as method calls which take a closure as a parameter (see [ScalaSpecsy]), it's simple to use the framework for parameterized tests. [ParameterizedExampleSpec] shows how to do it:
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class ParameterizedExampleSpec extends Spec {
+@RunVia(classOf[Specsy])
+class ParameterizedExampleSpec extends ScalaSpecsy {
   val parameters = List(
     (0, 0),
     (1, 1),
@@ -294,46 +305,46 @@ Note that the code which declares the specs must be deterministic. Otherwise the
 Executing Tests Only in Some Environments
 -----------------------------------------
 
-Since in Specsy every spec is a closure, it is very easy to customize how individual specs are run. For example, let's say that some of the tests require Java 7 to be able to run. You can write a helper method such as the `worksOnlyOnJava7` in [EnvironmentFilterExampleSpec], as shown below, and mark/surround the closures of affected specs with it.
+Since in Specsy every spec is a closure, it is very easy to customize how individual specs are run. For example, let's say that some of the tests require Java 8 to be able to run. You can write a helper method such as the `worksOnlyOnJava8` in [EnvironmentFilterExampleSpec], as shown below, and mark/surround the closures of affected specs with it.
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class EnvironmentFilterExampleSpec extends Spec {
+@RunVia(classOf[Specsy])
+class EnvironmentFilterExampleSpec extends ScalaSpecsy {
 
   "This test is run every time" >> {
     // Test code...
   }
 
-  "This test is run only under Java 7 and greater" >> worksOnlyOnJava7 {
-    // Test code... For example something which does custom class loading
-    // and requires the URLClassLoader.close() method which was added in Java 7.
+  "This test is run only under Java 8 and greater" >> worksOnlyOnJava8 {
+    // Test code... For example something which uses the new Date and Time API (JSR-310)
+    // which should be included in Java 8
   }
 
-  // This can also be used at the top level, if many/all tests work only on Java 7.
+  // This can also be used at the top level, if many/all tests work only on Java 8.
   // Just surround all tests and variable/field declarations into a closure.
-  worksOnlyOnJava7 {
+  worksOnlyOnJava8 {
 
-    "This requires Java 7" >> {
+    "This requires Java 8" >> {
       // Test code...
     }
-    "This also requires Java 7" >> {
+    "This also requires Java 8" >> {
       // Test code...
     }
   }
 
 
-  private def worksOnlyOnJava7(closure: => Unit) {
-    if (isJava7) {
+  private def worksOnlyOnJava8(closure: => Unit) {
+    if (isJava8) {
       closure
     }
   }
 
-  private def isJava7: Boolean = {
+  private def isJava8: Boolean = {
     try {
-      classOf[URLClassLoader].getMethod("close")
+      Class.forName("javax.time.calendar.LocalDate")
       true
     } catch {
-      case e: NoSuchMethodException => false
+      case e: ClassNotFoundException => false
     }
   }
 }
@@ -348,8 +359,8 @@ A common situation in Acceptance Test Driven Development (ATDD) is that you have
 Specsy does not (yet) have a concept of "pending", but you can achieve almost the same thing by making the test pass and by having the `pendingUntilFixed` method in a helper class which all tests use, so that it's easy to seach for all its usages to find out which tests are pending. [PendingUntilFixedExampleSpec] illustrates this:
 
 <pre class="brush: scala">
-@RunWith(classOf[Specsy])
-class PendingUntilFixedExampleSpec extends Spec {
+@RunVia(classOf[Specsy])
+class PendingUntilFixedExampleSpec extends ScalaSpecsy {
 
   "An acceptance test for an already implemented feature" >> {
     // Test code...
@@ -369,7 +380,7 @@ object AcceptanceTestHelpers {
     try {
       closure
     } catch {
-      case e =>
+      case e: Throwable =>
         System.err.println("This test is pending until fixed:")
         e.printStackTrace()
         return // test is pending
@@ -380,12 +391,12 @@ object AcceptanceTestHelpers {
 </pre>
 
 
-[Spec]:                         http://github.com/orfjackal/specsy/blob/master/src/main/scala/net/orfjackal/specsy/Spec.scala
-[FibonacciSpec]:                http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/FibonacciSpec.scala
-[StackSpec]:                    http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/StackSpec.scala
-[ShareSideEffectsExampleSpec]:  http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/ShareSideEffectsExampleSpec.scala
-[DeferBlocksExampleSpec]:       http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/DeferBlocksExampleSpec.scala
-[DeferBlocksExample2Spec]:      http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/DeferBlocksExample2Spec.scala
-[ParameterizedExampleSpec]:     http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/ParameterizedExampleSpec.scala
-[EnvironmentFilterExampleSpec]: http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/EnvironmentFilterExampleSpec.scala
-[PendingUntilFixedExampleSpec]: http://github.com/orfjackal/specsy/blob/master/src/test/scala/net/orfjackal/specsy/examples/PendingUntilFixedExampleSpec.scala
+[ScalaSpecsy]:                  https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/main/scala/org/specsy/scala/ScalaSpecsy.scala
+[FibonacciSpec]:                https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/FibonacciSpec.scala
+[StackSpec]:                    https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/StackSpec.scala
+[ShareSideEffectsExampleSpec]:  https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/ShareSideEffectsExampleSpec.scala
+[DeferBlocksExampleSpec]:       https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/DeferBlocksExampleSpec.scala
+[DeferBlocksExample2Spec]:      https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/DeferBlocksExample2Spec.scala
+[ParameterizedExampleSpec]:     https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/ParameterizedExampleSpec.scala
+[EnvironmentFilterExampleSpec]: https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/EnvironmentFilterExampleSpec.scala
+[PendingUntilFixedExampleSpec]: https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/PendingUntilFixedExampleSpec.scala

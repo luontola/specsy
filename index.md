@@ -3,7 +3,7 @@ layout: page
 ---
 {% include JB/setup %}
 
-Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing framework for [Scala](http://www.scala-lang.org/). It safely <em>isolates mutable state</em> and supports writing self-documenting tests/specifications.
+Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing framework for Scala, Groovy, Java and easily any other language on the JVM. It safely <em>isolates mutable state</em>, supports writing self-documenting tests/specifications, and runs all tests in parallel.
 
 Specsy has all the <em>essential features</em> of a unit testing framework and nothing excess. To illustrate Specsy's <em>expressiveness</em>, its public API has only three methods, but they provide functionality that requires about four printed pages of documentation - more than Specsy even has production code.
 
@@ -26,4 +26,4 @@ Project Goals
 
 - **Simplicity** - Specsy contains only the essential features, but does them well. Having a particular assertion syntax is not essential and it's easy to use the assertions of other testing libraries, so Specsy itself does not have assertions. Also any syntactic sugar is minimized, in order for it to be easy to know what the code does just by looking at it.
 
-- **Parallel Execution** - Running tests [fast](http://agileinaflash.blogspot.com/2009/02/first.html) is a must for using TDD (my pain threshold for recompile and test execution is about 5-10 seconds). Specsy makes it possible to parallelize the test execution using the maximal number of CPU cores (not yet implemented).
+- **Parallel Execution** - Running tests [fast](http://agileinaflash.blogspot.com/2009/02/first.html) is a must for using TDD (my pain threshold for recompile and test execution is about 5-10 seconds). With Specsy all tests in a test class can be run in parallel, taking full use of all available CPU cores.

@@ -5,26 +5,9 @@ group: navigation
 ---
 {% include JB/setup %}
 
-You can download Specsy from the [Maven Central Repository](http://repo1.maven.org/maven2/net/orfjackal/specsy/specsy/). The source code is at <https://github.com/orfjackal/specsy>
+You can download Specsy from the Maven Central Repository under the [org.specsy groupId](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22). Specsy's tests are run using the [Jumi test runner](http://jumi.fi/). (The old 1.x versions, which are run with JUnit, use the [net.orfjackal.specsy groupId](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.orfjackal.specsy%22).) The source code is at <https://github.com/orfjackal/specsy>
 
-If you use Maven, add the following dependency to your POM file.
-
-    <dependency>
-        <groupId>net.orfjackal.specsy</groupId>
-        <artifactId>specsy</artifactId>
-        <version>1.2.0</version>
-        <scope>test</scope>
-    </dependency>
-
-The default artifact is compiled using Scala 2.9.0. If you are using Scala 2.8.1, add the `scala281` classifier to your dependency:
-
-    <dependency>
-        <groupId>net.orfjackal.specsy</groupId>
-        <artifactId>specsy</artifactId>
-        <version>1.2.0</version>
-        <classifier>scala281</classifier>
-        <scope>test</scope>
-    </dependency>
+Choose the right artifact based on your language. For example, `specsy-java` is for Java (7 or higher; lambdas recommended), `specsy-groovy` for Groovy (all versions), and `specsy-scala_x.x.x` for a particular Scala version (2.7.7 or higher). Specsy runs on Java 7 or higher (due to [Jumi](http://jumi.fi/) requiring it). It's easy to add support for more JVM-based languages, so create a [feature or pull request](https://github.com/orfjackal/specsy/issues) if you would like your favorite language supported.
 
 Continue to the [documentation](documentation.html) to find out how to use Specsy.
 
@@ -32,7 +15,7 @@ Continue to the [documentation](documentation.html) to find out how to use Specs
 Version History
 ---------------
 
-**2.0.0 (Coming Soon!)**
+**2.0.0 (2012-09-30)**
 
 - Runs using the [Jumi](http://jumi.fi/) test runner, fixing all previously known issues (e.g. it now runs tests in parallel and reports test execution in real time)
 - Rewrote the core in Java to support multiple programming languages through thin language-specific frontends
