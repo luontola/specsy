@@ -7,21 +7,21 @@ package org.specsy.scala.examples
 import fi.jumi.api.RunVia
 import org.specsy.Specsy
 import org.specsy.scala.ScalaSpecsy
-import java.io.File
 import java.util.UUID
+import java.nio.file.{Files, Paths}
 
 @RunVia(classOf[Specsy])
 class DeferBlocksExampleSpec extends ScalaSpecsy {
-  val dir = new File("temp-directory-" + UUID.randomUUID())
-  assert(dir.mkdir(), "failed to create: " + dir)
+  val dir = Paths.get("temp-directory-" + UUID.randomUUID())
+  Files.createDirectory(dir)
   defer {
-    assert(dir.delete(), "failed to delete: " + dir)
+    Files.delete(dir)
   }
 
-  val file1 = new File(dir, "file 1.txt")
-  assert(file1.createNewFile(), "failed to create: " + file1)
+  val file1 = dir.resolve("file 1.txt")
+  Files.createFile(file1)
   defer {
-    assert(file1.delete(), "failed to delete:" + file1)
+    Files.delete(file1)
   }
 
   "..." >> {
@@ -30,10 +30,10 @@ class DeferBlocksExampleSpec extends ScalaSpecsy {
 
   "..." >> {
     // child specs can also use defer blocks
-    val file2 = new File(dir, "file 2.txt")
-    assert(file2.createNewFile(), "failed to create: " + file2)
+    val file2 = dir.resolve("file 2.txt")
+    Files.createFile(file2)
     defer {
-      assert(file2.delete(), "failed to delete:" + file2)
+      Files.delete(file2)
     }
 
     // 'file2' will be deleted when this child spec exits

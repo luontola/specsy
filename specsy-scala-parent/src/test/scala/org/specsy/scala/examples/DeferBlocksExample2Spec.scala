@@ -7,28 +7,28 @@ package org.specsy.scala.examples
 import fi.jumi.api.RunVia
 import org.specsy.Specsy
 import org.specsy.scala.ScalaSpecsy
-import java.io.File
 import java.util.UUID
+import java.nio.file.{Files, Path, Paths}
 
 @RunVia(classOf[Specsy])
 class DeferBlocksExample2Spec extends ScalaSpecsy {
-  val dir = createWithCleanup(new File("temp-directory-" + UUID.randomUUID()), _.mkdir(), _.delete())
-  val file1 = createWithCleanup(new File(dir, "file 1.txt"), _.createNewFile(), _.delete())
+  val dir = createWithCleanup(Paths.get("temp-directory-" + UUID.randomUUID()), Files.createDirectory(_))
+  val file1 = createWithCleanup(dir.resolve("file 1.txt"), Files.createFile(_))
 
   "..." >> {
   }
 
   "..." >> {
-    val file2 = createWithCleanup(new File(dir, "file 2.txt"), _.createNewFile(), _.delete())
+    val file2 = createWithCleanup(dir.resolve("file 2.txt"), Files.createFile(_))
   }
 
-  def createWithCleanup(file: File, create: File => Boolean, delete: File => Boolean): File = {
-    println("Creating " + file)
-    assert(create(file), "failed to create: " + file)
+  def createWithCleanup(path: Path, create: Path => Any): Path = {
+    println("Creating " + path)
+    create(path)
     defer {
-      println("Deleting " + file)
-      assert(delete(file), "failed to delete: " + file)
+      println("Deleting " + path)
+      Files.delete(path)
     }
-    file
+    path
   }
 }
