@@ -7,7 +7,6 @@ package org.specsy.scala.examples
 import fi.jumi.api.RunVia
 import org.specsy.Specsy
 import org.specsy.scala.ScalaSpecsy
-import java.net.URLClassLoader
 
 @RunVia(classOf[Specsy])
 class EnvironmentFilterExampleSpec extends ScalaSpecsy {
@@ -16,36 +15,36 @@ class EnvironmentFilterExampleSpec extends ScalaSpecsy {
     // Test code...
   }
 
-  "This test is run only under Java 7 and greater" >> worksOnlyOnJava7 {
-    // Test code... For example something which does custom class loading
-    // and requires the URLClassLoader.close() method which was added in Java 7.
+  "This test is run only under Java 8 and greater" >> worksOnlyOnJava8 {
+    // Test code... For example something which uses the new Date and Time API (JSR-310)
+    // which should be included in Java 8
   }
 
-  // This can also be used at the top level, if many/all tests work only on Java 7.
+  // This can also be used at the top level, if many/all tests work only on Java 8.
   // Just surround all tests and variable/field declarations into a closure.
-  worksOnlyOnJava7 {
+  worksOnlyOnJava8 {
 
-    "This requires Java 7" >> {
+    "This requires Java 8" >> {
       // Test code...
     }
-    "This also requires Java 7" >> {
+    "This also requires Java 8" >> {
       // Test code...
     }
   }
 
 
-  private def worksOnlyOnJava7(closure: => Unit) {
-    if (isJava7) {
+  private def worksOnlyOnJava8(closure: => Unit) {
+    if (isJava8) {
       closure
     }
   }
 
-  private def isJava7: Boolean = {
+  private def isJava8: Boolean = {
     try {
-      classOf[URLClassLoader].getMethod("close")
+      Class.forName("javax.time.calendar.LocalDate")
       true
     } catch {
-      case e: NoSuchMethodException => false
+      case e: ClassNotFoundException => false
     }
   }
 }
