@@ -29,13 +29,13 @@ public class JavaSpecsyExample extends JavaSpecsy {
                 defer(new Closure() {
                     @Override
                     public void run() throws Throwable {
-                        GlobalSpy.add("defer 1");
+                        GlobalSpy.add("defer 1"); // happens last
                     }
                 });
                 defer(new Closure() {
                     @Override
                     public void run() throws Throwable {
-                        GlobalSpy.add("defer 2");
+                        GlobalSpy.add("defer 2"); // happens first
                     }
                 });
             }
@@ -56,7 +56,7 @@ public class JavaSpecsyExample extends JavaSpecsy {
                         counter++;
                     }
                 });
-                GlobalSpy.add("isolated: " + counter);
+                GlobalSpy.add("isolated: " + counter); // expecting 1
             }
         });
 
@@ -76,7 +76,7 @@ public class JavaSpecsyExample extends JavaSpecsy {
                         counter++;
                     }
                 });
-                GlobalSpy.add("non-isolated: " + counter);
+                GlobalSpy.add("non-isolated: " + counter); // expecting 2
             }
         });
     }

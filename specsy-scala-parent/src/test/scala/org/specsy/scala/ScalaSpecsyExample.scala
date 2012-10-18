@@ -19,10 +19,10 @@ class ScalaSpecsyExample extends ScalaSpecsy {
   // Shorthand syntax, using some Scala magic
   "defer blocks" >> {
     defer {
-      GlobalSpy.add("defer 1")
+      GlobalSpy.add("defer 1") // happens last
     }
     defer {
-      GlobalSpy.add("defer 2")
+      GlobalSpy.add("defer 2") // happens first
     }
   }
 
@@ -33,7 +33,7 @@ class ScalaSpecsyExample extends ScalaSpecsy {
     "mutation 2" >> {
       counter += 1
     }
-    GlobalSpy.add("isolated: " + counter)
+    GlobalSpy.add("isolated: " + counter) // expecting 1
   }
 
   "non-isolated" >> {
@@ -44,6 +44,6 @@ class ScalaSpecsyExample extends ScalaSpecsy {
     "mutation 2" >> {
       counter += 1
     }
-    GlobalSpy.add("non-isolated: " + counter)
+    GlobalSpy.add("non-isolated: " + counter) // expecting 2
   }
 }

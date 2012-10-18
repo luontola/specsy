@@ -24,10 +24,10 @@ class GroovySpecsyExample extends GroovySpecsy {
     // Shorthand syntax, using some Groovy sugar
     spec "defer blocks", {
       defer {
-        GlobalSpy.add("defer 1")
+        GlobalSpy.add("defer 1") // happens last
       }
       defer {
-        GlobalSpy.add("defer 2")
+        GlobalSpy.add("defer 2") // happens first
       }
     }
 
@@ -38,7 +38,7 @@ class GroovySpecsyExample extends GroovySpecsy {
       spec "mutation 2", {
         counter += 1
       }
-      GlobalSpy.add("isolated: " + counter)
+      GlobalSpy.add("isolated: " + counter) // expecting 1
     }
 
     spec "non-isolated", {
@@ -49,7 +49,7 @@ class GroovySpecsyExample extends GroovySpecsy {
       spec "mutation 2", {
         counter += 1
       }
-      GlobalSpy.add("non-isolated: " + counter)
+      GlobalSpy.add("non-isolated: " + counter) // expecting 2
     }
   }
 }
