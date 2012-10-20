@@ -33,3 +33,19 @@ mvn release:perform -DconnectionUrl=scm:git:git://github.com/orfjackal/specsy.gi
 - Wait for the release to show up in Maven Central
 
 - Announce to implicitly@posterous.com, scala-announce@googlegroups.com and specsy@googlegroups.com
+
+
+	RELEASING A SINGLE MODULE
+
+Releasing a module for a new language version:
+
+1. Edit specsy-scala_2.10/pom.xml and change the scala.version property to "2.10.0-RC1"
+
+2. Commit as "Release for Scala 2.10.0-RC1", but do NOT create a tag
+
+3. Run in just that module:
+
+    mvn clean deploy -Psonatype-oss-release
+    mvn nexus:staging-close -Dnexus.description="`git log --format=format:%s -1`"
+
+4. Release the staging repository through https://oss.sonatype.org/
