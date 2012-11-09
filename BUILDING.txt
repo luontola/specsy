@@ -8,31 +8,19 @@ mvn clean verify
 
 	RELEASING
 
-- Update README to refer to the new release (change log, install instructions)
+1. Run the following commands:
 
-- Run following commands (update tag and branch names as necessary)
+    ./scripts/release-all.sh
+    git push
+    git push --tags
 
-mvn release:prepare
-mvn release:clean
-git fetch
-git checkout scala281
-git merge specsy-1.2.0
-git tag specsy-1.2.0-scala281
-git push
-git push --tags
+2. Release the staging repository through https://oss.sonatype.org/
 
-# The primary artifact must be released last, so that its POM will remain.
-# When testing may also use scm:git:`pwd` as the connectionUrl
-mvn release:perform -DconnectionUrl=scm:git:git://github.com/orfjackal/specsy.git -Dtag=specsy-1.2.0-scala281
-mvn release:perform -DconnectionUrl=scm:git:git://github.com/orfjackal/specsy.git -Dtag=specsy-1.2.0
+3. Update the version history on the web site
 
-- Login to https://oss.sonatype.org/ check that the staging repository looks ok (there are all binary JARs, source JAR and the right POM version)
+4. Wait for the release to show up in Maven Central
 
-- Close and Release the staging repository
-
-- Wait for the release to show up in Maven Central
-
-- Announce to implicitly@posterous.com, scala-announce@googlegroups.com and specsy@googlegroups.com
+5. Announce to specsy@googlegroups.com, implicitly@posterous.com, scala-announce@googlegroups.com
 
 
 	RELEASING A SINGLE MODULE
