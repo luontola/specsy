@@ -31,8 +31,12 @@ Releasing a module for a new language version:
 
 2. Commit as "Release for Scala 2.10.0-RC1", but do NOT create a tag
 
-3. Run in just that module:
+    git commit -am "Release for Scala 2.10.0-RC1"
+    git push
 
+3. Deploy only that module:
+
+    cd specsy-scala_2.10
     mvn clean deploy -Psonatype-oss-release
     mvn nexus:staging-close -Dnexus.description="`git log --format=format:%s -1`"
 
