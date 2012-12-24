@@ -19,7 +19,7 @@ group: navigation
 Quick Start
 -----------
 
-After you have [configured your dependencies](download.html), you can create a Specsy spec by extending the language specific base class, as shown below. Annotate the class with `@RunVia` to execute it using [Jumi](http://jumi.fi/). (If *have* to use JUnit's test runner instead of Jumi, then have a look at [NestedJUnit](https://github.com/orfjackal/nestedjunit) which supports a quite similar way of writing tests.)
+After you have [configured your dependencies](download.html), you can create a Specsy spec by extending the language specific base class, as shown below. The base class is annotated with `@RunVia` so that [Jumi](http://jumi.fi/) can run the tests. (If *have* to use JUnit's test runner instead of Jumi, then have a look at [NestedJUnit](https://github.com/orfjackal/nestedjunit) which supports a quite similar way of writing tests.)
 
 Here are examples of the language specific syntax for all of Specsy's API:
 
@@ -30,11 +30,8 @@ Here are examples of the language specific syntax for all of Specsy's API:
 For the rest of this documentation we will use the Scala version's shorthand syntax. The following shows the structure of a spec:
 
 <pre class="brush: scala">
-import fi.jumi.api.RunVia
-import org.specsy.Specsy
 import org.specsy.scala.ScalaSpecsy
 
-@RunVia(classOf[Specsy])
 class HelloWorldSpec extends ScalaSpecsy {
 
   // top-level spec; add your test code here and/or the child specs
@@ -64,7 +61,6 @@ Naming Tests
 It is recommended to name the tests using full sentences which describe features. [FibonacciSpec] is an example of how to use descriptive [specification-style](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html) test names:
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class FibonacciSpec extends ScalaSpecsy {
   val sequenceLength = 10
   val fib = new Fibonacci().sequence(sequenceLength)
@@ -104,7 +100,6 @@ import org.hamcrest.Matchers._
 To use the assertions from [specs](http://code.google.com/p/specs/), mix in one of the traits mentioned in [specs' matchers guide](http://code.google.com/p/specs/wiki/MatchersGuide#Use_specs_matchers_alone). For example:
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class SomeSpec extends ScalaSpecsy with SpecsMatchers {
 }
 </pre>
@@ -114,7 +109,6 @@ To use the assertions from [specs2](http://etorreborre.github.com/specs2/), mix 
 To use the assertions from [ScalaTest](http://www.scalatest.org/), mix in the [org.scalatest.matchers.ShouldMatchers](http://doc.scalatest.org/1.8/index.html#org.scalatest.matchers.ShouldMatchers) trait or one of the other matcher traits:
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class SomeSpec extends ScalaSpecsy with ShouldMatchers {
 }
 </pre>
@@ -128,7 +122,6 @@ Isolated Execution Model
 [StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications made in its parent specs, so there are no weird order-dependent test failures - everything just works as expected. It's kind of like *lexical scoping* applied to side-effects. Specsy accomplishes this by creating multiple fresh instances of the test class and selectively executing the nested specs.
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class StackSpec extends ScalaSpecsy {
   val stack = new scala.collection.mutable.Stack[String]
 
@@ -174,7 +167,6 @@ Non-Isolated Execution Model
 In some cases it may be desirable to avoid the isolation of side-effects; perhaps it would make the tests harder to organize (e.g. writing tests for a multi-step process) or it would affect performance too much (e.g. side-effect free parameterized tests). For those situations you may call `shareSideEffects()` which will cause all child specs of the current spec to see each other's side-effects. [ShareSideEffectsExampleSpec] illustrates this:
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class ShareSideEffectsExampleSpec extends ScalaSpecsy {
   var counter = 0
 
@@ -209,7 +201,6 @@ In Specsy, every parent spec acts similar to the "before" blocks in other testin
 [DeferBlocksExampleSpec] shows how the defer blocks can be used:
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class DeferBlocksExampleSpec extends ScalaSpecsy {
   val dir = Paths.get("temp-directory-" + UUID.randomUUID())
   Files.createDirectory(dir)
@@ -246,7 +237,6 @@ class DeferBlocksExampleSpec extends ScalaSpecsy {
 The code duplication in the above spec could be removed by extracting a method out of it, although it requires knowledge of Scala's more advanced features. [DeferBlocksExample2Spec] does the same thing as above, but with less code:
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class DeferBlocksExample2Spec extends ScalaSpecsy {
   val dir = createWithCleanup(Paths.get("temp-directory-" + UUID.randomUUID()), Files.createDirectory(_))
   val file1 = createWithCleanup(dir.resolve("file 1.txt"), Files.createFile(_))
@@ -277,7 +267,6 @@ Parameterized Tests
 Because Specsy's spec declarations are implemented as method calls which take a closure as a parameter (see [ScalaSpecsy]), it's simple to use the framework for parameterized tests. [ParameterizedExampleSpec] shows how to do it:
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class ParameterizedExampleSpec extends ScalaSpecsy {
   val parameters = List(
     (0, 0),
@@ -308,7 +297,6 @@ Executing Tests Only in Some Environments
 Since in Specsy every spec is a closure, it is very easy to customize how individual specs are run. For example, let's say that some of the tests require Java 8 to be able to run. You can write a helper method such as the `worksOnlyOnJava8` in [EnvironmentFilterExampleSpec], as shown below, and mark/surround the closures of affected specs with it.
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class EnvironmentFilterExampleSpec extends ScalaSpecsy {
 
   "This test is run every time" >> {
@@ -359,7 +347,6 @@ A common situation in Acceptance Test Driven Development (ATDD) is that you have
 Specsy does not (yet) have a concept of "pending", but you can achieve almost the same thing by making the test pass and by having the `pendingUntilFixed` method in a helper class which all tests use, so that it's easy to seach for all its usages to find out which tests are pending. [PendingUntilFixedExampleSpec] illustrates this:
 
 <pre class="brush: scala">
-@RunVia(classOf[Specsy])
 class PendingUntilFixedExampleSpec extends ScalaSpecsy {
 
   "An acceptance test for an already implemented feature" >> {
