@@ -24,4 +24,4 @@ mvn clean deploy \
 mvn nexus:staging-close \
     -Dnexus.description="Specsy $VERSION"
 
-git tag -s -m "Release $VERSION" "v$VERSION"
+git tag -s -m "Specsy $VERSION" "v$VERSION"
