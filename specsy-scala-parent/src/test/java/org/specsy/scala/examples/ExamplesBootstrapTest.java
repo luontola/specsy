@@ -44,7 +44,7 @@ public class ExamplesBootstrapTest {
 
         SuiteConfigurationBuilder suite = new SuiteConfigurationBuilder()
                 .addJvmOptions("-ea")
-                .testClass(testClass.getName());
+                .testClasses(testClass.getName());
 
         for (String library : System.getProperty("java.class.path").split(";")) {
             Path libraryPath = Paths.get(library);

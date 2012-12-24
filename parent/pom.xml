@@ -24,6 +24,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <jumi.version>0.2-SNAPSHOT</jumi.version>
         <scala.version>2.9.2</scala.version>
     </properties>
 
@@ -121,18 +122,18 @@
             <dependency>
                 <groupId>fi.jumi</groupId>
                 <artifactId>jumi-api</artifactId>
-                <version>0.1.196</version>
+                <version>${jumi.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>fi.jumi</groupId>
                 <artifactId>jumi-core</artifactId>
-                <version>0.1.196</version>
+                <version>${jumi.version}</version>
             </dependency>
             <dependency>
                 <groupId>fi.jumi</groupId>
                 <artifactId>jumi-core</artifactId>
-                <version>0.1.196</version>
+                <version>${jumi.version}</version>
                 <type>test-jar</type>
             </dependency>
 
@@ -140,7 +141,7 @@
             <dependency>
                 <groupId>fi.jumi</groupId>
                 <artifactId>jumi-launcher</artifactId>
-                <version>0.1.196</version>
+                <version>${jumi.version}</version>
             </dependency>
 
             <!-- Scala -->

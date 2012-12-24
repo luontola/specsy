@@ -2,6 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/specsy-core/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/specsy-groovy/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/specsy-java/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/specsy-core/target/generated-sources/annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/specsy-groovy/target/generated-sources/annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/specsy-java/target/generated-sources/annotations" includeSubdirectories="true" />
+    </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>
       <entry name="?*.properties" />
@@ -22,12 +30,9 @@
       <profile default="false" name="Maven default annotation processors profile" enabled="false">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <processorPath useClasspath="true" />
-        <module name="parent" />
-        <module name="project" />
         <module name="specsy-core" />
         <module name="specsy-groovy" />
         <module name="specsy-java" />
-        <module name="specsy-scala-parent" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
