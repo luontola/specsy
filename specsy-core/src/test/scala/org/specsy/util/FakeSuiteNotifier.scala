@@ -6,8 +6,9 @@ package org.specsy.util
 
 import fi.jumi.core.runs.{RunIdSequence, DefaultSuiteNotifier}
 import fi.jumi.core.runners.TestClassListener
+import fi.jumi.core.output.OutputCapturer
 import fi.jumi.actors.ActorRef
 
 class FakeSuiteNotifier(listener: TestClassListener)
-        extends DefaultSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), new SilentOutputCapturer())
+        extends DefaultSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), new OutputCapturer())
 

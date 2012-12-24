@@ -20,7 +20,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: fi.jumi:jumi-actors:0.1.196" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: fi.jumi:jumi-api:0.2-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: fi.jumi:jumi-core:test-jar:tests:0.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: commons-io:commons-io:2.4" level="project" />
   </component>
 </module>
 
