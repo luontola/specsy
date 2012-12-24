@@ -4,11 +4,8 @@
 
 package org.specsy.groovy
 
-import fi.jumi.api.RunVia
 import org.specsy.GlobalSpy
-import org.specsy.Specsy
 
-@RunVia(Specsy)
 class GroovySpecsyExample extends GroovySpecsy {
 
   def counter = 0

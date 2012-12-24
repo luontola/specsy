@@ -6,8 +6,11 @@ package org.specsy.scala
 
 import org.specsy.bootstrap.ContextDealer
 import org.specsy.core.Closure
+import fi.jumi.api.RunVia
+import org.specsy.Specsy
 
-trait ScalaSpecsy {
+@RunVia(classOf[Specsy])
+abstract class ScalaSpecsy {
 
   private val context = ContextDealer.take()
 

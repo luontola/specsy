@@ -4,11 +4,8 @@
 
 package org.specsy.scala.examples
 
-import fi.jumi.api.RunVia
-import org.specsy.Specsy
 import org.specsy.scala.ScalaSpecsy
 
-@RunVia(classOf[Specsy])
 class PendingUntilFixedExampleSpec extends ScalaSpecsy {
 
   "An acceptance test for an already implemented feature" >> {

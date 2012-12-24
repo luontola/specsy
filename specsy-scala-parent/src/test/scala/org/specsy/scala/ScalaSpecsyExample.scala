@@ -4,10 +4,8 @@
 
 package org.specsy.scala
 
-import org.specsy.{GlobalSpy, Specsy}
-import fi.jumi.api.RunVia
+import org.specsy.GlobalSpy
 
-@RunVia(classOf[Specsy])
 class ScalaSpecsyExample extends ScalaSpecsy {
   var counter = 0
 

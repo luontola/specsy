@@ -4,9 +4,12 @@
 
 package org.specsy.java;
 
+import fi.jumi.api.RunVia;
+import org.specsy.Specsy;
 import org.specsy.bootstrap.ContextDealer;
 import org.specsy.core.*;
 
+@RunVia(Specsy.class)
 public abstract class JavaSpecsy implements Closure {
 
     private final Context context = ContextDealer.take();

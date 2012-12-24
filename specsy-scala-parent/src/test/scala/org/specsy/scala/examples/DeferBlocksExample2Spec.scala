@@ -4,13 +4,10 @@
 
 package org.specsy.scala.examples
 
-import fi.jumi.api.RunVia
-import org.specsy.Specsy
 import org.specsy.scala.ScalaSpecsy
 import java.util.UUID
 import java.nio.file.{Files, Path, Paths}
 
-@RunVia(classOf[Specsy])
 class DeferBlocksExample2Spec extends ScalaSpecsy {
   val dir = createWithCleanup(Paths.get("temp-directory-" + UUID.randomUUID()), Files.createDirectory(_))
   val file1 = createWithCleanup(dir.resolve("file 1.txt"), Files.createFile(_))

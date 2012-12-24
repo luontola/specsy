@@ -4,11 +4,9 @@
 
 package org.specsy.java;
 
-import fi.jumi.api.RunVia;
-import org.specsy.*;
+import org.specsy.GlobalSpy;
 import org.specsy.core.Closure;
 
-@RunVia(Specsy.class)
 public class JavaSpecsyExample extends JavaSpecsy {
 
     private int counter = 0;

@@ -4,11 +4,8 @@
 
 package org.specsy.scala.examples
 
-import fi.jumi.api.RunVia
-import org.specsy.Specsy
 import org.specsy.scala.ScalaSpecsy
 
-@RunVia(classOf[Specsy])
 class EnvironmentFilterExampleSpec extends ScalaSpecsy {
 
   "This test is run every time" >> {

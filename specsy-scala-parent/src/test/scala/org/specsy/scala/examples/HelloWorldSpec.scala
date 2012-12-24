@@ -4,11 +4,8 @@
 
 package org.specsy.scala.examples
 
-import fi.jumi.api.RunVia
-import org.specsy.Specsy
 import org.specsy.scala.ScalaSpecsy
 
-@RunVia(classOf[Specsy])
 class HelloWorldSpec extends ScalaSpecsy {
 
   // top-level spec; add your test code here and/or the child specs
