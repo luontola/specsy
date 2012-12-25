@@ -15,7 +15,7 @@ Continue to the [documentation](documentation.html) to find out how to use Specs
 Version History
 ---------------
 
-**2.1.0 (2012-12-xx)**
+**2.1.0 (2012-12-25)**
 
 - Upgraded to Jumi 0.2.235
 - The `@RunVia` annotation is now inherited from the base class, so each test class doesn't need to repeat it. Due to this the `ScalaSpecsy` base class is now an abstract class instead of a trait
