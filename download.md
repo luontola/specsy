@@ -5,9 +5,15 @@ group: navigation
 ---
 {% include JB/setup %}
 
-You can download Specsy from the Maven Central Repository under the [org.specsy groupId](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22). Specsy's tests are run using the [Jumi test runner](http://jumi.fi/). (The old 1.x versions, which are run with JUnit, use the [net.orfjackal.specsy groupId](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.orfjackal.specsy%22).) The source code is at <https://github.com/orfjackal/specsy>
+You can download Specsy from the Maven Central Repository under the [org.specsy](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22) groupId. Specsy's tests are run using the [Jumi test runner](http://jumi.fi/). (The old 1.x versions, which are run with JUnit, use the [net.orfjackal.specsy](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.orfjackal.specsy%22) groupId.) The [source code](https://github.com/orfjackal/specsy) is at GitHub.
 
-Choose the right artifact based on your language. For example, `specsy-java` is for Java (7 or higher; lambdas recommended), `specsy-groovy` for Groovy (all versions), and `specsy-scala_x.x.x` for a particular Scala version (2.7.7 or higher). Specsy runs on Java 7 or higher (due to [Jumi](http://jumi.fi/) requiring it). It's easy to add support for more JVM-based languages, so create a [feature or pull request](https://github.com/orfjackal/specsy/issues) if you would like your favorite language supported.
+Choose the right artifact based on your programming language:
+
+- [specsy-scala_x.x.x](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22%20specsy-scala) for Scala (version 2.7.7 or higher)
+- [specsy-groovy](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22%20a%3A%22specsy-groovy%22) for Groovy (all versions)
+- [specsy-java](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22%20a%3A%22specsy-java%22) for Java (version 7 or higher; lambdas recommended)
+
+Specsy runs on Java 7 or higher (due to [Jumi](http://jumi.fi/) requiring it). It's easy to add support for more JVM-based languages (create just one [facade class](https://github.com/orfjackal/specsy/blob/master/specsy-groovy/src/main/java/org/specsy/groovy) and [syntax example](https://github.com/orfjackal/specsy/tree/master/specsy-groovy/src/test/java/org/specsy/groovy)), so create a [feature or pull request](https://github.com/orfjackal/specsy/issues) if you would like your favorite language supported.
 
 Continue to the [documentation](documentation.html) to find out how to use Specsy.
 
