@@ -1,4 +1,4 @@
-// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2013, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -15,20 +15,9 @@ public class ExamplesBootstrapTest {
 
     @Test(timeout = TIMEOUT)
     public void run_using_Jumi() throws Exception {
-        JumiBootstrap bootstrap = new JumiBootstrap()
+        new JumiBootstrap()
                 //.enableDebugMode()
-                .setPassingTestsVisible(true);
-
-        bootstrap.runTestClasses(
-                DeferBlocksExample2Spec.class,
-                DeferBlocksExampleSpec.class,
-                EnvironmentFilterExampleSpec.class,
-                FibonacciSpec.class,
-                HelloWorldSpec.class,
-                ParameterizedExampleSpec.class,
-                PendingUntilFixedExampleSpec.class,
-                ShareSideEffectsExampleSpec.class,
-                StackSpec.class
-        );
+                .setPassingTestsVisible(true)
+                .runTestsMatching("glob:org/specsy/scala/examples/**Spec.class");
     }
 }

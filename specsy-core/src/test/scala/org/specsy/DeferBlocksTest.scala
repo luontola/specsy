@@ -1,4 +1,4 @@
-// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2013, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -12,6 +12,7 @@ import fi.jumi.core.results.NullRunVisitor
 import fi.jumi.core.runs.RunId
 import collection.mutable
 import util.TestHelpers
+import fi.jumi.core.api.{StackTrace, TestFile}
 
 class DeferBlocksTest extends TestHelpers {
 
@@ -81,9 +82,9 @@ class DeferBlocksTest extends TestHelpers {
       })
     })
 
-    val failures = mutable.Buffer[Throwable]()
+    val failures = mutable.Buffer[StackTrace]()
     results.visitAllRuns(new NullRunVisitor {
-      override def onFailure(runId: RunId, testClass: String, testId: TestId, cause: Throwable) {
+      override def onFailure(runId: RunId, testFile: TestFile, testId: TestId, cause: StackTrace) {
         failures.append(cause)
       }
     })

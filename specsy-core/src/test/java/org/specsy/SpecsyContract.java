@@ -1,10 +1,11 @@
-// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2013, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
 package org.specsy;
 
 import fi.jumi.api.drivers.TestId;
+import fi.jumi.core.api.TestFile;
 import fi.jumi.core.results.SuiteEventDemuxer;
 import fi.jumi.core.testbench.TestBench;
 import org.junit.*;
@@ -31,7 +32,7 @@ public abstract class SpecsyContract {
 
     @Test
     public void reports_spec_names() {
-        String name = results.getTestName(testClass().getName(), TestId.of(0));
+        String name = results.getTestName(TestFile.fromClass(testClass()), TestId.of(0));
         assertThat(name, is("name of a spec"));
     }
 

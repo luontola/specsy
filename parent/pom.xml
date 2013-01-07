@@ -24,7 +24,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jumi.version>0.2.241</jumi.version>
+        <jumi.version>0.3.257</jumi.version>
         <scala.version>2.9.2</scala.version>
     </properties>
 

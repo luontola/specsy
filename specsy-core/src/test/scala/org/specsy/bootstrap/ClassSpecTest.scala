@@ -1,12 +1,11 @@
-// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2013, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
 package org.specsy.bootstrap
 
 import org.junit.{Before, Test}
-import fi.jumi.core.runs.RunId
-import fi.jumi.core.runners.TestClassListener
+import fi.jumi.core.runs.{RunListener, RunId}
 import fi.jumi.api.drivers.TestId
 import org.specsy.core.{Path, Context, Closure}
 import org.specsy.GlobalSpy
@@ -16,7 +15,7 @@ import org.specsy.util.FakeSuiteNotifier
 
 class ClassSpecTest {
 
-  private val listener = mock(classOf[TestClassListener])
+  private val listener = mock(classOf[RunListener])
   private val notifier = new FakeSuiteNotifier(listener)
   private val context = new Context(Path.ROOT, notifier)
 
