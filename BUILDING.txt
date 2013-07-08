@@ -25,18 +25,23 @@ mvn clean verify
 
 	RELEASING A SINGLE MODULE
 
+NOTE: Since Scala 2.10 sbt's naming convention [1] doesn't anymore use the
+full version number, so it shouldn't anymore be necessary to release a
+single module like this. For more information, see
+http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html#publishing-conventions
+
 Releasing a module for a new language version:
 
-1. Edit specsy-scala_2.10/pom.xml and change the scala.version property to "2.10.0-RC1"
+1. Edit specsy-scala_2.9/pom.xml and change the scala.version property to "2.9.3"
 
-2. Commit as "Release for Scala 2.10.0-RC1", but do NOT create a tag
+2. Commit as "Release for Scala 2.9.3", but do NOT create a tag
 
-    git commit -am "Release for Scala 2.10.0-RC1"
+    git commit -am "Release for Scala 2.9.3"
     git push
 
 3. Deploy only that module:
 
-    cd specsy-scala_2.10
+    cd specsy-scala_2.9
     mvn clean deploy -Psonatype-oss-release
     mvn nexus:staging-close -Dnexus.description="`git log --format=format:%s -1`"
 
