@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.specsy:specsy-core:test-jar:tests:2.1.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/specsy/specsy-core/2.1.1-SNAPSHOT/specsy-core-2.1.1-SNAPSHOT-tests.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/specsy/specsy-core/2.1.1-SNAPSHOT/specsy-core-2.1.1-SNAPSHOT-test-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/specsy/specsy-core/2.1.1-SNAPSHOT/specsy-core-2.1.1-SNAPSHOT-test-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
