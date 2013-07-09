@@ -1,27 +1,50 @@
 #!/bin/bash
 set -eu
-: ${1:? Usage: $0 VERSION}
+: ${1:? Usage: $0 RELEASE_VERSION}
 
-VERSION="$1"
-if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    echo "Error: VERSION must be in X.Y.Z format, but was $VERSION"
+RELEASE_VERSION="$1"
+if [[ ! "$RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "Error: RELEASE_VERSION must be in X.Y.Z format, but was $RELEASE_VERSION"
     exit 1
 fi
 
+function bump_version()
+{
+    local prefix=`echo $1 | sed -n -r 's/([0-9]+\.[0-9]+\.)[0-9]+/\1/p'`
+    local suffix=`echo $1 | sed -n -r 's/[0-9]+\.[0-9]+\.([0-9]+)/\1/p'`
+    ((suffix++))
+    echo "$prefix$suffix-SNAPSHOT"
+}
+NEXT_VERSION=`bump_version $RELEASE_VERSION`
 set -x
 
 mvn versions:set \
     -DgenerateBackupPoms=false \
-    -DnewVersion="$VERSION" \
+    -DnewVersion="$RELEASE_VERSION" \
     --file parent/pom.xml
-
 git add -u
-git commit -m "Release $VERSION"
+git commit -m "Release $RELEASE_VERSION"
 
 mvn clean deploy \
     -Psonatype-oss-release
 
-mvn nexus:staging-close \
-    -Dnexus.description="Specsy $VERSION"
+# TODO: upgrade to nexus-staging-maven-plugin
+# TODO: release OSSRH and push to GitHub automatically
+#mvn nexus:staging-close \
+#    -Dnexus.description="Specsy $RELEASE_VERSION"
 
-git tag -s -m "Specsy $VERSION" "v$VERSION"
+git tag -s -m "Specsy $RELEASE_VERSION" "v$RELEASE_VERSION"
+
+mvn versions:set \
+    -DgenerateBackupPoms=false \
+    -DnewVersion="$NEXT_VERSION" \
+    --file parent/pom.xml
+git add -u
+git commit -m "Prepare for next development iteration"
+
+set +x
+echo ""
+echo "Done. Next steps:"
+echo "    open https://oss.sonatype.org/"
+echo "    git push"
+echo "    git push --tags"
