@@ -24,7 +24,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jumi.version>0.3.257</jumi.version>
+        <jumi.version>0.4.350</jumi.version>
         <scala.version>2.9.2</scala.version>
     </properties>
 
@@ -82,13 +82,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>fi.jumi</groupId>
-            <artifactId>jumi-core</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
     <dependencyManagement>
@@ -124,12 +117,6 @@
                 <groupId>fi.jumi</groupId>
                 <artifactId>jumi-core</artifactId>
                 <version>${jumi.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>fi.jumi</groupId>
-                <artifactId>jumi-core</artifactId>
-                <version>${jumi.version}</version>
-                <type>test-jar</type>
             </dependency>
 
             <!-- TODO: remove this boostrap when Jumi can be run without it -->

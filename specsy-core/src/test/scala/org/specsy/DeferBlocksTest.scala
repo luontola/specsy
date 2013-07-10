@@ -9,10 +9,9 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
 import fi.jumi.api.drivers.TestId
 import fi.jumi.core.results.NullRunVisitor
-import fi.jumi.core.runs.RunId
 import collection.mutable
 import util.TestHelpers
-import fi.jumi.core.api.{StackTrace, TestFile}
+import fi.jumi.core.api.{RunId, StackTrace, TestFile}
 
 class DeferBlocksTest extends TestHelpers {
 

@@ -15,9 +15,13 @@ public class ExamplesBootstrapTest {
 
     @Test(timeout = TIMEOUT)
     public void run_using_Jumi() throws Exception {
-        new JumiBootstrap()
+        JumiBootstrap bootstrap = new JumiBootstrap();
+        bootstrap.suite
+                .addJvmOptions("-ea")
+                .setIncludedTestsPattern("glob:org/specsy/scala/examples/**Spec.class");
+        bootstrap
                 //.enableDebugMode()
                 .setPassingTestsVisible(true)
-                .runTestsMatching("glob:org/specsy/scala/examples/**Spec.class");
+                .runSuite();
     }
 }

@@ -5,18 +5,20 @@
 package org.specsy.bootstrap
 
 import org.junit.{Before, Test}
-import fi.jumi.core.runs.{RunListener, RunId}
+import fi.jumi.core.runs.{RunIdSequence, ThreadBoundSuiteNotifier, RunListener}
 import fi.jumi.api.drivers.TestId
 import org.specsy.core.{Path, Context, Closure}
 import org.specsy.GlobalSpy
 import org.mockito.Mockito._
 import org.mockito.Matchers.{eq => is, _}
-import org.specsy.util.FakeSuiteNotifier
+import fi.jumi.core.api.RunId
+import fi.jumi.actors.ActorRef
+import fi.jumi.core.output.OutputCapturer
 
 class ClassSpecTest {
 
   private val listener = mock(classOf[RunListener])
-  private val notifier = new FakeSuiteNotifier(listener)
+  private val notifier = new ThreadBoundSuiteNotifier(ActorRef.wrap(listener), new RunIdSequence(), new OutputCapturer())
   private val context = new Context(Path.ROOT, notifier)
 
   @Before
