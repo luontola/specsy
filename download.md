@@ -21,6 +21,10 @@ Continue to the [documentation](documentation.html) to find out how to use Specs
 Version History
 ---------------
 
+**Upcoming Changes**
+
+- Upgraded to Jumi 0.4.350 (not that it matters to users, because the older versions are compatible)
+
 **2.1.0 (2012-12-25)**
 
 - Upgraded to Jumi 0.2.235
