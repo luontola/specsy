@@ -32,17 +32,21 @@ http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html#publishin
 
 Releasing a module for a new language version:
 
-1. Edit specsy-scala_2.9/pom.xml and change the scala.version property to "2.9.3"
+1. Checkout a branch from the original release's tag
 
-2. Commit as "Release for Scala 2.9.3", but do NOT create a tag
+    git checkout -b v2.1.x v2.1.0
+
+2. Edit specsy-scala_2.9/pom.xml and change the scala.version property to "2.9.3"
+
+3. Commit as "Release for Scala 2.9.3", but do NOT create a tag
 
     git commit -am "Release for Scala 2.9.3"
-    git push
+    git push origin HEAD
 
-3. Deploy only that module:
+4. Deploy only that module
 
     cd specsy-scala_2.9
-    mvn clean deploy -Psonatype-oss-release
-    mvn nexus:staging-close -Dnexus.description="`git log --format=format:%s -1`"
+    ../scripts/stage.sh   "`git log --format=format:%s -1`"
+    ../scripts/publish.sh "`git log --format=format:%s -1`"
 
-4. Release the staging repository through https://oss.sonatype.org/
+5. Release the staging repository through https://oss.sonatype.org/
