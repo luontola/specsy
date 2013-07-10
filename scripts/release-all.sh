@@ -26,12 +26,20 @@ git add -u
 git commit -m "Release $RELEASE_VERSION"
 
 mvn clean deploy \
-    -Psonatype-oss-release
+    --errors \
+    -Psonatype-oss-release \
+    -DaltDeploymentRepository="staging::default::file:staging"
 
-# TODO: upgrade to nexus-staging-maven-plugin
+mvn nexus-staging:deploy-staged-repository \
+    --errors \
+    -DrepositoryDirectory=staging \
+    -DstagingDescription="Specsy $RELEASE_VERSION"
+
 # TODO: release OSSRH and push to GitHub automatically
-#mvn nexus:staging-close \
-#    -Dnexus.description="Specsy $RELEASE_VERSION"
+#mvn nexus-staging:release \
+#    --errors \
+#    -DaltStagingDirectory=staging \
+#    -DstagingDescription="Specsy $RELEASE_VERSION"
 
 git tag -s -m "Specsy $RELEASE_VERSION" "v$RELEASE_VERSION"
 
