@@ -14,6 +14,8 @@ import org.mockito.Matchers.{eq => is, _}
 import fi.jumi.core.api.RunId
 import fi.jumi.actors.ActorRef
 import fi.jumi.core.output.OutputCapturer
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 
 class ClassSpecTest {
 
@@ -45,6 +47,12 @@ class ClassSpecTest {
     runSpec(classOf[ClosureImplementingSpec])
 
     GlobalSpy.assertContains("run executed")
+  }
+
+  @Test
+  def has_custom_toString_for_better_logging_in_Jumi() {
+    assertThat(new ClassSpec(classOf[ContextAcquiringSpec]).toString,
+      equalTo("org.specsy.bootstrap.ClassSpec(org.specsy.bootstrap.ContextAcquiringSpec)"))
   }
 
   private def runSpec(testClass: Class[_]) {
