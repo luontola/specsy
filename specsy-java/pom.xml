@@ -29,4 +29,92 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+
+            <!-- Our test classes use Java 8 lambdas -->
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <fork>true</fork>
+                    <executable>${env.JAVA8_HOME}/bin/javac</executable>
+                </configuration>
+            </plugin>
+
+            <!-- Process our byte codes to make them run on Java 7 -->
+
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-retrolambda</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>net.orfjackal.retrolambda</groupId>
+                                    <artifactId>retrolambda</artifactId>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <destFileName>retrolambda.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>retrolambda-classes</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <property name="compile_classpath" refid="maven.compile.classpath"/>
+                                <exec executable="${env.JAVA8_HOME}/bin/java" failonerror="true">
+                                    <arg value="-Dretrolambda.inputDir=${project.build.outputDirectory}"/>
+                                    <arg value="-Dretrolambda.classpath=${compile_classpath}"/>
+                                    <arg value="-javaagent:${project.build.directory}/retrolambda.jar"/>
+                                    <arg value="-jar"/>
+                                    <arg value="${project.build.directory}/retrolambda.jar"/>
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>retrolambda-test-classes</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <property name="test_classpath" refid="maven.test.classpath"/>
+                                <exec executable="${env.JAVA8_HOME}/bin/java" failonerror="true">
+                                    <arg value="-Dretrolambda.inputDir=${project.build.testOutputDirectory}"/>
+                                    <arg value="-Dretrolambda.classpath=${test_classpath}"/>
+                                    <arg value="-javaagent:${project.build.directory}/retrolambda.jar"/>
+                                    <arg value="-jar"/>
+                                    <arg value="${project.build.directory}/retrolambda.jar"/>
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
 </project>

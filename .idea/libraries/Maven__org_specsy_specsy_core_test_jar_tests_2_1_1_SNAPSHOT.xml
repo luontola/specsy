@@ -4,9 +4,11 @@
       <root url="jar://$MAVEN_REPOSITORY$/org/specsy/specsy-core/2.1.1-SNAPSHOT/specsy-core-2.1.1-SNAPSHOT-tests.jar!/" />
     </CLASSES>
     <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/specsy-core/specsy-core-2.1.1-SNAPSHOT-test-javadoc.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/specsy/specsy-core/2.1.1-SNAPSHOT/specsy-core-2.1.1-SNAPSHOT-test-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
+      <root url="jar://$PROJECT_DIR$/specsy-core/specsy-core-2.1.1-SNAPSHOT-test-sources.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/specsy/specsy-core/2.1.1-SNAPSHOT/specsy-core-2.1.1-SNAPSHOT-test-sources.jar!/" />
     </SOURCES>
   </library>
