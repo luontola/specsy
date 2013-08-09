@@ -19,7 +19,7 @@ group: navigation
 Quick Start
 -----------
 
-After you have [configured your dependencies](download.html), you can create a Specsy spec by extending the language specific base class, as shown below. The base class is annotated with `@RunVia` so that [Jumi](http://jumi.fi/) can run the tests. (If *have* to use JUnit's test runner instead of Jumi, then have a look at [NestedJUnit](https://github.com/orfjackal/nestedjunit) which supports a quite similar way of writing tests.)
+After you have [configured your dependencies](download.html), you can create a Specsy spec by extending the language specific base class, as shown below. The base class is annotated with `@RunVia` so that [Jumi](http://jumi.fi/) can run the tests. (If you *have* to use JUnit's test runner instead of Jumi, then have a look at [NestedJUnit](https://github.com/orfjackal/nestedjunit) which supports a quite similar way of writing tests.)
 
 Here are examples of the language specific syntax for all of Specsy's API:
 
