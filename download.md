@@ -5,7 +5,7 @@ group: navigation
 ---
 {% include JB/setup %}
 
-You can download Specsy from the Maven Central Repository under the [org.specsy](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22) groupId. Specsy's tests are run using the [Jumi test runner](http://jumi.fi/). (The old 1.x versions, which are run with JUnit, use the [net.orfjackal.specsy](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.orfjackal.specsy%22) groupId.) The [source code](https://github.com/orfjackal/specsy) is at GitHub.
+You can download Specsy from the Maven Central Repository under the [org.specsy](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22) groupId. Specsy 2's tests are run using the [Jumi test runner](http://jumi.fi/) - please refer to Jumi's documentation for instructions on how to run the tests. (The old Specsy 1.x versions, which are run using the JUnit test runner, use the [net.orfjackal.specsy](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.orfjackal.specsy%22) groupId.) The [source code](https://github.com/orfjackal/specsy) is at GitHub.
 
 Choose the right artifact based on your programming language:
 
@@ -13,7 +13,7 @@ Choose the right artifact based on your programming language:
 - [specsy-groovy](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22%20a%3A%22specsy-groovy%22) for Groovy (all versions)
 - [specsy-java](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.specsy%22%20a%3A%22specsy-java%22) for Java (version 7 or higher; lambdas recommended)
 
-Specsy runs on Java 7 or higher (due to [Jumi](http://jumi.fi/) requiring it). It's easy to add support for more JVM-based languages (create just one [facade class](https://github.com/orfjackal/specsy/blob/master/specsy-groovy/src/main/java/org/specsy/groovy) and [syntax example](https://github.com/orfjackal/specsy/tree/master/specsy-groovy/src/test/java/org/specsy/groovy)), so create a [feature or pull request](https://github.com/orfjackal/specsy/issues) if you would like your favorite language supported.
+Specsy requires Java 7 or higher. It's easy to add support for more JVM-based languages (create just one [facade class](https://github.com/orfjackal/specsy/blob/master/specsy-groovy/src/main/java/org/specsy/groovy) and [syntax example](https://github.com/orfjackal/specsy/tree/master/specsy-groovy/src/test/java/org/specsy/groovy)), so create a [feature or pull request](https://github.com/orfjackal/specsy/issues) if you would like your favorite language supported.
 
 Continue to the [documentation](documentation.html) to find out how to use Specsy.
 
