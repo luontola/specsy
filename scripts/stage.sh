@@ -4,7 +4,7 @@ set -eu
 DESCRIPTION="$1"
 set -x
 
-mvn clean deploy \
+JAVA_HOME="$JAVA7_HOME" mvn clean deploy \
     --errors \
     -Psonatype-oss-release \
     -DaltDeploymentRepository="staging::default::file:staging"
