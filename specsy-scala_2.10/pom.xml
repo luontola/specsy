@@ -10,12 +10,12 @@
         <relativePath>../specsy-scala-parent/pom.xml</relativePath>
     </parent>
 
-    <!-- See http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html#publishing-conventions -->
+    <!-- See http://www.scala-sbt.org/release/docs/Cross-Build.html#Publishing+Conventions -->
     <artifactId>specsy-scala_2.10</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <scala.version>2.10.2</scala.version>
+        <scala.version>2.10.4</scala.version>
     </properties>
 
     <build>
