@@ -25,6 +25,7 @@
         <module>specsy-scala_2.8</module>
         <module>specsy-scala_2.9</module>
         <module>specsy-scala_2.10</module>
+        <module>specsy-scala_2.11</module>
     </modules>
 
     <build>
