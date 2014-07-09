@@ -1,4 +1,4 @@
-// Copyright © 2010-2013, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2014, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -13,7 +13,7 @@ import org.mockito.Mockito._
 import org.mockito.Matchers.{eq => is, _}
 import fi.jumi.core.api.RunId
 import fi.jumi.actors.ActorRef
-import fi.jumi.core.output.OutputCapturer
+import fi.jumi.core.stdout.OutputCapturer
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 
