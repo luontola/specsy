@@ -14,7 +14,7 @@ class EnvironmentFilterExampleSpec extends ScalaSpecsy {
 
   "This test is run only under Java 8 and greater" >> worksOnlyOnJava8 {
     // Test code... For example something which uses the new Date and Time API (JSR-310)
-    // which should be included in Java 8
+    // which was added in Java 8
   }
 
   // This can also be used at the top level, if many/all tests work only on Java 8.
@@ -38,7 +38,7 @@ class EnvironmentFilterExampleSpec extends ScalaSpecsy {
 
   private def isJava8: Boolean = {
     try {
-      Class.forName("javax.time.calendar.LocalDate")
+      Class.forName("java.time.LocalDate")
       true
     } catch {
       case e: ClassNotFoundException => false
