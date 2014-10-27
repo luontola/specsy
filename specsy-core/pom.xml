@@ -24,16 +24,15 @@
 
         <!-- Testing / Scala -->
 
-        <!-- XXX: cannot use `test` scope because otherwise IDEA cannot compile the tests -->
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-compiler</artifactId>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
