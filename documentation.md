@@ -5,15 +5,15 @@ group: navigation
 ---
 {% include JB/setup %}
 
-- [Quick Start](#quick_start)
-- [Naming Tests](#naming_tests)
+- [Quick Start](#quick-start)
+- [Naming Tests](#naming-tests)
 - [Assertions](#assertions)
-- [Isolated Execution Model](#isolated_execution_model)
-- [Non-Isolated Execution Model](#nonisolated_execution_model)
-- [“Before” and “After” Blocks](#before_and_after_blocks)
-- [Parameterized Tests](#parameterized_tests)
-- [Executing Tests Only in Some Environments](#executing_tests_only_in_some_environments)
-- [“Pending Until Fixed”](#pending_until_fixed)
+- [Isolated Execution Model](#isolated-execution-model)
+- [Non-Isolated Execution Model](#non-isolated-execution-model)
+- [“Before” and “After” Blocks](#before-and-after-blocks)
+- [Parameterized Tests](#parameterized-tests)
+- [Executing Tests Only in Some Environments](#executing-tests-only-in-some-environments)
+- [“Pending Until Fixed”](#pending-until-fixed)
 
 
 Quick Start
@@ -50,7 +50,7 @@ class HelloWorldSpec extends ScalaSpecsy {
 }
 </pre>
 
-You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs (see [Isolated Execution Model](#isolated_execution_model)). The test runner can run each leaf child spec in its own thread.
+You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs (see [Isolated Execution Model](#isolated-execution-model)). The test runner can run each leaf child spec in its own thread.
 
 Specsy does not contain its own assertion syntax, so you can use the assertions from [JUnit](http://www.junit.org/), [Hamcrest](http://code.google.com/p/hamcrest/), [specs](http://code.google.com/p/specs/), [specs2](http://specs2.org/), [ScalaTest](http://www.scalatest.org/) or any other framework which makes it possible (see [Assertions](#assertions)).
 
