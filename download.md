@@ -23,6 +23,7 @@ Version History
 
 **Upcoming**
 
+- Experimental JUnit 5 support
 - Dropped support for Scala 2.7-2.9
 
 **2.1.1 (2014-07-09)**
