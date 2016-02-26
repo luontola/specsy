@@ -27,12 +27,26 @@
       <profile default="true" name="Default" enabled="false">
         <processorPath useClasspath="true" />
       </profile>
-      <profile default="false" name="Maven default annotation processors profile" enabled="false">
+      <profile default="false" name="Annotation profile for specsy-groovy" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="specsy-groovy" />
+      </profile>
+      <profile default="false" name="Annotation profile for specsy-java" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="specsy-java" />
+      </profile>
+      <profile default="false" name="Annotation profile for specsy-core" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="specsy-core" />
-        <module name="specsy-groovy" />
-        <module name="specsy-java" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -45,4 +59,3 @@
     </bytecodeTargetLevel>
   </component>
 </project>
-
