@@ -21,6 +21,10 @@ Continue to the [documentation](documentation.html) to find out how to use Specs
 Version History
 ---------------
 
+**Upcoming**
+
+- Dropped support for Scala 2.7-2.9
+
 **2.1.1 (2014-07-09)**
 
 - Upgraded to Jumi 0.5.437 (not that it matters to users, because the older versions are compatible)
