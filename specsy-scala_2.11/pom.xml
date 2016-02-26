@@ -18,20 +18,4 @@
         <scala.version>2.11.7</scala.version>
     </properties>
 
-    <build>
-        <plugins>
-
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <configuration>
-                    <args>
-                        <arg>-language:implicitConversions</arg>
-                    </args>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
-
 </project>
