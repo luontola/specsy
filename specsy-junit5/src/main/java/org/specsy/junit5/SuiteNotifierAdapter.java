@@ -20,39 +20,38 @@ public class SuiteNotifierAdapter implements SuiteNotifier {
 
     public SuiteNotifierAdapter(EngineExecutionListener listener, ClassTestDescriptor rootDescriptor) {
         this.listener = listener;
-        descriptorsByTestId.put(TestId.ROOT, rootDescriptor);
+        this.descriptorsByTestId.put(TestId.ROOT, rootDescriptor);
     }
 
     @Override
     public void fireTestFound(TestId testId, String name) {
-        if (testId.isRoot()) {
-            return;
-        }
+        descriptorsByTestId.computeIfAbsent(testId, k -> createTestDescriptor(testId, name));
+    }
+
+    private TestDescriptor createTestDescriptor(TestId testId, String name) {
         TestDescriptor parent = descriptorsByTestId.get(testId.getParent());
         NestedTestDescriptor descriptor = new NestedTestDescriptor(parent, testId, name);
-        TestDescriptor previous = descriptorsByTestId.putIfAbsent(testId, descriptor);
-        if (previous == null) {
-            parent.addChild(descriptor);
-            listener.dynamicTestRegistered(descriptor);
-        }
+        parent.addChild(descriptor);
+        listener.dynamicTestRegistered(descriptor);
+        return descriptor;
     }
 
     @Override
     public TestNotifier fireTestStarted(TestId testId) {
-        TestDescriptor descriptor = toDescriptor(testId);
+        TestDescriptor descriptor = getTestDescriptor(testId);
         listener.executionStarted(descriptor);
         return new TestNotifierAdapter(listener, descriptor);
+    }
+
+    private TestDescriptor getTestDescriptor(TestId testId) {
+        return descriptorsByTestId.computeIfAbsent(testId, key -> {
+            throw new IllegalStateException("key not found: " + key);
+        });
     }
 
     @Override
     public void fireInternalError(String message, Throwable cause) {
         // TODO: proper error handling
         throw new RuntimeException("Internal error: " + message, cause);
-    }
-
-    private TestDescriptor toDescriptor(TestId testId) {
-        return descriptorsByTestId.computeIfAbsent(testId, key -> {
-            throw new IllegalStateException("key not found: " + key);
-        });
     }
 }
