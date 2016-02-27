@@ -57,19 +57,8 @@ public class SpecsyTestEngineTest {
     }
 
     @Test
-    public void reported_TestId_tree_structure() {
-        Launcher launcher = LauncherFactory.create();
-        List<TestIdentifier> tests = new ArrayList<>();
-        launcher.registerTestExecutionListeners(new TestExecutionListener() {
-            @Override
-            public void executionStarted(TestIdentifier testIdentifier) {
-                tests.add(testIdentifier);
-            }
-        });
-
-        launcher.execute(TestDiscoveryRequestBuilder.request()
-                .select(forClass(DummySpec.class))
-                .build());
+    public void reported_unique_ids() {
+        List<TestIdentifier> tests = runTests(DummySpec.class);
 
         assertThat("tests", tests, hasSize(6));
         assertUniqueId(tests, 0, "specsy");
@@ -78,6 +67,17 @@ public class SpecsyTestEngineTest {
         assertUniqueId(tests, 3, "specsy", "org.specsy.junit5.SpecsyTestEngineTest$DummySpec", "0", "0");
         assertUniqueId(tests, 4, "specsy", "org.specsy.junit5.SpecsyTestEngineTest$DummySpec");
         assertUniqueId(tests, 5, "specsy", "org.specsy.junit5.SpecsyTestEngineTest$DummySpec", "1");
+    }
+
+    @Test
+    public void reported_display_names() {
+        List<TestIdentifier> tests = runTests(DummySpec.class);
+
+        assertThat(tests.get(0).getDisplayName(), is("Specsy"));
+        assertThat(tests.get(1).getDisplayName(), is("DummySpec"));
+        assertThat(tests.get(2).getDisplayName(), is("passing"));
+        assertThat(tests.get(3).getDisplayName(), is("nested"));
+        assertThat(tests.get(5).getDisplayName(), is("failing"));
     }
 
 
@@ -98,6 +98,21 @@ public class SpecsyTestEngineTest {
 
 
     // helpers
+
+    private static List<TestIdentifier> runTests(Class<?> testClass) {
+        Launcher launcher = LauncherFactory.create();
+        List<TestIdentifier> tests = new ArrayList<>();
+        launcher.registerTestExecutionListeners(new TestExecutionListener() {
+            @Override
+            public void executionStarted(TestIdentifier testIdentifier) {
+                tests.add(testIdentifier);
+            }
+        });
+        launcher.execute(TestDiscoveryRequestBuilder.request()
+                .select(forClass(testClass))
+                .build());
+        return tests;
+    }
 
     private static void assertUniqueId(List<TestIdentifier> tests, int index,
                                        String... expectedUniqueIdParts) {
