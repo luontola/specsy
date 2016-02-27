@@ -5,13 +5,14 @@
 package org.specsy.junit5;
 
 import org.junit.gen5.engine.support.descriptor.AbstractTestDescriptor;
+import org.junit.gen5.engine.support.descriptor.EngineDescriptor;
 
 public class ClassTestDescriptor extends AbstractTestDescriptor {
 
     private final Class<?> testClass;
 
-    public ClassTestDescriptor(Class<?> testClass) {
-        super(testClass.getName());
+    public ClassTestDescriptor(EngineDescriptor parent, Class<?> testClass) {
+        super(parent.getUniqueId() + ":" + testClass.getName());
         this.testClass = testClass;
     }
 

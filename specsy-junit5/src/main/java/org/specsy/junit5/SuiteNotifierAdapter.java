@@ -28,9 +28,11 @@ public class SuiteNotifierAdapter implements SuiteNotifier {
         if (testId.isRoot()) {
             return;
         }
-        NestedTestDescriptor descriptor = new NestedTestDescriptor(testId, name);
+        TestDescriptor parent = descriptorsByTestId.get(testId.getParent());
+        NestedTestDescriptor descriptor = new NestedTestDescriptor(parent, testId, name);
         TestDescriptor previous = descriptorsByTestId.putIfAbsent(testId, descriptor);
         if (previous == null) {
+            parent.addChild(descriptor);
             listener.dynamicTestRegistered(descriptor);
         }
     }

@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
 
 import static org.junit.gen5.engine.TestExecutionResult.Status.FAILED;
+import static org.junit.gen5.engine.TestExecutionResult.Status.SUCCESSFUL;
 
 public class SpecsyTestEngine implements TestEngine {
 
@@ -33,7 +34,7 @@ public class SpecsyTestEngine implements TestEngine {
             Class<?> testClass = selector.getTestClass();
             RunVia runVia = testClass.getAnnotation(RunVia.class);
             if (runVia != null && runVia.value() == Specsy.class) {
-                engineDescriptor.addChild(new ClassTestDescriptor(testClass));
+                engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
             }
         }
         return engineDescriptor;
@@ -41,16 +42,25 @@ public class SpecsyTestEngine implements TestEngine {
 
     @Override
     public void execute(ExecutionRequest request) {
-        EngineExecutionListener listener = request.getEngineExecutionListener();
-        request.getRootTestDescriptor().accept((descriptor, remove) -> {
-            if (descriptor instanceof EngineDescriptor) {
-                // no processing needed
-            } else if (descriptor instanceof ClassTestDescriptor) {
-                execute((ClassTestDescriptor) descriptor, listener);
-            } else {
-                throw new IllegalArgumentException("Unsupported descriptor: " + descriptor);
-            }
-        });
+        execute(request.getRootTestDescriptor(), request.getEngineExecutionListener());
+    }
+
+    private void execute(TestDescriptor descriptor, EngineExecutionListener listener) {
+        if (descriptor instanceof EngineDescriptor) {
+            execute((EngineDescriptor) descriptor, listener);
+        } else if (descriptor instanceof ClassTestDescriptor) {
+            execute((ClassTestDescriptor) descriptor, listener);
+        } else {
+            throw new IllegalArgumentException("Unrecognized descriptor: " + descriptor);
+        }
+    }
+
+    private void execute(EngineDescriptor descriptor, EngineExecutionListener listener) {
+        listener.executionStarted(descriptor);
+        for (TestDescriptor child : descriptor.getChildren()) {
+            execute(child, listener);
+        }
+        listener.executionFinished(descriptor, new TestExecutionResult(SUCCESSFUL, null));
     }
 
     private void execute(ClassTestDescriptor descriptor, EngineExecutionListener listener) {
