@@ -27,7 +27,7 @@ public class SpecsyTestEngine implements TestEngine {
 
     @Override
     public TestDescriptor discover(EngineDiscoveryRequest discoveryRequest) {
-        EngineDescriptor engineDescriptor = new EngineDescriptor(getId(), "Specsy");
+        EngineDescriptor engineDescriptor = new EngineDescriptor(getId(), "Specsy " + new Specsy().getVersion());
 
         // TODO: support other test selector types
         for (ClassSelector selector : discoveryRequest.getSelectorsByType(ClassSelector.class)) {

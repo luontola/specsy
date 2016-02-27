@@ -73,7 +73,8 @@ public class SpecsyTestEngineTest {
     public void reported_display_names() {
         List<TestIdentifier> tests = runTests(DummySpec.class);
 
-        assertThat(tests.get(0).getDisplayName(), is("Specsy"));
+        String engineName = tests.get(0).getDisplayName();
+        assertThat(engineName, engineName.matches("Specsy (\\d+\\.\\d+\\.\\d+(-SNAPSHOT)?|<local-build>)"));
         assertThat(tests.get(1).getDisplayName(), is("DummySpec"));
         assertThat(tests.get(2).getDisplayName(), is("passing"));
         assertThat(tests.get(3).getDisplayName(), is("nested"));
