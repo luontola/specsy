@@ -1,4 +1,4 @@
-// Copyright © 2010-2014, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -19,7 +19,7 @@ public class SpecRun implements Runnable {
         this(spec, Path.ROOT, notifier, executor);
     }
 
-    private SpecRun(Spec spec, Path pathToExecute, SuiteNotifier notifier, Executor executor) {
+    public SpecRun(Spec spec, Path pathToExecute, SuiteNotifier notifier, Executor executor) {
         this.spec = spec;
         this.pathToExecute = pathToExecute;
         this.notifier = notifier;

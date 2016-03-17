@@ -5,6 +5,7 @@
 package org.specsy.junit5;
 
 import org.junit.Test;
+import org.junit.gen5.engine.DiscoverySelector;
 import org.junit.gen5.launcher.Launcher;
 import org.junit.gen5.launcher.TestExecutionListener;
 import org.junit.gen5.launcher.TestId;
@@ -27,6 +28,8 @@ import java.util.stream.Stream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.gen5.engine.discovery.ClassSelector.forClass;
+import static org.junit.gen5.engine.discovery.UniqueIdSelector.forUniqueId;
+import static org.junit.gen5.launcher.EngineIdFilter.byEngineId;
 
 public class SpecsyTestEngineTest {
 
@@ -58,7 +61,7 @@ public class SpecsyTestEngineTest {
 
     @Test
     public void reported_unique_ids() {
-        List<TestIdentifier> tests = runTests(DummySpec.class);
+        List<TestIdentifier> tests = runTests(forClass(DummySpec.class));
 
         assertThat("tests", tests, hasSize(6));
         assertUniqueId(tests, 0, "specsy");
@@ -71,13 +74,24 @@ public class SpecsyTestEngineTest {
 
     @Test
     public void reported_display_names() {
-        List<TestIdentifier> tests = runTests(DummySpec.class);
+        List<TestIdentifier> tests = runTests(forClass(DummySpec.class));
 
         assertThat(tests.get(0).getDisplayName(), is("Specsy"));
         assertThat(tests.get(1).getDisplayName(), is("DummySpec"));
         assertThat(tests.get(2).getDisplayName(), is("passing"));
         assertThat(tests.get(3).getDisplayName(), is("nested"));
         assertThat(tests.get(5).getDisplayName(), is("failing"));
+    }
+
+    @Test
+    public void select_tests_by_UniqueId() {
+        List<TestIdentifier> tests = runTests(forUniqueId("specsy:org.specsy.junit5.SpecsyTestEngineTest$DummySpec:0"));
+
+        assertThat("tests", tests, hasSize(4));
+        assertUniqueId(tests, 0, "specsy");
+        assertUniqueId(tests, 1, "specsy", "org.specsy.junit5.SpecsyTestEngineTest$DummySpec");
+        assertUniqueId(tests, 2, "specsy", "org.specsy.junit5.SpecsyTestEngineTest$DummySpec", "0");
+        assertUniqueId(tests, 3, "specsy", "org.specsy.junit5.SpecsyTestEngineTest$DummySpec", "0", "0");
     }
 
 
@@ -99,7 +113,7 @@ public class SpecsyTestEngineTest {
 
     // helpers
 
-    private static List<TestIdentifier> runTests(Class<?> testClass) {
+    private static List<TestIdentifier> runTests(DiscoverySelector selector) {
         Launcher launcher = LauncherFactory.create();
         List<TestIdentifier> tests = new ArrayList<>();
         launcher.registerTestExecutionListeners(new TestExecutionListener() {
@@ -109,7 +123,8 @@ public class SpecsyTestEngineTest {
             }
         });
         launcher.execute(TestDiscoveryRequestBuilder.request()
-                .select(forClass(testClass))
+                .select(selector)
+                .filter(byEngineId("specsy")) // XXX: JUnit5TestableFactory.fromUniqueId() fails when running any other engines with forUniqueId
                 .build());
         return tests;
     }

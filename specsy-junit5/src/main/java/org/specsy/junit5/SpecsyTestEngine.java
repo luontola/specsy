@@ -5,39 +5,65 @@
 package org.specsy.junit5;
 
 import fi.jumi.api.RunVia;
-import fi.jumi.api.drivers.Driver;
 import org.junit.gen5.engine.*;
 import org.junit.gen5.engine.discovery.ClassSelector;
+import org.junit.gen5.engine.discovery.UniqueIdSelector;
 import org.junit.gen5.engine.support.descriptor.EngineDescriptor;
 import org.specsy.Specsy;
+import org.specsy.bootstrap.ClassSpec;
+import org.specsy.core.Path;
+import org.specsy.core.SpecRun;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
+import java.util.stream.Stream;
 
-import static org.junit.gen5.engine.TestExecutionResult.Status.FAILED;
 import static org.junit.gen5.engine.TestExecutionResult.Status.SUCCESSFUL;
 
 public class SpecsyTestEngine implements TestEngine {
 
+    private static final String ENGINE_ID = "specsy";
+
     @Override
     public String getId() {
-        return "specsy";
+        return ENGINE_ID;
     }
 
     @Override
     public TestDescriptor discover(EngineDiscoveryRequest discoveryRequest) {
         EngineDescriptor engineDescriptor = new EngineDescriptor(getId(), "Specsy");
 
-        // TODO: support other test selector types
+        // TODO: support ClasspathSelector
+        // TODO: support PackageSelector
         for (ClassSelector selector : discoveryRequest.getSelectorsByType(ClassSelector.class)) {
             Class<?> testClass = selector.getTestClass();
             RunVia runVia = testClass.getAnnotation(RunVia.class);
             if (runVia != null && runVia.value() == Specsy.class) {
-                engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
+                engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass, Path.ROOT));
+            }
+        }
+        for (UniqueIdSelector selector : discoveryRequest.getSelectorsByType(UniqueIdSelector.class)) {
+            String uniqueId = selector.getUniqueId();
+            if (uniqueId.startsWith(ENGINE_ID + ":")) {
+                String[] parts = uniqueId.split(":");
+                Class<?> testClass = loadClass(parts[1]);
+                Path pathToExecute = Path.of(Stream.of(parts)
+                        .skip(2)
+                        .mapToInt(Integer::parseInt)
+                        .toArray());
+                engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass, pathToExecute));
             }
         }
         return engineDescriptor;
+    }
+
+    private static Class<?> loadClass(String name) {
+        try {
+            return Class.forName(name);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -64,16 +90,12 @@ public class SpecsyTestEngine implements TestEngine {
     }
 
     private void execute(ClassTestDescriptor descriptor, EngineExecutionListener listener) {
+        ClassSpec spec = new ClassSpec(descriptor.getTestClass());
+        Path pathToExecute = descriptor.getPathToExecute();
+
+        SuiteNotifierAdapter notifier = new SuiteNotifierAdapter(listener, descriptor);
         AsyncThreadlessExecutor executor = new AsyncThreadlessExecutor();
-        try {
-            Class<?> testClass = descriptor.getTestClass();
-            Driver driver = testClass.getAnnotation(RunVia.class).value().newInstance();
-            driver.findTests(testClass, new SuiteNotifierAdapter(listener, descriptor), executor);
-        } catch (Throwable t) {
-            listener.executionStarted(descriptor);
-            listener.executionFinished(descriptor, new TestExecutionResult(FAILED,
-                    new RuntimeException("Failed to start running tests in " + descriptor.getName(), t)));
-        }
+        executor.execute(new SpecRun(spec, pathToExecute, notifier, executor));
         executor.executeUntilDone();
     }
 

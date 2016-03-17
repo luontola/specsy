@@ -6,18 +6,25 @@ package org.specsy.junit5;
 
 import org.junit.gen5.engine.support.descriptor.AbstractTestDescriptor;
 import org.junit.gen5.engine.support.descriptor.EngineDescriptor;
+import org.specsy.core.Path;
 
 public class ClassTestDescriptor extends AbstractTestDescriptor {
 
     private final Class<?> testClass;
+    private final Path pathToExecute;
 
-    public ClassTestDescriptor(EngineDescriptor parent, Class<?> testClass) {
+    public ClassTestDescriptor(EngineDescriptor parent, Class<?> testClass, Path pathToExecute) {
         super(parent.getUniqueId() + ":" + testClass.getName());
         this.testClass = testClass;
+        this.pathToExecute = pathToExecute;
     }
 
     public Class<?> getTestClass() {
         return testClass;
+    }
+
+    public Path getPathToExecute() {
+        return pathToExecute;
     }
 
     @Override
