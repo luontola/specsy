@@ -19,15 +19,14 @@ import org.specsy.java.JavaSpecsy;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.StringJoiner;
+import java.net.URL;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.gen5.engine.discovery.ClassSelector.forClass;
+import static org.junit.gen5.engine.discovery.ClasspathSelector.forPath;
 import static org.junit.gen5.engine.discovery.UniqueIdSelector.forUniqueId;
 import static org.junit.gen5.launcher.EngineIdFilter.byEngineId;
 
@@ -94,6 +93,15 @@ public class SpecsyTestEngineTest {
         assertUniqueId(tests, 3, "specsy", "org.specsy.junit5.SpecsyTestEngineTest$DummySpec", "0", "0");
     }
 
+    @Test
+    public void select_tests_by_classpath() {
+        List<TestIdentifier> tests = runTests(forPath(myClasspathRoot()));
+
+        assertThat("tests", tests, hasSize(6));
+        assertUniqueId(tests, 0, "specsy");
+        assertUniqueId(tests, 1, "specsy", "org.specsy.junit5.SpecsyTestEngineTest$DummySpec");
+    }
+
 
     // guinea pigs
 
@@ -114,6 +122,10 @@ public class SpecsyTestEngineTest {
     // helpers
 
     private static List<TestIdentifier> runTests(DiscoverySelector selector) {
+        return runTests(Collections.singletonList(selector));
+    }
+
+    private static List<TestIdentifier> runTests(List<DiscoverySelector> selectors) {
         Launcher launcher = LauncherFactory.create();
         List<TestIdentifier> tests = new ArrayList<>();
         launcher.registerTestExecutionListeners(new TestExecutionListener() {
@@ -123,7 +135,7 @@ public class SpecsyTestEngineTest {
             }
         });
         launcher.execute(TestDiscoveryRequestBuilder.request()
-                .select(selector)
+                .select(selectors)
                 .filter(byEngineId("specsy")) // XXX: JUnit5TestableFactory.fromUniqueId() fails when running any other engines with forUniqueId
                 .build());
         return tests;
@@ -157,5 +169,11 @@ public class SpecsyTestEngineTest {
         StringWriter sw = new StringWriter();
         summary.printOn(new PrintWriter(sw));
         return sw.toString();
+    }
+
+    private String myClasspathRoot() {
+        String classFile = getClass().getName().replace(".", "/") + ".class";
+        URL resource = getClass().getResource("/" + classFile);
+        return resource.getPath().replace(classFile, "");
     }
 }

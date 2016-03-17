@@ -7,6 +7,7 @@ package org.specsy.junit5;
 import fi.jumi.api.RunVia;
 import org.junit.gen5.engine.*;
 import org.junit.gen5.engine.discovery.ClassSelector;
+import org.junit.gen5.engine.discovery.ClasspathSelector;
 import org.junit.gen5.engine.discovery.UniqueIdSelector;
 import org.junit.gen5.engine.support.descriptor.EngineDescriptor;
 import org.specsy.Specsy;
@@ -19,6 +20,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
 import java.util.stream.Stream;
 
+import static org.junit.gen5.commons.util.ReflectionUtils.findAllClassesInClasspathRoot;
 import static org.junit.gen5.engine.TestExecutionResult.Status.SUCCESSFUL;
 
 public class SpecsyTestEngine implements TestEngine {
@@ -34,15 +36,20 @@ public class SpecsyTestEngine implements TestEngine {
     public TestDescriptor discover(EngineDiscoveryRequest discoveryRequest) {
         EngineDescriptor engineDescriptor = new EngineDescriptor(getId(), "Specsy");
 
-        // TODO: support ClasspathSelector
         // TODO: support PackageSelector
         for (ClassSelector selector : discoveryRequest.getSelectorsByType(ClassSelector.class)) {
             Class<?> testClass = selector.getTestClass();
-            RunVia runVia = testClass.getAnnotation(RunVia.class);
-            if (runVia != null && runVia.value() == Specsy.class) {
-                engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass, Path.ROOT));
+            if (isSpecsyClass(testClass)) {
+                engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
             }
         }
+
+        for (ClasspathSelector selector : discoveryRequest.getSelectorsByType(ClasspathSelector.class)) {
+            for (Class<?> testClass : findAllClassesInClasspathRoot(selector.getClasspathRoot(), SpecsyTestEngine::isSpecsyClass)) {
+                engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
+            }
+        }
+
         for (UniqueIdSelector selector : discoveryRequest.getSelectorsByType(UniqueIdSelector.class)) {
             String uniqueId = selector.getUniqueId();
             if (uniqueId.startsWith(ENGINE_ID + ":")) {
@@ -56,6 +63,11 @@ public class SpecsyTestEngine implements TestEngine {
             }
         }
         return engineDescriptor;
+    }
+
+    private static boolean isSpecsyClass(Class<?> testClass) {
+        RunVia runVia = testClass.getAnnotation(RunVia.class);
+        return runVia != null && runVia.value() == Specsy.class;
     }
 
     private static Class<?> loadClass(String name) {

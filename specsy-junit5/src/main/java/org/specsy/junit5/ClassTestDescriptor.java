@@ -13,6 +13,10 @@ public class ClassTestDescriptor extends AbstractTestDescriptor {
     private final Class<?> testClass;
     private final Path pathToExecute;
 
+    public ClassTestDescriptor(EngineDescriptor parent, Class<?> testClass) {
+        this(parent, testClass, Path.ROOT);
+    }
+
     public ClassTestDescriptor(EngineDescriptor parent, Class<?> testClass, Path pathToExecute) {
         super(parent.getUniqueId() + ":" + testClass.getName());
         this.testClass = testClass;
