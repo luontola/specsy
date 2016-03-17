@@ -8,6 +8,7 @@ import fi.jumi.api.RunVia;
 import org.junit.gen5.engine.*;
 import org.junit.gen5.engine.discovery.ClassSelector;
 import org.junit.gen5.engine.discovery.ClasspathSelector;
+import org.junit.gen5.engine.discovery.PackageSelector;
 import org.junit.gen5.engine.discovery.UniqueIdSelector;
 import org.junit.gen5.engine.support.descriptor.EngineDescriptor;
 import org.specsy.Specsy;
@@ -15,12 +16,14 @@ import org.specsy.bootstrap.ClassSpec;
 import org.specsy.core.Path;
 import org.specsy.core.SpecRun;
 
+import java.io.File;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
 import java.util.stream.Stream;
 
 import static org.junit.gen5.commons.util.ReflectionUtils.findAllClassesInClasspathRoot;
+import static org.junit.gen5.commons.util.ReflectionUtils.findAllClassesInPackage;
 import static org.junit.gen5.engine.TestExecutionResult.Status.SUCCESSFUL;
 
 public class SpecsyTestEngine implements TestEngine {
@@ -36,7 +39,6 @@ public class SpecsyTestEngine implements TestEngine {
     public TestDescriptor discover(EngineDiscoveryRequest discoveryRequest) {
         EngineDescriptor engineDescriptor = new EngineDescriptor(getId(), "Specsy");
 
-        // TODO: support PackageSelector
         for (ClassSelector selector : discoveryRequest.getSelectorsByType(ClassSelector.class)) {
             Class<?> testClass = selector.getTestClass();
             if (isSpecsyClass(testClass)) {
@@ -45,7 +47,15 @@ public class SpecsyTestEngine implements TestEngine {
         }
 
         for (ClasspathSelector selector : discoveryRequest.getSelectorsByType(ClasspathSelector.class)) {
-            for (Class<?> testClass : findAllClassesInClasspathRoot(selector.getClasspathRoot(), SpecsyTestEngine::isSpecsyClass)) {
+            File classpathRoot = selector.getClasspathRoot();
+            for (Class<?> testClass : findAllClassesInClasspathRoot(classpathRoot, SpecsyTestEngine::isSpecsyClass)) {
+                engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
+            }
+        }
+
+        for (PackageSelector selector : discoveryRequest.getSelectorsByType(PackageSelector.class)) {
+            String packageName = selector.getPackageName();
+            for (Class<?> testClass : findAllClassesInPackage(packageName, SpecsyTestEngine::isSpecsyClass)) {
                 engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
             }
         }

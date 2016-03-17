@@ -27,6 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.gen5.engine.discovery.ClassSelector.forClass;
 import static org.junit.gen5.engine.discovery.ClasspathSelector.forPath;
+import static org.junit.gen5.engine.discovery.PackageSelector.forPackageName;
 import static org.junit.gen5.engine.discovery.UniqueIdSelector.forUniqueId;
 import static org.junit.gen5.launcher.EngineIdFilter.byEngineId;
 
@@ -96,6 +97,15 @@ public class SpecsyTestEngineTest {
     @Test
     public void select_tests_by_classpath() {
         List<TestIdentifier> tests = runTests(forPath(myClasspathRoot()));
+
+        assertThat("tests", tests, hasSize(6));
+        assertUniqueId(tests, 0, "specsy");
+        assertUniqueId(tests, 1, "specsy", "org.specsy.junit5.SpecsyTestEngineTest$DummySpec");
+    }
+
+    @Test
+    public void select_tests_by_package() {
+        List<TestIdentifier> tests = runTests(forPackageName(getClass().getPackage().getName()));
 
         assertThat("tests", tests, hasSize(6));
         assertUniqueId(tests, 0, "specsy");
