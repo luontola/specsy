@@ -2,13 +2,13 @@
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
-package org.specsy.examples.groovy;
+package org.specsy.examples.groovy
 
-import org.specsy.groovy.GroovySpecsy;
+import org.specsy.groovy.GroovySpecsy
 
 class HelloWorldSpec extends GroovySpecsy {
     @Override
-    void run() throws Throwable {
+    void run() {
 
         // top-level spec; add your test code here and/or the child specs
 
