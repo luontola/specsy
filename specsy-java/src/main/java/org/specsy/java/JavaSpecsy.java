@@ -1,4 +1,4 @@
-// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -7,7 +7,8 @@ package org.specsy.java;
 import fi.jumi.api.RunVia;
 import org.specsy.Specsy;
 import org.specsy.bootstrap.ContextDealer;
-import org.specsy.core.*;
+import org.specsy.core.Closure;
+import org.specsy.core.Context;
 
 @RunVia(Specsy.class)
 public abstract class JavaSpecsy implements Closure {
@@ -23,8 +24,8 @@ public abstract class JavaSpecsy implements Closure {
     /**
      * Declares a child spec.
      */
-    public void spec(String name, Closure spec) {
-        context.spec(name, spec);
+    public void spec(String name, Closure body) {
+        context.spec(name, body);
     }
 
     /**

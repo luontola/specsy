@@ -1,4 +1,4 @@
-// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -7,7 +7,8 @@ package org.specsy.groovy;
 import fi.jumi.api.RunVia;
 import org.specsy.Specsy;
 import org.specsy.bootstrap.ContextDealer;
-import org.specsy.core.*;
+import org.specsy.core.Closure;
+import org.specsy.core.Context;
 
 @RunVia(Specsy.class)
 public abstract class GroovySpecsy implements Closure {
@@ -23,8 +24,8 @@ public abstract class GroovySpecsy implements Closure {
     /**
      * Declares a child spec.
      */
-    public void spec(String name, Runnable spec) {
-        context.spec(name, new GroovyClosure(spec));
+    public void spec(String name, Runnable body) {
+        context.spec(name, new GroovyClosure(body));
     }
 
     /**
@@ -51,6 +52,9 @@ class GroovyClosure implements Closure {
     private final Runnable closure;
 
     public GroovyClosure(Runnable closure) {
+        if (closure == null) {
+            throw new NullPointerException();
+        }
         this.closure = closure;
     }
 

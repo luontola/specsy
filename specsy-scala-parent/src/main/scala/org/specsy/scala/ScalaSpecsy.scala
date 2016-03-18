@@ -19,8 +19,8 @@ abstract class ScalaSpecsy {
   /**
    * Declares a child spec.
    */
-  def spec(name: String)(spec: => Unit) {
-    context.spec(name, new ScalaClosure(spec))
+  def spec(name: String)(body: => Unit) {
+    context.spec(name, new ScalaClosure(body))
   }
 
   protected implicit def String_to_NestedSpec(name: String): NestedSpec = new NestedSpec(name)
@@ -29,8 +29,8 @@ abstract class ScalaSpecsy {
     /**
      * Declares a child spec.
      */
-    def >>(spec: => Unit) {
-      context.spec(name, new ScalaClosure(spec))
+    def >>(body: => Unit) {
+      context.spec(name, new ScalaClosure(body))
     }
   }
 

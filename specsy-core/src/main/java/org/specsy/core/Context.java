@@ -1,12 +1,15 @@
-// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
 package org.specsy.core;
 
-import fi.jumi.api.drivers.*;
+import fi.jumi.api.drivers.SuiteNotifier;
+import fi.jumi.api.drivers.TestNotifier;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static org.specsy.core.Context.Status.*;
 
@@ -34,6 +37,8 @@ public class Context {
     // control flow
 
     public void bootstrap(String className, Closure rootSpec) {
+        assertNonNull("className", className);
+        assertNonNull("rootSpec", rootSpec);
         changeStatus(NOT_STARTED, RUNNING);
 
         enterRootSpec(className);
@@ -47,11 +52,13 @@ public class Context {
         current = new SpecContext(name, null, Path.ROOT, targetPath);
     }
 
-    public void spec(String name, Closure spec) {
+    public void spec(String name, Closure body) {
+        assertNonNull("name", name);
+        assertNonNull("body", body);
         assertStatusIs(RUNNING);
 
         enterSpec(name);
-        processSpec(spec);
+        processSpec(body);
         exitSpec();
     }
 
@@ -99,6 +106,7 @@ public class Context {
     // deferring
 
     public void defer(Closure block) {
+        assertNonNull("block", block);
         current.addDefer(block);
     }
 
@@ -125,6 +133,12 @@ public class Context {
     private void assertStatusIs(Status expected) {
         if (status != expected) {
             throw new IllegalStateException("expected status " + expected + ", but was " + status);
+        }
+    }
+
+    private static void assertNonNull(String varName, Object var) {
+        if (var == null) {
+            throw new NullPointerException(varName);
         }
     }
 }
