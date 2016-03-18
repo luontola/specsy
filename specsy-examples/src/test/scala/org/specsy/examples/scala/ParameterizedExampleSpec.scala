@@ -22,7 +22,7 @@ class ParameterizedExampleSpec extends ScalaSpecsy {
     (9, 81))
 
   for ((n, expectedSquare) <- parameters) {
-    "Square of " + n + " is " + expectedSquare >> {
+    s"Square of $n is $expectedSquare" >> {
       assertThat(n * n, is(expectedSquare))
     }
   }
