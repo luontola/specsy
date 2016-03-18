@@ -24,6 +24,7 @@
         <module>specsy-scala-parent</module>
         <module>specsy-scala_2.10</module>
         <module>specsy-scala_2.11</module>
+        <module>specsy-examples</module>
     </modules>
 
     <build>

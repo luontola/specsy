@@ -110,7 +110,12 @@
             </dependency>
             <dependency>
                 <groupId>org.specsy</groupId>
-                <artifactId>specsy-scala_${scala.version}</artifactId>
+                <artifactId>specsy-groovy</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.specsy</groupId>
+                <artifactId>specsy-scala_2.10</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

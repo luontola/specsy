@@ -55,11 +55,19 @@
         <processorPath useClasspath="true" />
         <module name="specsy-junit5" />
       </profile>
+      <profile default="false" name="Annotation profile for specsy-examples" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="specsy-examples" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="parent" target="1.7" />
       <module name="project" target="1.7" />
       <module name="specsy-core" target="1.7" />
+      <module name="specsy-examples" target="1.7" />
       <module name="specsy-groovy" target="1.7" />
       <module name="specsy-java" target="1.8" />
       <module name="specsy-junit5" target="1.8" />

@@ -1,12 +1,12 @@
-// Copyright © 2010-2012, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
-package org.specsy.scala.examples
+package org.specsy.examples.scala
 
 import org.specsy.scala.ScalaSpecsy
-import java.util.UUID
 import java.nio.file.{Files, Paths}
+import java.util.UUID
 
 class DeferBlocksExampleSpec extends ScalaSpecsy {
   val dir = Paths.get("temp-directory-" + UUID.randomUUID())
