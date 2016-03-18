@@ -264,7 +264,7 @@ class DeferBlocksExample2Spec extends ScalaSpecsy {
 Parameterized Tests
 -------------------
 
-Because Specsy's spec declarations are implemented as method calls which take a closure as a parameter (see [ScalaSpecsy]), it's simple to use the framework for parameterized tests. [ParameterizedExampleSpec] shows how to do it:
+Because Specsy's spec declarations are implemented as method calls which take a closure as a parameter, it's simple to use the framework for parameterized tests. [ParameterizedExampleSpec] shows how to do it:
 
 <pre class="brush: scala">
 class ParameterizedExampleSpec extends ScalaSpecsy {
@@ -378,12 +378,11 @@ object AcceptanceTestHelpers {
 </pre>
 
 
-[ScalaSpecsy]:                  https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/main/scala/org/specsy/scala/ScalaSpecsy.scala
-[FibonacciSpec]:                https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/FibonacciSpec.scala
-[StackSpec]:                    https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/StackSpec.scala
-[ShareSideEffectsExampleSpec]:  https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/ShareSideEffectsExampleSpec.scala
-[DeferBlocksExampleSpec]:       https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/DeferBlocksExampleSpec.scala
-[DeferBlocksExample2Spec]:      https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/DeferBlocksExample2Spec.scala
-[ParameterizedExampleSpec]:     https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/ParameterizedExampleSpec.scala
-[EnvironmentFilterExampleSpec]: https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/EnvironmentFilterExampleSpec.scala
-[PendingUntilFixedExampleSpec]: https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/examples/PendingUntilFixedExampleSpec.scala
+[FibonacciSpec]:                https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/FibonacciSpec.scala
+[StackSpec]:                    https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/StackSpec.scala
+[ShareSideEffectsExampleSpec]:  https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/ShareSideEffectsExampleSpec.scala
+[DeferBlocksExampleSpec]:       https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/DeferBlocksExampleSpec.scala
+[DeferBlocksExample2Spec]:      https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/DeferBlocksExample2Spec.scala
+[ParameterizedExampleSpec]:     https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/ParameterizedExampleSpec.scala
+[EnvironmentFilterExampleSpec]: https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/EnvironmentFilterExampleSpec.scala
+[PendingUntilFixedExampleSpec]: https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/PendingUntilFixedExampleSpec.scala
