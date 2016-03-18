@@ -18,7 +18,7 @@ public class StackSpec extends JavaSpecsy {
     private Deque<String> stack = new ArrayDeque<>();
 
     @Override
-    public void run() throws Throwable {
+    public void run() {
 
         spec("An empty stack", () -> {
 

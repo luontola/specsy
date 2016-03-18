@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class DeferBlocksExample2Spec extends JavaSpecsy {
     @Override
-    public void run() throws Throwable {
+    public void run() throws IOException {
         Path dir = createWithCleanup(Paths.get("temp-directory-" + UUID.randomUUID()), Files::createDirectory);
         Path file1 = createWithCleanup(dir.resolve("file 1.txt"), Files::createFile);
 

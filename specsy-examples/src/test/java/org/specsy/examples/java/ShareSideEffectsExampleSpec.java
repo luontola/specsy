@@ -13,7 +13,7 @@ public class ShareSideEffectsExampleSpec extends JavaSpecsy {
     private int counter = 0;
 
     @Override
-    public void run() throws Throwable {
+    public void run() {
 
         // Without the call to `shareSideEffects()` the value of `counter` would be `1`
         // in the asserts of each of the following child specs.

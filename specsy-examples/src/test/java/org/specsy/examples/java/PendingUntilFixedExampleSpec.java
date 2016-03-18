@@ -11,7 +11,7 @@ import static org.specsy.examples.java.AcceptanceTestHelpers.pendingUntilFixed;
 
 public class PendingUntilFixedExampleSpec extends JavaSpecsy {
     @Override
-    public void run() throws Throwable {
+    public void run() {
         spec("An acceptance test for an already implemented feature", () -> {
             // Test code...
         });

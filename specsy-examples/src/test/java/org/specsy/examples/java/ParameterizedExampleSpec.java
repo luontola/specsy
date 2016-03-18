@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.is;
 
 public class ParameterizedExampleSpec extends JavaSpecsy {
     @Override
-    public void run() throws Throwable {
+    public void run() {
         int[][] parameters = new int[][]{
                 {0, 0},
                 {1, 1},

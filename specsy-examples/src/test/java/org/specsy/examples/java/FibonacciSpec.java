@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.is;
 
 public class FibonacciSpec extends JavaSpecsy {
     @Override
-    public void run() throws Throwable {
+    public void run() {
         int sequenceLength = 10;
         int[] fib = new Fibonacci().sequence(sequenceLength);
         assertThat(fib.length, is(sequenceLength));

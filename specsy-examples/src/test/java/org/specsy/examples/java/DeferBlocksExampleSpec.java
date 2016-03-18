@@ -6,6 +6,7 @@ package org.specsy.examples.java;
 
 import org.specsy.java.JavaSpecsy;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 public class DeferBlocksExampleSpec extends JavaSpecsy {
     @Override
-    public void run() throws Throwable {
+    public void run() throws IOException {
         Path dir = Paths.get("temp-directory-" + UUID.randomUUID());
         Files.createDirectory(dir);
         defer(() -> {
