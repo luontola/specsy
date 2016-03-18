@@ -49,6 +49,52 @@ class HelloWorldSpec extends ScalaSpecsy {
   }
 }
 </pre>
+<pre class="brush: groovy">
+import org.specsy.groovy.GroovySpecsy
+
+class HelloWorldSpec extends GroovySpecsy {
+    @Override
+    void run() {
+
+        // top-level spec; add your test code here and/or the child specs
+
+        spec "name of the spec", {
+            // first child spec
+        }
+
+        spec "name of the spec", {
+            // second child spec
+
+            spec "name of the spec", {
+                // a nested child spec
+            }
+        }
+    }
+}
+</pre>
+<pre class="brush: java">
+import org.specsy.java.JavaSpecsy;
+
+public class HelloWorldSpec extends JavaSpecsy {
+    @Override
+    public void run() throws Throwable {
+
+        // top-level spec; add your test code here and/or the child specs
+
+        spec("name of the spec", () -> {
+            // first child spec
+        });
+
+        spec("name of the spec", () -> {
+            // second child spec
+
+            spec("name of the spec", () -> {
+                // a nested child spec
+            });
+        });
+    }
+}
+</pre>
 
 You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs (see [Isolated Execution Model](#isolated-execution-model)). The test runner can run each leaf child spec in its own thread.
 
@@ -77,6 +123,48 @@ class FibonacciSpec extends ScalaSpecsy {
   }
 }
 </pre>
+<pre class="brush: groovy">
+class FibonacciSpec extends GroovySpecsy {
+    @Override
+    void run() {
+        int sequenceLength = 10
+        int[] fib = new Fibonacci().sequence(sequenceLength)
+        assertThat(fib.length, is(sequenceLength))
+
+        spec "The first two Fibonacci numbers are 0 and 1", {
+            assertThat(fib[0], is(0))
+            assertThat(fib[1], is(1))
+        }
+
+        spec "Each remaining number is the sum of the previous two", {
+            for (int i = 2; i &lt; fib.length; i++) {
+                assertThat(fib[i], is(fib[i - 1] + fib[i - 2]))
+            }
+        }
+    }
+}
+</pre>
+<pre class="brush: java">
+public class FibonacciSpec extends JavaSpecsy {
+    @Override
+    public void run() {
+        int sequenceLength = 10;
+        int[] fib = new Fibonacci().sequence(sequenceLength);
+        assertThat(fib.length, is(sequenceLength));
+
+        spec("The first two Fibonacci numbers are 0 and 1", () -> {
+            assertThat(fib[0], is(0));
+            assertThat(fib[1], is(1));
+        });
+
+        spec("Each remaining number is the sum of the previous two", () -> {
+            for (int i = 2; i &lt; fib.length; i++) {
+                assertThat(fib[i], is(fib[i - 1] + fib[i - 2]));
+            }
+        });
+    }
+}
+</pre>
 
 You can take advantage of the ability to nest tests when writing the test names, for example as in [StackSpec].
 
@@ -89,12 +177,26 @@ To use the assertions from [JUnit](http://www.junit.org/), add the following imp
 <pre class="brush: scala">
 import org.junit.Assert._
 </pre>
+<pre class="brush: groovy">
+import static org.junit.Assert.*
+</pre>
+<pre class="brush: java">
+import static org.junit.Assert.*;
+</pre>
 
 To use the assertions from [Hamcrest](http://code.google.com/p/hamcrest/), add the following imports to your test file:
 
 <pre class="brush: scala">
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
+</pre>
+<pre class="brush: groovy">
+import static org.hamcrest.MatcherAssert.assertThat
+import static org.hamcrest.Matchers.*
+</pre>
+<pre class="brush: java">
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 </pre>
 
 To use the assertions from [specs](http://code.google.com/p/specs/), mix in one of the traits mentioned in [specs' matchers guide](http://code.google.com/p/specs/wiki/MatchersGuide#Use_specs_matchers_alone). For example:
@@ -157,6 +259,86 @@ class StackSpec extends ScalaSpecsy {
   }
 }
 </pre>
+<pre class="brush: groovy">
+class StackSpec extends GroovySpecsy {
+    def stack = new ArrayDeque&lt;String>()
+
+    @Override
+    void run() {
+
+        spec "An empty stack", {
+
+            spec "is empty", {
+                assertTrue(stack.isEmpty())
+            }
+            spec "After a push, the stack is no longer empty", {
+                stack.push("a push")
+                assertFalse(stack.isEmpty())
+            }
+        }
+
+        spec "When objects have been pushed onto a stack", {
+            stack.push("pushed first")
+            stack.push("pushed last")
+
+            spec "the object pushed last is popped first", {
+                String poppedFirst = stack.pop()
+                assertThat(poppedFirst, is("pushed last"))
+            }
+            spec "the object pushed first is popped last", {
+                stack.pop()
+                String poppedLast = stack.pop()
+                assertThat(poppedLast, is("pushed first"))
+            }
+            spec "After popping all objects, the stack is empty", {
+                stack.pop()
+                stack.pop()
+                assertTrue(stack.isEmpty())
+            }
+        }
+    }
+}
+</pre>
+<pre class="brush: java">
+public class StackSpec extends JavaSpecsy {
+    private Deque&lt;String> stack = new ArrayDeque&lt;>();
+
+    @Override
+    public void run() {
+
+        spec("An empty stack", () -> {
+
+            spec("is empty", () -> {
+                assertTrue(stack.isEmpty());
+            });
+            spec("After a push, the stack is no longer empty", () -> {
+                stack.push("a push");
+                assertFalse(stack.isEmpty());
+            });
+        });
+
+        spec("When objects have been pushed onto a stack", () -> {
+            stack.push("pushed first");
+            stack.push("pushed last");
+
+            spec("the object pushed last is popped first", () -> {
+                String poppedFirst = stack.pop();
+                assertThat(poppedFirst, is("pushed last"));
+            });
+            spec("the object pushed first is popped last", () -> {
+                stack.pop();
+                String poppedLast = stack.pop();
+                assertThat(poppedLast, is("pushed first"));
+            });
+            spec("After popping all objects, the stack is empty", () -> {
+                stack.pop();
+                stack.pop();
+                assertTrue(stack.isEmpty());
+            });
+        });
+    }
+}
+</pre>
 
 A rule of thumb is that out of all sibling specs (i.e. child specs with the same parent) always *exactly one sibling spec is executed during a test run*, and each test run has its own instance of the test class. So when the closure of a spec is executed and Specsy encounters a child spec declaration, it will selectively execute one of its child specs (right where it is declared) and skip the others. Then a fresh instance of the test class is created and a different code path is executed, until all child specs have been executed.
 
@@ -185,6 +367,56 @@ class ShareSideEffectsExampleSpec extends ScalaSpecsy {
     counter += 1
     assertThat(counter, is(3))
   }
+}
+</pre>
+<pre class="brush: groovy">
+class ShareSideEffectsExampleSpec extends GroovySpecsy {
+    def counter = 0
+
+    @Override
+    void run() {
+
+        // Without the call to `shareSideEffects()` the value of `counter` would be `1`
+        // in the asserts of each of the following child specs.
+        shareSideEffects()
+        spec "One", {
+            counter += 1
+            assertThat(counter, is(1))
+        }
+        spec "Two", {
+            counter += 1
+            assertThat(counter, is(2))
+        }
+        spec "Three", {
+            counter += 1
+            assertThat(counter, is(3))
+        }
+    }
+}
+</pre>
+<pre class="brush: java">
+public class ShareSideEffectsExampleSpec extends JavaSpecsy {
+    private int counter = 0;
+
+    @Override
+    public void run() {
+
+        // Without the call to `shareSideEffects()` the value of `counter` would be `1`
+        // in the asserts of each of the following child specs.
+        shareSideEffects();
+        spec("One", () -> {
+            counter += 1;
+            assertThat(counter, is(1));
+        });
+        spec("Two", () -> {
+            counter += 1;
+            assertThat(counter, is(2));
+        });
+        spec("Three", () -> {
+            counter += 1;
+            assertThat(counter, is(3));
+        });
+    }
 }
 </pre>
 
@@ -233,6 +465,76 @@ class DeferBlocksExampleSpec extends ScalaSpecsy {
   // (or if creating 'file1' failed, then will delete only 'dir')
 }
 </pre>
+<pre class="brush: groovy">
+class DeferBlocksExampleSpec extends GroovySpecsy {
+    @Override
+    void run() {
+        Path dir = Paths.get("temp-directory-" + UUID.randomUUID())
+        Files.createDirectory(dir)
+        defer {
+            Files.delete(dir)
+        }
+
+        Path file1 = dir.resolve("file 1.txt")
+        Files.createFile(file1)
+        defer {
+            Files.delete(file1)
+        }
+
+        spec "...", {
+            // do something with the files
+        }
+
+        spec "...", {
+            // child specs can also use defer blocks
+            Path file2 = dir.resolve("file 2.txt")
+            Files.createFile(file2)
+            defer {
+                Files.delete(file2)
+            }
+
+            // 'file2' will be deleted when this child spec exits
+        }
+        // will delete first 'file1' and second 'dir'
+        // (or if creating 'file1' failed, then will delete only 'dir')
+    }
+}
+</pre>
+<pre class="brush: java">
+public class DeferBlocksExampleSpec extends JavaSpecsy {
+    @Override
+    public void run() throws IOException {
+        Path dir = Paths.get("temp-directory-" + UUID.randomUUID());
+        Files.createDirectory(dir);
+        defer(() -> {
+            Files.delete(dir);
+        });
+
+        Path file1 = dir.resolve("file 1.txt");
+        Files.createFile(file1);
+        defer(() -> {
+            Files.delete(file1);
+        });
+
+        spec("...", () -> {
+            // do something with the files
+        });
+
+        spec("...", () -> {
+            // child specs can also use defer blocks
+            Path file2 = dir.resolve("file 2.txt");
+            Files.createFile(file2);
+            defer(() -> {
+                Files.delete(file2);
+            });
+
+            // 'file2' will be deleted when this child spec exits
+        });
+        // will delete first 'file1' and second 'dir'
+        // (or if creating 'file1' failed, then will delete only 'dir')
+    }
+}
+</pre>
 
 The code duplication in the above spec could be removed by extracting a method out of it, although it requires knowledge of Scala's more advanced features. [DeferBlocksExample2Spec] does the same thing as above, but with less code:
 
@@ -259,6 +561,62 @@ class DeferBlocksExample2Spec extends ScalaSpecsy {
   }
 }
 </pre>
+<pre class="brush: groovy">
+class DeferBlocksExample2Spec extends GroovySpecsy {
+    @Override
+    void run() {
+        Path dir = createWithCleanup(Paths.get("temp-directory-" + UUID.randomUUID()), Files.&createDirectory)
+        Path file1 = createWithCleanup(dir.resolve("file 1.txt"), Files.&createFile)
+
+        spec "...", {
+        }
+
+        spec "...", {
+            Path file2 = createWithCleanup(dir.resolve("file 2.txt"), Files.&createFile)
+        }
+    }
+
+    private Path createWithCleanup(Path path, Closure create) {
+        println "Creating $path"
+        create(path)
+        defer {
+            println "Deleting $path"
+            Files.delete(path)
+        }
+        return path
+    }
+}
+</pre>
+<pre class="brush: java">
+public class DeferBlocksExample2Spec extends JavaSpecsy {
+    @Override
+    public void run() throws IOException {
+        Path dir = createWithCleanup(Paths.get("temp-directory-" + UUID.randomUUID()), Files::createDirectory);
+        Path file1 = createWithCleanup(dir.resolve("file 1.txt"), Files::createFile);
+
+        spec("...", () -> {
+        });
+
+        spec("...", () -> {
+            Path file2 = createWithCleanup(dir.resolve("file 2.txt"), Files::createFile);
+        });
+    }
+
+    private Path createWithCleanup(Path path, FileCreator creator) throws IOException {
+        System.out.println("Creating " + path);
+        creator.create(path);
+        defer(() -> {
+            System.out.println("Deleting " + path);
+            Files.delete(path);
+        });
+        return path;
+    }
+
+    private interface FileCreator {
+        void create(Path path) throws IOException;
+    }
+}
+</pre>
 
 
 Parameterized Tests
@@ -281,10 +639,61 @@ class ParameterizedExampleSpec extends ScalaSpecsy {
     (9, 81))
 
   for ((n, expectedSquare) &lt;- parameters) {
-    "Square of " + n + " is " + expectedSquare >> {
+    s"Square of $n is $expectedSquare" >> {
       assertThat(n * n, is(expectedSquare))
     }
   }
+}
+</pre>
+<pre class="brush: groovy">
+public class ParameterizedExampleSpec extends GroovySpecsy {
+    @Override
+    public void run() {
+        def parameters = [
+                [0, 0],
+                [1, 1],
+                [2, 4],
+                [3, 9],
+                [4, 16],
+                [5, 25],
+                [6, 36],
+                [7, 49],
+                [8, 64],
+                [9, 81]
+        ]
+        parameters.each { n, expectedSquare ->
+            spec "Square of $n is $expectedSquare", {
+                assertThat(n * n, is(expectedSquare))
+            }
+        }
+    }
+}
+</pre>
+<pre class="brush: java">
+public class ParameterizedExampleSpec extends JavaSpecsy {
+    @Override
+    public void run() {
+        int[][] parameters = new int[][]{
+                {0, 0},
+                {1, 1},
+                {2, 4},
+                {3, 9},
+                {4, 16},
+                {5, 25},
+                {6, 36},
+                {7, 49},
+                {8, 64},
+                {9, 81}
+        };
+        for (int[] pair : parameters) {
+            int n = pair[0];
+            int expectedSquare = pair[1];
+
+            spec("Square of " + n + " is " + expectedSquare, () -> {
+                assertThat(n * n, is(expectedSquare));
+            });
+        }
+    }
 }
 </pre>
 
@@ -337,6 +746,92 @@ class EnvironmentFilterExampleSpec extends ScalaSpecsy {
   }
 }
 </pre>
+<pre class="brush: groovy">
+class EnvironmentFilterExampleSpec extends GroovySpecsy {
+    @Override
+    void run() {
+        spec "This test is run every time", {
+            // Test code...
+        }
+
+        spec "This test is run only under Java 8 and greater", {
+            worksOnlyOnJava8 {
+                // Test code... For example something which uses the new Date and Time API (JSR-310)
+                // which was added in Java 8
+            }
+        }
+
+        // This can also be used at the top level, if many/all tests work only on Java 8.
+        // Just surround all tests and variable/field declarations into a closure.
+        worksOnlyOnJava8 {
+
+            spec "This requires Java 8", {
+                // Test code...
+            }
+            spec "This also requires Java 8", {
+                // Test code...
+            }
+        }
+    }
+
+    private static void worksOnlyOnJava8(Closure closure) {
+        if (isJava8()) {
+            closure.run()
+        }
+    }
+
+    private static boolean isJava8() {
+        try {
+            Class.forName("java.time.LocalDate")
+            return true
+        } catch (ClassNotFoundException e) {
+            return false
+        }
+    }
+}
+</pre>
+<pre class="brush: java">
+public class EnvironmentFilterExampleSpec extends JavaSpecsy {
+    @Override
+    public void run() throws Throwable {
+        spec("This test is run every time", () -> {
+            // Test code...
+        });
+
+        spec("This test is run only under Java 8 and greater", () -> worksOnlyOnJava8(() -> {
+            // Test code... For example something which uses the new Date and Time API (JSR-310)
+            // which was added in Java 8
+        }));
+
+        // This can also be used at the top level, if many/all tests work only on Java 8.
+        // Just surround all tests and variable/field declarations into a closure.
+        worksOnlyOnJava8(() -> {
+
+            spec("This requires Java 8", () -> {
+                // Test code...
+            });
+            spec("This also requires Java 8", () -> {
+                // Test code...
+            });
+        });
+    }
+
+    private static void worksOnlyOnJava8(Closure closure) throws Throwable {
+        if (isJava8()) {
+            closure.run();
+        }
+    }
+
+    private static boolean isJava8() {
+        try {
+            Class.forName("java.time.LocalDate");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+}
+</pre>
 
 
 “Pending Until Fixed”
@@ -374,6 +869,74 @@ object AcceptanceTestHelpers {
     }
     throw new AssertionError("This test would now pass. Remove the 'pendingUntilFixed' tag.")
   }
+}
+</pre>
+<pre class="brush: groovy">
+import static com.example.AcceptanceTestHelpers.pendingUntilFixed
+
+class PendingUntilFixedExampleSpec extends GroovySpecsy {
+    @Override
+    void run() {
+        spec "An acceptance test for an already implemented feature", {
+            // Test code...
+        }
+
+        spec "An acceptance test whose feature has not yet been implemented", {
+            pendingUntilFixed {
+                // Test code which is still failing...
+                throw new AssertionError("this feature is not implemented")
+            }
+        }
+    }
+}
+
+class AcceptanceTestHelpers {
+
+    // When this method is in a helper class, it's easy to find all pending tests
+    // by searching for all usages of this method with your IDE.
+    public static void pendingUntilFixed(Closure closure) {
+        try {
+            closure.run()
+        } catch (Throwable t) {
+            System.err.println("This test is pending until fixed:")
+            t.printStackTrace()
+            return // test is pending
+        }
+        throw new AssertionError("This test would now pass. Remove the 'pendingUntilFixed' tag.")
+    }
+}
+</pre>
+<pre class="brush: java">
+import static com.example.AcceptanceTestHelpers.pendingUntilFixed;
+
+public class PendingUntilFixedExampleSpec extends JavaSpecsy {
+    @Override
+    public void run() {
+        spec("An acceptance test for an already implemented feature", () -> {
+            // Test code...
+        });
+
+        spec("An acceptance test whose feature has not yet been implemented", () -> pendingUntilFixed(() -> {
+            // Test code which is still failing...
+            throw new AssertionError("this feature is not implemented");
+        }));
+    }
+}
+
+class AcceptanceTestHelpers {
+
+    // When this method is in a helper class, it's easy to find all pending tests
+    // by searching for all usages of this method with your IDE.
+    public static void pendingUntilFixed(Closure closure) {
+        try {
+            closure.run();
+        } catch (Throwable t) {
+            System.err.println("This test is pending until fixed:");
+            t.printStackTrace();
+            return; // test is pending
+        }
+        throw new AssertionError("This test would now pass. Remove the 'pendingUntilFixed' tag.");
+    }
 }
 </pre>
 
