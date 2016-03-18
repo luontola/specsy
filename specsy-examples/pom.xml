@@ -15,22 +15,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>org.specsy</groupId>
-            <artifactId>specsy-java</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.specsy</groupId>
-            <artifactId>specsy-groovy</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.specsy</groupId>
-            <artifactId>specsy-scala_2.10</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!-- TODO: remove this boostrap when Jumi can run the examples without it -->
         <dependency>
             <groupId>fi.jumi</groupId>
@@ -38,7 +22,35 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Java -->
+
+        <dependency>
+            <groupId>org.specsy</groupId>
+            <artifactId>specsy-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Groovy -->
+
+        <dependency>
+            <groupId>org.specsy</groupId>
+            <artifactId>specsy-groovy</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Scala -->
+
+        <dependency>
+            <groupId>org.specsy</groupId>
+            <artifactId>specsy-scala_2.10</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.scala-lang</groupId>
@@ -54,6 +66,29 @@
 
     <build>
         <plugins>
+
+            <!-- Java -->
+
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <jvm>${env.JAVA8_HOME}/bin/java</jvm>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+
+                    <!-- Groovy -->
+
+                    <compilerId>groovy-eclipse-compiler</compilerId>
+                </configuration>
+            </plugin>
+
+            <!-- Scala-->
 
             <plugin>
                 <groupId>net.alchim31.maven</groupId>

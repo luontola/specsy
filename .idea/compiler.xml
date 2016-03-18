@@ -67,7 +67,7 @@
       <module name="parent" target="1.7" />
       <module name="project" target="1.7" />
       <module name="specsy-core" target="1.7" />
-      <module name="specsy-examples" target="1.7" />
+      <module name="specsy-examples" target="1.8" />
       <module name="specsy-groovy" target="1.7" />
       <module name="specsy-java" target="1.8" />
       <module name="specsy-junit5" target="1.8" />
