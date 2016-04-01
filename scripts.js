@@ -11,14 +11,25 @@ $(document).ready(function() {
     selectorsByLanguage[language].push(selector)
   }
 
-  function selectLanguage(language) {
+  function selectLanguage(language, event) {
+    // Prevent infinite loop, because every tab select will trigger this method
     if (selectedLanguage === language) {
-      return; // prevent infinite loop, because every tab select will trigger this method
+      return;
     }
     selectedLanguage = language;
+
+    var offsetBefore = event.target.getBoundingClientRect().top;
     $.each(selectorsByLanguage[language], function(index, selector) {
       selector();
     })
+    var offsetAfter = event.target.getBoundingClientRect().top;
+
+    // Keep the clicked element in the same position on screen,
+    // even when the page length changes above it, because
+    // some languages have more compact code examples.
+    if (offsetBefore !== offsetAfter) {
+      window.scrollBy(0, offsetAfter - offsetBefore);
+    }
   }
 
   $('div.example').each(function(exampleIndex, example) {
@@ -33,8 +44,8 @@ $(document).ready(function() {
         addLanguageSelector(language, function() {
             $(tabs).tabs('select_tab', id)
         });
-        $(tab).find('a').on('click', function() {
-          selectLanguage(language);
+        $(tab).find('a').on('click', function(event) {
+          selectLanguage(language, event);
         });
       })
     $(example).prepend(tabs);
