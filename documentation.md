@@ -30,7 +30,7 @@ Here are examples of the language specific syntax for all of Specsy's API:
 For the rest of this documentation we will use the Scala version's shorthand syntax. The following shows the structure of a spec:
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 import org.specsy.scala.ScalaSpecsy
 
 class HelloWorldSpec extends ScalaSpecsy {
@@ -50,7 +50,7 @@ class HelloWorldSpec extends ScalaSpecsy {
   }
 }
 </pre>
-<pre class="brush: groovy" data-label="groovy">
+<pre class="brush: groovy" data-language="Groovy">
 import org.specsy.groovy.GroovySpecsy
 
 class HelloWorldSpec extends GroovySpecsy {
@@ -73,7 +73,7 @@ class HelloWorldSpec extends GroovySpecsy {
     }
 }
 </pre>
-<pre class="brush: java" data-label="java">
+<pre class="brush: java" data-language="Java">
 import org.specsy.java.JavaSpecsy;
 
 public class HelloWorldSpec extends JavaSpecsy {
@@ -109,7 +109,7 @@ Naming Tests
 It is recommended to name the tests using full sentences which describe features. [FibonacciSpec] is an example of how to use descriptive [specification-style](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html) test names:
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class FibonacciSpec extends ScalaSpecsy {
   val sequenceLength = 10
   val fib = new Fibonacci().sequence(sequenceLength)
@@ -126,7 +126,7 @@ class FibonacciSpec extends ScalaSpecsy {
   }
 }
 </pre>
-<pre class="brush: groovy" data-label="groovy">
+<pre class="brush: groovy" data-language="Groovy">
 class FibonacciSpec extends GroovySpecsy {
     @Override
     void run() {
@@ -147,7 +147,7 @@ class FibonacciSpec extends GroovySpecsy {
     }
 }
 </pre>
-<pre class="brush: java" data-label="java">
+<pre class="brush: java" data-language="Java">
 public class FibonacciSpec extends JavaSpecsy {
     @Override
     public void run() {
@@ -179,13 +179,13 @@ Assertions
 To use the assertions from [JUnit](http://www.junit.org/), add the following import to your test file:
 
 <div class="example">
-<pre class="brush: scala" data-label="Scala">
+<pre class="brush: scala" data-language="Scala">
 import org.junit.Assert._
 </pre>
-<pre class="brush: groovy" data-label="Groovy">
+<pre class="brush: groovy" data-language="Groovy">
 import static org.junit.Assert.*
 </pre>
-<pre class="brush: java" data-label="Java">
+<pre class="brush: java" data-language="Java">
 import static org.junit.Assert.*;
 </pre>
 </div>
@@ -193,15 +193,15 @@ import static org.junit.Assert.*;
 To use the assertions from [Hamcrest](http://code.google.com/p/hamcrest/), add the following imports to your test file:
 
 <div class="example">
-<pre class="brush: scala" data-label="Scala">
+<pre class="brush: scala" data-language="Scala">
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers._
 </pre>
-<pre class="brush: groovy" data-label="Groovy">
+<pre class="brush: groovy" data-language="Groovy">
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.*
 </pre>
-<pre class="brush: java" data-label="Java">
+<pre class="brush: java" data-language="Java">
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 </pre>
@@ -210,7 +210,7 @@ import static org.hamcrest.Matchers.*;
 To use the assertions from [specs](http://code.google.com/p/specs/), mix in one of the traits mentioned in [specs' matchers guide](http://code.google.com/p/specs/wiki/MatchersGuide#Use_specs_matchers_alone). For example:
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class SomeSpec extends ScalaSpecsy with SpecsMatchers {
 }
 </pre>
@@ -221,7 +221,7 @@ To use the assertions from [specs2](http://etorreborre.github.com/specs2/), mix 
 To use the assertions from [ScalaTest](http://www.scalatest.org/), mix in the [org.scalatest.matchers.ShouldMatchers](http://doc.scalatest.org/1.8/index.html#org.scalatest.matchers.ShouldMatchers) trait or one of the other matcher traits:
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class SomeSpec extends ScalaSpecsy with ShouldMatchers {
 }
 </pre>
@@ -236,7 +236,7 @@ Isolated Execution Model
 [StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications made in its parent specs, so there are no weird order-dependent test failures - everything just works as expected. It's kind of like *lexical scoping* applied to side-effects. Specsy accomplishes this by creating multiple fresh instances of the test class and selectively executing the nested specs.
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class StackSpec extends ScalaSpecsy {
   val stack = new scala.collection.mutable.Stack[String]
 
@@ -272,7 +272,7 @@ class StackSpec extends ScalaSpecsy {
   }
 }
 </pre>
-<pre class="brush: groovy" data-label="groovy">
+<pre class="brush: groovy" data-language="Groovy">
 class StackSpec extends GroovySpecsy {
     def stack = new ArrayDeque&lt;String>()
 
@@ -312,7 +312,7 @@ class StackSpec extends GroovySpecsy {
     }
 }
 </pre>
-<pre class="brush: java" data-label="java">
+<pre class="brush: java" data-language="Java">
 public class StackSpec extends JavaSpecsy {
     private Deque&lt;String> stack = new ArrayDeque&lt;>();
 
@@ -363,7 +363,7 @@ Non-Isolated Execution Model
 In some cases it may be desirable to avoid the isolation of side-effects; perhaps it would make the tests harder to organize (e.g. writing tests for a multi-step process) or it would affect performance too much (e.g. side-effect free parameterized tests). For those situations you may call `shareSideEffects()` which will cause all child specs of the current spec to see each other's side-effects. [ShareSideEffectsExampleSpec] illustrates this:
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class ShareSideEffectsExampleSpec extends ScalaSpecsy {
   var counter = 0
 
@@ -384,7 +384,7 @@ class ShareSideEffectsExampleSpec extends ScalaSpecsy {
   }
 }
 </pre>
-<pre class="brush: groovy" data-label="groovy">
+<pre class="brush: groovy" data-language="Groovy">
 class ShareSideEffectsExampleSpec extends GroovySpecsy {
     def counter = 0
 
@@ -409,7 +409,7 @@ class ShareSideEffectsExampleSpec extends GroovySpecsy {
     }
 }
 </pre>
-<pre class="brush: java" data-label="java">
+<pre class="brush: java" data-language="Java">
 public class ShareSideEffectsExampleSpec extends JavaSpecsy {
     private int counter = 0;
 
@@ -449,7 +449,7 @@ In Specsy, every parent spec acts similar to the "before" blocks in other testin
 [DeferBlocksExampleSpec] shows how the defer blocks can be used:
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class DeferBlocksExampleSpec extends ScalaSpecsy {
   val dir = Paths.get("temp-directory-" + UUID.randomUUID())
   Files.createDirectory(dir)
@@ -482,7 +482,7 @@ class DeferBlocksExampleSpec extends ScalaSpecsy {
   // (or if creating 'file1' failed, then will delete only 'dir')
 }
 </pre>
-<pre class="brush: groovy" data-label="groovy">
+<pre class="brush: groovy" data-language="Groovy">
 class DeferBlocksExampleSpec extends GroovySpecsy {
     @Override
     void run() {
@@ -517,7 +517,7 @@ class DeferBlocksExampleSpec extends GroovySpecsy {
     }
 }
 </pre>
-<pre class="brush: java" data-label="java">
+<pre class="brush: java" data-language="Java">
 public class DeferBlocksExampleSpec extends JavaSpecsy {
     @Override
     public void run() throws IOException {
@@ -557,7 +557,7 @@ public class DeferBlocksExampleSpec extends JavaSpecsy {
 The code duplication in the above spec could be removed by extracting a method out of it, although it requires knowledge of Scala's more advanced features. [DeferBlocksExample2Spec] does the same thing as above, but with less code:
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class DeferBlocksExample2Spec extends ScalaSpecsy {
   val dir = createWithCleanup(Paths.get("temp-directory-" + UUID.randomUUID()), Files.createDirectory(_))
   val file1 = createWithCleanup(dir.resolve("file 1.txt"), Files.createFile(_))
@@ -580,7 +580,7 @@ class DeferBlocksExample2Spec extends ScalaSpecsy {
   }
 }
 </pre>
-<pre class="brush: groovy" data-label="groovy">
+<pre class="brush: groovy" data-language="Groovy">
 class DeferBlocksExample2Spec extends GroovySpecsy {
     @Override
     void run() {
@@ -606,7 +606,7 @@ class DeferBlocksExample2Spec extends GroovySpecsy {
     }
 }
 </pre>
-<pre class="brush: java" data-label="java">
+<pre class="brush: java" data-language="Java">
 public class DeferBlocksExample2Spec extends JavaSpecsy {
     @Override
     public void run() throws IOException {
@@ -645,7 +645,7 @@ Parameterized Tests
 Because Specsy's spec declarations are implemented as method calls which take a closure as a parameter, it's simple to use the framework for parameterized tests. [ParameterizedExampleSpec] shows how to do it:
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class ParameterizedExampleSpec extends ScalaSpecsy {
   val parameters = List(
     (0, 0),
@@ -666,7 +666,7 @@ class ParameterizedExampleSpec extends ScalaSpecsy {
   }
 }
 </pre>
-<pre class="brush: groovy" data-label="groovy">
+<pre class="brush: groovy" data-language="Groovy">
 public class ParameterizedExampleSpec extends GroovySpecsy {
     @Override
     public void run() {
@@ -690,7 +690,7 @@ public class ParameterizedExampleSpec extends GroovySpecsy {
     }
 }
 </pre>
-<pre class="brush: java" data-label="java">
+<pre class="brush: java" data-language="Java">
 public class ParameterizedExampleSpec extends JavaSpecsy {
     @Override
     public void run() {
@@ -728,7 +728,7 @@ Executing Tests Only in Some Environments
 Since in Specsy every spec is a closure, it is very easy to customize how individual specs are run. For example, let's say that some of the tests require Java 8 to be able to run. You can write a helper method such as the `worksOnlyOnJava8` in [EnvironmentFilterExampleSpec], as shown below, and mark/surround the closures of affected specs with it.
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class EnvironmentFilterExampleSpec extends ScalaSpecsy {
 
   "This test is run every time" >> {
@@ -769,7 +769,7 @@ class EnvironmentFilterExampleSpec extends ScalaSpecsy {
   }
 }
 </pre>
-<pre class="brush: groovy" data-label="groovy">
+<pre class="brush: groovy" data-language="Groovy">
 class EnvironmentFilterExampleSpec extends GroovySpecsy {
     @Override
     void run() {
@@ -813,7 +813,7 @@ class EnvironmentFilterExampleSpec extends GroovySpecsy {
     }
 }
 </pre>
-<pre class="brush: java" data-label="java">
+<pre class="brush: java" data-language="Java">
 public class EnvironmentFilterExampleSpec extends JavaSpecsy {
     @Override
     public void run() throws Throwable {
@@ -866,7 +866,7 @@ A common situation in Acceptance Test Driven Development (ATDD) is that you have
 Specsy does not (yet) have a concept of "pending", but you can achieve almost the same thing by making the test pass and by having the `pendingUntilFixed` method in a helper class which all tests use, so that it's easy to seach for all its usages to find out which tests are pending. [PendingUntilFixedExampleSpec] illustrates this:
 
 <div class="example">
-<pre class="brush: scala" data-label="scala">
+<pre class="brush: scala" data-language="Scala">
 class PendingUntilFixedExampleSpec extends ScalaSpecsy {
 
   "An acceptance test for an already implemented feature" >> {
@@ -896,7 +896,7 @@ object AcceptanceTestHelpers {
   }
 }
 </pre>
-<pre class="brush: groovy" data-label="groovy">
+<pre class="brush: groovy" data-language="Groovy">
 import static com.example.AcceptanceTestHelpers.pendingUntilFixed
 
 class PendingUntilFixedExampleSpec extends GroovySpecsy {
@@ -931,7 +931,7 @@ class AcceptanceTestHelpers {
     }
 }
 </pre>
-<pre class="brush: java" data-label="java">
+<pre class="brush: java" data-language="Java">
 import static com.example.AcceptanceTestHelpers.pendingUntilFixed;
 
 public class PendingUntilFixedExampleSpec extends JavaSpecsy {
