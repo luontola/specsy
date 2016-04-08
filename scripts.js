@@ -32,15 +32,15 @@ $(document).ready(function() {
     }
   }
 
-  $('div.example').each(function(exampleIndex, example) {
+  $('.example').each(function(exampleIndex, example) {
     var tabs = $.parseHTML('<ul class="tabs"><h1>');
     $(example).children()
-      .each(function(codeIndex, code) {
-        var language = $(code).data('language') || '???';
-        var id = 'example-'+exampleIndex+'-'+codeIndex;
+      .each(function(snippetIndex, snippet) {
+        var language = $(snippet).data('language') || '???';
+        var id = 'example-'+exampleIndex+'-'+snippetIndex;
         var tab = $.parseHTML('<li class="tab"><a href="#'+id+'">'+language+'</a></li>');
         $(tabs).append(tab);
-        $(code).wrap('<div id="'+id+'"></div>');
+        $(snippet).wrap('<div id="'+id+'"></div>');
         addLanguageSelector(language, function() {
             $(tabs).tabs('select_tab', id)
         });
