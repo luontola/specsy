@@ -2,15 +2,15 @@
 # For more see: https://github.com/mojombo/jekyll/wiki/Permalinks
 permalink: /:categories/:year/:month/:day/:title 
 
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
-pygments: true
+exclude: [".rvmrc", ".rbenv-version", "Rakefile"]
+highlighter: "pygments"
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
 title: Specsy
-tagline: unit-level testing framework, safely isolates mutable state
-description: Specsy is a BDD-style unit-level testing framework for any languages on the Java platform. It safely isolates mutable state and supports writing self-documenting tests/specifications.
+tagline: unit testing framework, safely isolates mutable state
+description: Specsy is a BDD-style unit testing framework for any languages on the Java platform. It safely isolates mutable state and supports writing self-documenting tests/specifications.
 author:
   name: Esko Luontola
   url: http://www.orfjackal.net/
