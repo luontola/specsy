@@ -5,29 +5,71 @@ group: navigation
 ---
 {% include JB/setup %}
 
-- [Quick Start](#quick-start)
-- [Naming Tests](#naming-tests)
-- [Assertions](#assertions)
-- [Isolated Execution Model](#isolated-execution-model)
-- [Non-Isolated Execution Model](#non-isolated-execution-model)
-- [“Before” and “After” Blocks](#before-and-after-blocks)
-- [Parameterized Tests](#parameterized-tests)
-- [Executing Tests Only in Some Environments](#executing-tests-only-in-some-environments)
-- [“Pending Until Fixed”](#pending-until-fixed)
+- [Getting Started](#getting-started)
+- [Core Features](#core-features)
+    - [Naming Tests](#naming-tests)
+    - [Assertions](#assertions)
+    - [Isolated Execution Model](#isolated-execution-model)
+    - [Non-Isolated Execution Model](#non-isolated-execution-model)
+    - [“Before” and “After” Blocks](#before-and-after-blocks)
+- [Indirect Features](#indirect-features)
+    - [Parameterized Tests](#parameterized-tests)
+    - [Executing Tests Only in Some Environments](#executing-tests-only-in-some-environments)
+    - [“Pending Until Fixed”](#pending-until-fixed)
 
 
-Quick Start
+Getting Started
 -----------
 
-After you have [configured your dependencies](download.html), you can create a Specsy spec by extending the language specific base class, as shown below. **Specsy 2 requires the [Jumi test runner](http://jumi.fi/), so please refer to Jumi's documentation to find out [how to run the tests](https://github.com/orfjackal/jumi/wiki/Running-Tests).** (If you *have* to use JUnit's test runner instead of Jumi, then have a look at [NestedJUnit](https://github.com/orfjackal/nestedjunit) which supports a quite similar way of writing tests.)
+### 1. Dependencies
 
-Here are examples of the language specific syntax for all of Specsy's API:
+Add to your project a dependency to Specsy's programming language specific API. Choose one or more of the following:
 
-- [Scala](https://github.com/orfjackal/specsy/blob/master/specsy-scala-parent/src/test/scala/org/specsy/scala/ScalaSpecsyExample.scala)
-- [Groovy](https://github.com/orfjackal/specsy/blob/master/specsy-groovy/src/test/java/org/specsy/groovy/GroovySpecsyExample.groovy)
-- [Java](https://github.com/orfjackal/specsy/blob/master/specsy-java/src/test/java/org/specsy/java/JavaSpecsyExample.java)
+<figure class="example">
+<pre class="brush: xml" data-language="Scala">
+<dependency>
+    <groupId>org.specsy</groupId>
+    <artifactId>specsy-scala_2.10</artifactId>
+    <version>2.1.1</version>
+    <scope>test</scope>
+</dependency>
+</pre>
+<pre class="brush: xml" data-language="Groovy">
+<dependency>
+    <groupId>org.specsy</groupId>
+    <artifactId>specsy-groovy</artifactId>
+    <version>2.1.1</version>
+    <scope>test</scope>
+</dependency>
+</pre>
+<pre class="brush: xml" data-language="Java">
+<dependency>
+    <groupId>org.specsy</groupId>
+    <artifactId>specsy-java</artifactId>
+    <version>2.1.1</version>
+    <scope>test</scope>
+</dependency>
+</pre>
+</figure>
 
-For the rest of this documentation we will use the Scala version's shorthand syntax. The following shows the structure of a spec:
+If you are running tests with the [Jumi test runner](http://jumi.fi/), then nothing more is needed.
+
+If you are running tests with the [JUnit 5 test runner](http://junit.org/junit5/), then you will also need to add the following dependency:
+
+<pre class="brush: xml" data-language="Java">
+<dependency>
+    <groupId>org.specsy</groupId>
+    <artifactId>specsy-junit5</artifactId>
+    <version>TODO_NOT_YET_RELEASED</version>
+    <scope>test</scope>
+</dependency>
+</pre>
+
+
+### 2. Syntax
+
+
+Create a test class by extending Specsy's programming language specific base class:
 
 <figure class="example">
 <pre class="brush: scala" data-language="Scala">
@@ -98,15 +140,19 @@ public class HelloWorldSpec extends JavaSpecsy {
 </pre>
 </figure>
 
-You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs (see [Isolated Execution Model](#isolated-execution-model)). The test runner can run each leaf child spec in its own thread.
+### 3. Mental Model
 
-Specsy does not contain its own assertion syntax, so you can use the assertions from [JUnit](http://www.junit.org/), [Hamcrest](http://code.google.com/p/hamcrest/), [specs](http://code.google.com/p/specs/), [specs2](http://specs2.org/), [ScalaTest](http://www.scalatest.org/) or any other framework which makes it possible (see [Assertions](#assertions)).
+You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs (see [Isolated Execution Model](#isolated-execution-model)). Test runners may run each leaf child spec in its own thread.
+
+Read the rest of this documentation to learn Specsy's features.
 
 
-Naming Tests
-------------
+Core Features
+-------------
 
-It is recommended to name the tests using full sentences which describe features. [FibonacciSpec] is an example of how to use descriptive [specification-style](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html) test names:
+### Naming Tests
+
+It is recommended to name the tests using full sentences which describe features. [FibonacciSpec] is an example of how to use descriptive [specification-style test names](http://blog.orfjackal.net/2010/02/three-styles-of-naming-tests.html):
 
 <figure class="example">
 <pre class="brush: scala" data-language="Scala">
@@ -173,10 +219,11 @@ public class FibonacciSpec extends JavaSpecsy {
 You can take advantage of the ability to nest tests when writing the test names, for example as in [StackSpec].
 
 
-Assertions
-----------
+### Assertions
 
-To use the assertions from [JUnit](http://www.junit.org/), add the following import to your test file:
+Specsy does not have its own assertion syntax, because you can easily use any assertion libraries.
+
+To use the assertions from [JUnit 4](http://www.junit.org/), add the following import to your test file:
 
 <figure class="example">
 <pre class="brush: scala" data-language="Scala">
@@ -227,11 +274,10 @@ class SomeSpec extends ScalaSpecsy with ShouldMatchers {
 </pre>
 </figure>
 
-Any other assertions are also OK. All that is needed is that they throw an exception when the assertion fails. Refer to the documentation of other testing frameworks for instructions on how to use their assertions in another framework.
+Any other assertion libraries are also okay. All that is needed is that they throw an exception when the assertion fails. Refer to the documentation of other testing frameworks for instructions on how to use their assertions in another framework.
 
 
-Isolated Execution Model
-------------------------
+### Isolated Execution Model
 
 [StackSpec] illustrates the isolated execution model. As you notice, the stack is a mutable data structure and it is being modified in nearly every child spec. But each child spec can trust that it sees only the modifications made in its parent specs, so there are no weird order-dependent test failures - everything just works as expected. It's kind of like *lexical scoping* applied to side-effects. Specsy accomplishes this by creating multiple fresh instances of the test class and selectively executing the nested specs.
 
@@ -357,10 +403,9 @@ public class StackSpec extends JavaSpecsy {
 A rule of thumb is that out of all sibling specs (i.e. child specs with the same parent) always *exactly one sibling spec is executed during a test run*, and each test run has its own instance of the test class. So when the closure of a spec is executed and Specsy encounters a child spec declaration, it will selectively execute one of its child specs (right where it is declared) and skip the others. Then a fresh instance of the test class is created and a different code path is executed, until all child specs have been executed.
 
 
-Non-Isolated Execution Model
-----------------------------
+### Non-Isolated Execution Model
 
-In some cases it may be desirable to avoid the isolation of side-effects; perhaps it would make the tests harder to organize (e.g. writing tests for a multi-step process) or it would affect performance too much (e.g. side-effect free parameterized tests). For those situations you may call `shareSideEffects()` which will cause all child specs of the current spec to see each other's side-effects. [ShareSideEffectsExampleSpec] illustrates this:
+In some cases it may be desirable to avoid the isolation of side-effects; perhaps it would make the tests harder to organize (e.g. writing tests for a multi-step process) or it would affect performance too much (e.g. side-effect free [parameterized tests](#parameterized-tests)). For those situations you may call `shareSideEffects()` which will cause all child specs of the current spec to see each other's side-effects. [ShareSideEffectsExampleSpec] illustrates this:
 
 <figure class="example">
 <pre class="brush: scala" data-language="Scala">
@@ -441,8 +486,7 @@ Note that the effects of `shareSideEffects()` (pun intended) are restricted insi
 [See here](https://github.com/orfjackal/dimdwarf/blob/e0f109dcd2d81f35b411fd1a2ad75be7ef60ae75/dimdwarf-core/src/test/scala/net/orfjackal/dimdwarf/domain/SimpleTimestampSpec.scala#L64) for a real-life example of using `shareSideEffects()` as a performance optimization for parameterized tests. Actually this is the first use case which drove me to finally implement `shareSideEffects()` (and it took [just one hour to implement](https://github.com/orfjackal/specsy/commit/c31f8508969098b05f7bedac0a9fe9a1b6fe833a)). Before that I had used Specsy for 9 months without any need for it, even though it had been in my plans already since much earlier in [GoSpec](https://github.com/orfjackal/gospec). So it should very rarely, if ever, be necessary to use the non-isolated execution model.
 
 
-"Before" and "After" Blocks
----------------------------
+### "Before" and "After" Blocks
 
 In Specsy, every parent spec acts similar to the "before" blocks in other testing frameworks. And as for "after" blocks, Specsy has a construct called *defer blocks* (inspired by [Go's defer statement](http://golang.org/doc/effective_go.html#defer)). Each spec can declare as many or few defer blocks as it wishes, and they will be executed in LIFO order when the spec exits.
 
@@ -639,8 +683,10 @@ public class DeferBlocksExample2Spec extends JavaSpecsy {
 </figure>
 
 
-Parameterized Tests
--------------------
+Indirect Features
+-----------------
+
+### Parameterized Tests
 
 Because Specsy's spec declarations are implemented as method calls which take a closure as a parameter, it's simple to use the framework for parameterized tests. [ParameterizedExampleSpec] shows how to do it:
 
@@ -719,11 +765,10 @@ public class ParameterizedExampleSpec extends JavaSpecsy {
 </pre>
 </figure>
 
-Note that the code which declares the specs must be deterministic. Otherwise the test isolation mechanism may not run all specs exactly once. Also here it might be desirable to use `shareSideEffects()` as a performance optimization, assuming that the generated specs do not have side-effects.
+Note that the code which declares the specs must be deterministic. Otherwise the test isolation mechanism may not run all specs exactly once. Also here it might be desirable to use `shareSideEffects()` as a performance optimization (see [Non-Isolated Execution Model](#non-isolated-execution-model)), assuming that the generated specs do not have side-effects.
 
 
-Executing Tests Only in Some Environments
------------------------------------------
+### Executing Tests Only in Some Environments
 
 Since in Specsy every spec is a closure, it is very easy to customize how individual specs are run. For example, let's say that some of the tests require Java 8 to be able to run. You can write a helper method such as the `worksOnlyOnJava8` in [EnvironmentFilterExampleSpec], as shown below, and mark/surround the closures of affected specs with it.
 
@@ -858,8 +903,7 @@ public class EnvironmentFilterExampleSpec extends JavaSpecsy {
 </figure>
 
 
-“Pending Until Fixed”
----------------------
+### “Pending Until Fixed”
 
 A common situation in Acceptance Test Driven Development (ATDD) is that you have an acceptance test which is not yet passing, until you implement the feature specified by that acceptance test, but that might take a long time. In that situation it can be useful to make the test so that if the test throws an exception, then you don't fail it but consider it to be pending, but if the test does *not* throw an exception and the feature is complete, then you fail it so that you would remember to remove the pending-until-fixed tag.
 
