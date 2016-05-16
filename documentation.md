@@ -29,7 +29,7 @@ Add to your project a dependency to Specsy's programming language specific API. 
 <pre class="brush: xml" data-language="Scala">
 <dependency>
     <groupId>org.specsy</groupId>
-    <artifactId>specsy-scala_2.10</artifactId>
+    <artifactId>specsy-scala_2.11</artifactId> <!-- or specsy-scala_2.10 -->
     <version>2.1.1</version>
     <scope>test</scope>
 </dependency>
