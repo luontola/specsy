@@ -5,11 +5,133 @@ layout: page
 
 Specsy is a [BDD](http://dannorth.net/introducing-bdd)-style unit-level testing framework for Scala, Groovy, Java and easily any other language on the JVM. It safely <em>isolates mutable state</em>, supports writing self-documenting tests/specifications, and runs all tests in parallel.
 
-Specsy has all the <em>essential features</em> of a unit testing framework and nothing excess. To illustrate Specsy's <em>expressiveness</em>, its public API has only three methods, but they provide functionality that requires about four printed pages of documentation - more than Specsy even has production code.
+Specsy has all the <em>essential features</em> of a unit testing framework and nothing excess. To illustrate Specsy's <em>expressiveness</em>, its public API has only three methods, but they provide functionality that requires about four printed pages of documentation to cover - more than Specsy even has production code.
 
-Refer to the [documentation](documentation.html) to see examples of tests written with Specsy.
+The following example demonstrates Specsy's isolated execution model.
+
+<figure class="example">
+<pre class="brush: scala" data-language="Scala">
+class StackSpec extends ScalaSpecsy {
+  val stack = new scala.collection.mutable.Stack[String]
+
+  "An empty stack" >> {
+
+    "is empty" >> {
+      assertTrue(stack.isEmpty)
+    }
+    "After a push, the stack is no longer empty" >> {
+      stack.push("a push")
+      assertFalse(stack.isEmpty)
+    }
+  }
+
+  "When objects have been pushed onto a stack" >> {
+    stack.push("pushed first")
+    stack.push("pushed last")
+
+    "the object pushed last is popped first" >> {
+      val poppedFirst = stack.pop()
+      assertThat(poppedFirst, is("pushed last"))
+    }
+    "the object pushed first is popped last" >> {
+      stack.pop()
+      val poppedLast = stack.pop()
+      assertThat(poppedLast, is("pushed first"))
+    }
+    "After popping all objects, the stack is empty" >> {
+      stack.pop()
+      stack.pop()
+      assertTrue(stack.isEmpty)
+    }
+  }
+}
+</pre>
+<pre class="brush: groovy" data-language="Groovy">
+class StackSpec extends GroovySpecsy {
+    def stack = new ArrayDeque&lt;String>()
+
+    @Override
+    void run() {
+
+        spec "An empty stack", {
+
+            spec "is empty", {
+                assertTrue(stack.isEmpty())
+            }
+            spec "After a push, the stack is no longer empty", {
+                stack.push("a push")
+                assertFalse(stack.isEmpty())
+            }
+        }
+
+        spec "When objects have been pushed onto a stack", {
+            stack.push("pushed first")
+            stack.push("pushed last")
+
+            spec "the object pushed last is popped first", {
+                String poppedFirst = stack.pop()
+                assertThat(poppedFirst, is("pushed last"))
+            }
+            spec "the object pushed first is popped last", {
+                stack.pop()
+                String poppedLast = stack.pop()
+                assertThat(poppedLast, is("pushed first"))
+            }
+            spec "After popping all objects, the stack is empty", {
+                stack.pop()
+                stack.pop()
+                assertTrue(stack.isEmpty())
+            }
+        }
+    }
+}
+</pre>
+<pre class="brush: java" data-language="Java">
+public class StackSpec extends JavaSpecsy {
+    private Deque&lt;String> stack = new ArrayDeque&lt;>();
+
+    @Override
+    public void run() {
+
+        spec("An empty stack", () -> {
+
+            spec("is empty", () -> {
+                assertTrue(stack.isEmpty());
+            });
+            spec("After a push, the stack is no longer empty", () -> {
+                stack.push("a push");
+                assertFalse(stack.isEmpty());
+            });
+        });
+
+        spec("When objects have been pushed onto a stack", () -> {
+            stack.push("pushed first");
+            stack.push("pushed last");
+
+            spec("the object pushed last is popped first", () -> {
+                String poppedFirst = stack.pop();
+                assertThat(poppedFirst, is("pushed last"));
+            });
+            spec("the object pushed first is popped last", () -> {
+                stack.pop();
+                String poppedLast = stack.pop();
+                assertThat(poppedLast, is("pushed first"));
+            });
+            spec("After popping all objects, the stack is empty", () -> {
+                stack.pop();
+                stack.pop();
+                assertTrue(stack.isEmpty());
+            });
+        });
+    }
+}
+</pre>
+</figure>
+
+Refer to the [documentation](/documentation) to see more examples and to start using Specsy.
 
 - Mailing list: <http://groups.google.com/group/specsy>
+- Release notes: <https://github.com/orfjackal/specsy/blob/master/RELEASE-NOTES.md>
 - Source code: <https://github.com/orfjackal/specsy>
 - License: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 - Developer: [Esko Luontola](https://github.com/orfjackal) ([@orfjackal](http://twitter.com/orfjackal))
