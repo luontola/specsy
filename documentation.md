@@ -140,6 +140,9 @@ public class HelloWorldSpec extends JavaSpecsy {
 </pre>
 </figure>
 
+P.S. It's easy to add support for more JVM-based languages (create just one [facade class](https://github.com/orfjackal/specsy/blob/master/specsy-groovy/src/main/java/org/specsy/groovy) and [syntax example](https://github.com/orfjackal/specsy/tree/master/specsy-groovy/src/test/java/org/specsy/groovy)), so create a [feature or pull request](https://github.com/orfjackal/specsy/issues) if you would like your favorite language supported.
+
+
 ### 3. Mental Model
 
 You can add test code to any of the blocks between curly braces - semantically there is no difference between the top-level spec and all the nested child specs. There can be as many or few nested specs as you wish (including zero). A child spec will see the side-effects of its parent specs, but it cannot see any side-effects from its sibling specs (see [Isolated Execution Model](#isolated-execution-model)). Test runners may run each leaf child spec in its own thread.
