@@ -18,7 +18,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: fi.jumi:jumi-api:0.5.437" level="project" />
     <orderEntry type="module" module-name="specsy-groovy" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy:2.4.6" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.specsy:specsy-scala_2.10:2.1.2-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.specsy:specsy-scala_2.10:2.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.10.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.scala-lang:scala-compiler:2.10.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.scala-lang:scala-reflect:2.10.6" level="project" />
