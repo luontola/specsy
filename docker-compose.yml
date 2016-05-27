@@ -2,6 +2,7 @@ version: '2'
 services:
   dev:
     build: .
+    image: luontola/specsy-dev:latest
     volumes:
     - ${HOME}:/root
     - .:/specsy
