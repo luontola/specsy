@@ -2,7 +2,7 @@
 Release Notes
 -------------
 
-### Upcoming Changes
+### Specsy 2.2.0 (2016-05-27)
 
 - Experimental JUnit 5 support
 - Dropped support for Scala 2.7-2.9
