@@ -1,18 +1,24 @@
 #!/bin/bash
 set -eu
-: ${1:? Usage: $0 DESCRIPTION}
+: ${2:? Usage: $0 DESCRIPTION VERSION}
 DESCRIPTION="$1"
+VERSION="$2"
 set -x
 
-# TODO: release OSSRH and push to GitHub automatically
-#mvn nexus-staging:release \
-#    --errors \
-#    -DaltStagingDirectory=staging \
-#    -DstagingDescription="$DESCRIPTION"
+mvn nexus-staging:deploy-staged-repository \
+    --errors \
+    -DrepositoryDirectory=staging \
+    -DstagingDescription="$DESCRIPTION"
 
-set +x
-echo ""
-echo "Done. Next steps:"
-echo "    open https://oss.sonatype.org/"
-echo "    git push origin HEAD"
-echo "    git push origin --tags"
+# assumes 'staging/*.properties' under altStagingDirectory
+mvn nexus-staging:release \
+    --errors \
+    -DaltStagingDirectory=. \
+    -DstagingDescription="$DESCRIPTION"
+
+git push origin HEAD
+git push origin --tags
+
+cd ../specsy-site
+./update-version.sh "$VERSION"
+git push
