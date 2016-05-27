@@ -30,7 +30,7 @@ Add to your project a dependency to Specsy's programming language specific API. 
 <dependency>
     <groupId>org.specsy</groupId>
     <artifactId>specsy-scala_2.11</artifactId> <!-- or specsy-scala_2.10 -->
-    <version>2.1.1</version>
+    <version>2.2.0</version>
     <scope>test</scope>
 </dependency>
 </pre>
@@ -38,7 +38,7 @@ Add to your project a dependency to Specsy's programming language specific API. 
 <dependency>
     <groupId>org.specsy</groupId>
     <artifactId>specsy-groovy</artifactId>
-    <version>2.1.1</version>
+    <version>2.2.0</version>
     <scope>test</scope>
 </dependency>
 </pre>
@@ -46,7 +46,7 @@ Add to your project a dependency to Specsy's programming language specific API. 
 <dependency>
     <groupId>org.specsy</groupId>
     <artifactId>specsy-java</artifactId>
-    <version>2.1.1</version>
+    <version>2.2.0</version>
     <scope>test</scope>
 </dependency>
 </pre>
@@ -60,7 +60,7 @@ If you are running tests with the [JUnit 5 test runner](http://junit.org/junit5/
 <dependency>
     <groupId>org.specsy</groupId>
     <artifactId>specsy-junit5</artifactId>
-    <version>TODO_NOT_YET_RELEASED</version>
+    <version>2.2.0</version>
     <scope>test</scope>
 </dependency>
 </pre>
