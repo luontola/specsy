@@ -17,8 +17,8 @@ function assert-file-contains-substring() {
 function set-documentation-version() {
     local file="documentation.md"
     local version="$1"
-    sed -i -r -e "s/^(\\s*<version>).+(<\\/version>)\$/\1$version\2/" "$file"
-    assert-file-contains-substring "$file" "<version>$version</version>"
+    sed -i -r -e "s/^(\\s*&lt;version>).+(<\\/version>)\$/\1$version\2/" "$file"
+    assert-file-contains-substring "$file" "&lt;version>$version</version>"
 }
 
 set -x
