@@ -59,7 +59,7 @@ If you are running tests with the [JUnit 5 test runner](http://junit.org/junit5/
 <pre class="brush: xml" data-language="Java">
 &lt;dependency>
     &lt;groupId>org.specsy</groupId>
-    &lt;artifactId>specsy-junit5</artifactId>
+    &lt;artifactId>specsy-junit</artifactId>
     &lt;version>2.3.0</version>
     &lt;scope>test</scope>
 &lt;/dependency>
