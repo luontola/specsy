@@ -2,7 +2,7 @@
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
-package org.specsy.junit5;
+package org.specsy.junit;
 
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
 import org.junit.platform.engine.support.descriptor.EngineDescriptor;

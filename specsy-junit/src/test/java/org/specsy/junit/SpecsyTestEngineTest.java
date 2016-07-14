@@ -2,7 +2,7 @@
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
-package org.specsy.junit5;
+package org.specsy.junit;
 
 import org.junit.Test;
 import org.junit.platform.engine.DiscoverySelector;
@@ -33,7 +33,7 @@ import static org.junit.platform.launcher.EngineFilter.includeEngines;
 public class SpecsyTestEngineTest {
 
     @Test
-    public void runs_Specsy_with_JUnit5() {
+    public void runs_Specsy_with_JUnit() {
         Launcher launcher = LauncherFactory.create();
 
         SummaryGeneratingListener summaryListener = new SummaryGeneratingListener();
@@ -64,11 +64,11 @@ public class SpecsyTestEngineTest {
 
         assertThat("tests", tests, hasSize(6));
         assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
-        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]"));
-        assertThat(tests.get(2).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]/[nested:0]"));
-        assertThat(tests.get(3).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]/[nested:0]/[nested:0]"));
-        assertThat(tests.get(4).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]"));
-        assertThat(tests.get(5).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]/[nested:1]"));
+        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
+        assertThat(tests.get(2).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]"));
+        assertThat(tests.get(3).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]/[nested:0]"));
+        assertThat(tests.get(4).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
+        assertThat(tests.get(5).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:1]"));
     }
 
     @Test
@@ -84,13 +84,13 @@ public class SpecsyTestEngineTest {
 
     @Test
     public void select_tests_by_UniqueId() {
-        List<TestIdentifier> tests = runTests(selectUniqueId("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]/[nested:0]"));
+        List<TestIdentifier> tests = runTests(selectUniqueId("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]"));
 
         assertThat("tests", tests, hasSize(4));
         assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
-        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]"));
-        assertThat(tests.get(2).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]/[nested:0]"));
-        assertThat(tests.get(3).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]/[nested:0]/[nested:0]"));
+        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
+        assertThat(tests.get(2).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]"));
+        assertThat(tests.get(3).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]/[nested:0]"));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class SpecsyTestEngineTest {
 
         assertThat("tests", tests, hasSize(6));
         assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
-        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]"));
+        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class SpecsyTestEngineTest {
 
         assertThat("tests", tests, hasSize(6));
         assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
-        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit5.SpecsyTestEngineTest$DummySpec]"));
+        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
     }
 
 
