@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/specsy-groovy/specsy-groovy.iml" filepath="$PROJECT_DIR$/specsy-groovy/specsy-groovy.iml" />
       <module fileurl="file://$PROJECT_DIR$/specsy-java/specsy-java.iml" filepath="$PROJECT_DIR$/specsy-java/specsy-java.iml" />
       <module fileurl="file://$PROJECT_DIR$/specsy-junit/specsy-junit.iml" filepath="$PROJECT_DIR$/specsy-junit/specsy-junit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/specsy-junit5/specsy-junit5.iml" filepath="$PROJECT_DIR$/specsy-junit5/specsy-junit5.iml" />
       <module fileurl="file://$PROJECT_DIR$/specsy-scala-parent/specsy-scala-parent.iml" filepath="$PROJECT_DIR$/specsy-scala-parent/specsy-scala-parent.iml" />
     </modules>
   </component>
