@@ -35,6 +35,11 @@ public class ClassTestDescriptor extends AbstractTestDescriptor {
 
     @Override
     public boolean isTest() {
+        return false;
+    }
+
+    @Override
+    public boolean hasTests() {
         return true;
     }
 

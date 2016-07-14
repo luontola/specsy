@@ -51,9 +51,9 @@ public class SpecsyTestEngineTest {
 //        ConsoleLauncher.main(SampleSpec.class.getName());
 
         String summaryString = toString(summary);
-        assertThat(summaryString, containsString("4 tests found"));
-        assertThat(summaryString, containsString("5 tests started"));
-        assertThat(summaryString, containsString("4 tests successful"));
+        assertThat(summaryString, containsString("3 tests found"));
+        assertThat(summaryString, containsString("3 tests started"));
+        assertThat(summaryString, containsString("2 tests successful"));
         assertThat(summaryString, containsString("1 tests failed"));
     }
 

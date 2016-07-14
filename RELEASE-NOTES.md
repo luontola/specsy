@@ -2,6 +2,10 @@
 Release Notes
 -------------
 
+### Upcoming
+
+- Improved IntelliJ IDEA compatibility. Now the specs are at least nested under the test class, though deeply nested specs are still not shown as a tree
+
 ### Specsy 2.3.0 (2016-07-14)
 
 - Upgraded to JUnit Platform 1.0.0-M1 (JUnit 5.0.0-M1)
