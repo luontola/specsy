@@ -7,3 +7,12 @@ services:
     - ${HOME}:/root
     - .:/specsy
     - ../specsy-site:/specsy-site
+  site:
+    build: .
+    image: luontola/specsy-dev:latest
+    working_dir: /specsy-site
+    command: jekyll serve --host 0.0.0.0 --port 4000
+    ports:
+    - "4000:4000"
+    volumes:
+    - ../specsy-site:/specsy-site

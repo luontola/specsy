@@ -13,3 +13,7 @@ Starting a Docker based development environment:
  
     docker-compose pull
     docker-compose run --rm dev
+
+Starting a local server for the web site:
+
+    docker-compose run --rm --service-ports site
