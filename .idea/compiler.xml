@@ -37,7 +37,6 @@
         <module name="specsy-groovy" />
         <module name="specsy-java" />
         <module name="specsy-junit" />
-        <module name="specsy-junit5" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -48,7 +47,6 @@
       <module name="specsy-groovy" target="1.7" />
       <module name="specsy-java" target="1.8" />
       <module name="specsy-junit" target="1.8" />
-      <module name="specsy-junit5" target="1.5" />
       <module name="specsy-scala-parent" target="1.7" />
       <module name="specsy-scala_2.10" target="1.7" />
     </bytecodeTargetLevel>
