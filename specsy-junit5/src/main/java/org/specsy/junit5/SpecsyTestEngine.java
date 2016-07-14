@@ -5,26 +5,26 @@
 package org.specsy.junit5;
 
 import fi.jumi.api.RunVia;
-import org.junit.gen5.engine.*;
-import org.junit.gen5.engine.discovery.ClassSelector;
-import org.junit.gen5.engine.discovery.ClasspathSelector;
-import org.junit.gen5.engine.discovery.PackageSelector;
-import org.junit.gen5.engine.discovery.UniqueIdSelector;
-import org.junit.gen5.engine.support.descriptor.EngineDescriptor;
+import org.junit.platform.engine.*;
+import org.junit.platform.engine.UniqueId.Segment;
+import org.junit.platform.engine.discovery.ClassSelector;
+import org.junit.platform.engine.discovery.ClasspathSelector;
+import org.junit.platform.engine.discovery.PackageSelector;
+import org.junit.platform.engine.discovery.UniqueIdSelector;
+import org.junit.platform.engine.support.descriptor.EngineDescriptor;
 import org.specsy.Specsy;
 import org.specsy.bootstrap.ClassSpec;
 import org.specsy.core.Path;
 import org.specsy.core.SpecRun;
 
 import java.io.File;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
-import java.util.stream.Stream;
 
-import static org.junit.gen5.commons.util.ReflectionUtils.findAllClassesInClasspathRoot;
-import static org.junit.gen5.commons.util.ReflectionUtils.findAllClassesInPackage;
-import static org.junit.gen5.engine.TestExecutionResult.Status.SUCCESSFUL;
+import static org.junit.platform.commons.util.ReflectionUtils.findAllClassesInClasspathRoot;
+import static org.junit.platform.commons.util.ReflectionUtils.findAllClassesInPackage;
 
 public class SpecsyTestEngine implements TestEngine {
 
@@ -36,11 +36,11 @@ public class SpecsyTestEngine implements TestEngine {
     }
 
     @Override
-    public TestDescriptor discover(EngineDiscoveryRequest discoveryRequest) {
-        EngineDescriptor engineDescriptor = new EngineDescriptor(getId(), "Specsy");
+    public TestDescriptor discover(EngineDiscoveryRequest discoveryRequest, UniqueId myUniqueId) {
+        EngineDescriptor engineDescriptor = new EngineDescriptor(myUniqueId, "Specsy");
 
         for (ClassSelector selector : discoveryRequest.getSelectorsByType(ClassSelector.class)) {
-            Class<?> testClass = selector.getTestClass();
+            Class<?> testClass = selector.getJavaClass();
             if (isSpecsyClass(testClass)) {
                 engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
             }
@@ -61,12 +61,18 @@ public class SpecsyTestEngine implements TestEngine {
         }
 
         for (UniqueIdSelector selector : discoveryRequest.getSelectorsByType(UniqueIdSelector.class)) {
-            String uniqueId = selector.getUniqueId();
-            if (uniqueId.startsWith(ENGINE_ID + ":")) {
-                String[] parts = uniqueId.split(":");
-                Class<?> testClass = loadClass(parts[1]);
-                Path pathToExecute = Path.of(Stream.of(parts)
-                        .skip(2)
+            UniqueId uniqueId = selector.getUniqueId();
+            System.out.println("id = " + uniqueId);
+            if (uniqueId.getEngineId().orElse("").equals(ENGINE_ID)) {
+                List<Segment> segments = uniqueId.getSegments();
+                Class<?> testClass = loadClass(segments.stream()
+                        .filter(s -> s.getType().equals(ClassTestDescriptor.SEGMENT_TYPE))
+                        .map(Segment::getValue)
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("class segment missing in " + uniqueId)));
+                Path pathToExecute = Path.of(segments.stream()
+                        .filter(s -> s.getType().equals(NestedTestDescriptor.SEGMENT_TYPE))
+                        .map(Segment::getValue)
                         .mapToInt(Integer::parseInt)
                         .toArray());
                 engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass, pathToExecute));
@@ -108,7 +114,7 @@ public class SpecsyTestEngine implements TestEngine {
         for (TestDescriptor child : descriptor.getChildren()) {
             execute(child, listener);
         }
-        listener.executionFinished(descriptor, new TestExecutionResult(SUCCESSFUL, null));
+        listener.executionFinished(descriptor, TestExecutionResult.successful());
     }
 
     private void execute(ClassTestDescriptor descriptor, EngineExecutionListener listener) {

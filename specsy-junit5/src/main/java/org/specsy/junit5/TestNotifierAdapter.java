@@ -5,16 +5,13 @@
 package org.specsy.junit5;
 
 import fi.jumi.api.drivers.TestNotifier;
-import org.junit.gen5.engine.EngineExecutionListener;
-import org.junit.gen5.engine.TestDescriptor;
-import org.junit.gen5.engine.TestExecutionResult;
+import org.junit.platform.engine.EngineExecutionListener;
+import org.junit.platform.engine.TestDescriptor;
+import org.junit.platform.engine.TestExecutionResult;
 import org.opentest4j.MultipleFailuresError;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.junit.gen5.engine.TestExecutionResult.Status.FAILED;
-import static org.junit.gen5.engine.TestExecutionResult.Status.SUCCESSFUL;
 
 public class TestNotifierAdapter implements TestNotifier {
     private final TestDescriptor descriptor;
@@ -37,7 +34,11 @@ public class TestNotifierAdapter implements TestNotifier {
     }
 
     private static TestExecutionResult toResult(List<Throwable> failures) {
-        return new TestExecutionResult(failures.isEmpty() ? SUCCESSFUL : FAILED, mergeFailures(failures));
+        if (failures.isEmpty()) {
+            return TestExecutionResult.successful();
+        } else {
+            return TestExecutionResult.failed(mergeFailures(failures));
+        }
     }
 
     private static Throwable mergeFailures(List<Throwable> failures) {

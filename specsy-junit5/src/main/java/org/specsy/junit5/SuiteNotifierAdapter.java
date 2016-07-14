@@ -7,8 +7,8 @@ package org.specsy.junit5;
 import fi.jumi.api.drivers.SuiteNotifier;
 import fi.jumi.api.drivers.TestId;
 import fi.jumi.api.drivers.TestNotifier;
-import org.junit.gen5.engine.EngineExecutionListener;
-import org.junit.gen5.engine.TestDescriptor;
+import org.junit.platform.engine.EngineExecutionListener;
+import org.junit.platform.engine.TestDescriptor;
 
 import java.util.HashMap;
 import java.util.Map;

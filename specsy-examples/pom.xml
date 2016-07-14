@@ -22,6 +22,18 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.specsy</groupId>
+            <artifactId>specsy-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Java -->
 
         <dependency>

@@ -4,11 +4,13 @@
 
 package org.specsy.junit5;
 
-import org.junit.gen5.engine.support.descriptor.AbstractTestDescriptor;
-import org.junit.gen5.engine.support.descriptor.EngineDescriptor;
+import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
+import org.junit.platform.engine.support.descriptor.EngineDescriptor;
 import org.specsy.core.Path;
 
 public class ClassTestDescriptor extends AbstractTestDescriptor {
+
+    public static final String SEGMENT_TYPE = "class";
 
     private final Class<?> testClass;
     private final Path pathToExecute;
@@ -18,7 +20,7 @@ public class ClassTestDescriptor extends AbstractTestDescriptor {
     }
 
     public ClassTestDescriptor(EngineDescriptor parent, Class<?> testClass, Path pathToExecute) {
-        super(parent.getUniqueId() + ":" + testClass.getName());
+        super(parent.getUniqueId().append(SEGMENT_TYPE, testClass.getName()), testClass.getSimpleName());
         this.testClass = testClass;
         this.pathToExecute = pathToExecute;
     }
@@ -32,16 +34,6 @@ public class ClassTestDescriptor extends AbstractTestDescriptor {
     }
 
     @Override
-    public String getName() {
-        return testClass.getName();
-    }
-
-    @Override
-    public String getDisplayName() {
-        return testClass.getSimpleName();
-    }
-
-    @Override
     public boolean isTest() {
         return true;
     }
@@ -49,10 +41,5 @@ public class ClassTestDescriptor extends AbstractTestDescriptor {
     @Override
     public boolean isContainer() {
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getName() + "(" + getName() + ")";
     }
 }

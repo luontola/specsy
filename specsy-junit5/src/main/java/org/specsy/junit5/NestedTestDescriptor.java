@@ -5,32 +5,22 @@
 package org.specsy.junit5;
 
 import fi.jumi.api.drivers.TestId;
-import org.junit.gen5.engine.TestDescriptor;
-import org.junit.gen5.engine.support.descriptor.AbstractTestDescriptor;
+import org.junit.platform.engine.TestDescriptor;
+import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
 
 public class NestedTestDescriptor extends AbstractTestDescriptor {
 
+    public static final String SEGMENT_TYPE = "nested";
+
     private final TestId testId;
-    private final String name;
 
     public NestedTestDescriptor(TestDescriptor parent, TestId testId, String name) {
-        super(parent.getUniqueId() + ":" + testId.getIndex());
+        super(parent.getUniqueId().append(SEGMENT_TYPE, String.valueOf(testId.getIndex())), name);
         this.testId = testId;
-        this.name = name;
     }
 
     public TestId getTestId() {
         return testId;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getDisplayName() {
-        return name;
     }
 
     @Override

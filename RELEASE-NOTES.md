@@ -2,6 +2,10 @@
 Release Notes
 -------------
 
+### Upcoming
+
+- Upgraded to JUnit Platform 1.0.0-M1
+
 ### Specsy 2.2.0 (2016-05-27)
 
 - Experimental JUnit 5 support
