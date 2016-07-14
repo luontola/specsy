@@ -12,7 +12,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="TEST" name="Maven: fi.jumi:jumi-launcher:0.5.437" level="project" />
-    <orderEntry type="module" module-name="specsy-junit5" scope="TEST" />
+    <orderEntry type="module" module-name="specsy-junit" scope="TEST" />
     <orderEntry type="module" module-name="specsy-core" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.0.0-M1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.0.0-M1" level="project" />

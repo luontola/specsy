@@ -107,7 +107,7 @@
 
             <dependency>
                 <groupId>org.specsy</groupId>
-                <artifactId>specsy-junit5</artifactId>
+                <artifactId>specsy-junit</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

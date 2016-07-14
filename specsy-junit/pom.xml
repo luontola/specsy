@@ -10,7 +10,7 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>specsy-junit5</artifactId>
+    <artifactId>specsy-junit</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

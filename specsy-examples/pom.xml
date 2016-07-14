@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>org.specsy</groupId>
-            <artifactId>specsy-junit5</artifactId>
+            <artifactId>specsy-junit</artifactId>
             <scope>test</scope>
         </dependency>
 

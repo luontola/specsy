@@ -4,7 +4,8 @@ Release Notes
 
 ### Upcoming
 
-- Upgraded to JUnit Platform 1.0.0-M1
+- Upgraded to JUnit Platform 1.0.0-M1 (JUnit 5.0.0-M1)
+- Renamed the `specsy-junit5` module to `specsy-junit` 
 
 ### Specsy 2.2.0 (2016-05-27)
 
