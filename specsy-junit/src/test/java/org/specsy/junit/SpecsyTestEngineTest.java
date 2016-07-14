@@ -14,7 +14,6 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.LoggingListener;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
-import org.specsy.java.JavaSpecsy;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -43,13 +42,13 @@ public class SpecsyTestEngineTest {
         }));
 
         launcher.execute(LauncherDiscoveryRequestBuilder.request()
-                .selectors(selectClass(DummySpec.class))
+                .selectors(selectClass(SampleSpec.class))
                 .build());
 
         TestExecutionSummary summary = summaryListener.getSummary();
         summary.printTo(new PrintWriter(System.out));
         summary.printFailuresTo(new PrintWriter(System.out));
-//        ConsoleLauncher.main(DummySpec.class.getName());
+//        ConsoleLauncher.main(SampleSpec.class.getName());
 
         String summaryString = toString(summary);
         assertThat(summaryString, containsString("4 tests found"));
@@ -60,23 +59,23 @@ public class SpecsyTestEngineTest {
 
     @Test
     public void reported_UniqueIds() {
-        List<TestIdentifier> tests = runTests(selectClass(DummySpec.class));
+        List<TestIdentifier> tests = runTests(selectClass(SampleSpec.class));
 
         assertThat("tests", tests, hasSize(6));
         assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
-        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
-        assertThat(tests.get(2).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]"));
-        assertThat(tests.get(3).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]/[nested:0]"));
-        assertThat(tests.get(4).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
-        assertThat(tests.get(5).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:1]"));
+        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]"));
+        assertThat(tests.get(2).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]/[nested:0]"));
+        assertThat(tests.get(3).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]/[nested:0]/[nested:0]"));
+        assertThat(tests.get(4).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]"));
+        assertThat(tests.get(5).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]/[nested:1]"));
     }
 
     @Test
     public void reported_display_names() {
-        List<TestIdentifier> tests = runTests(selectClass(DummySpec.class));
+        List<TestIdentifier> tests = runTests(selectClass(SampleSpec.class));
 
         assertThat(tests.get(0).getDisplayName(), is("Specsy"));
-        assertThat(tests.get(1).getDisplayName(), is("DummySpec"));
+        assertThat(tests.get(1).getDisplayName(), is("SampleSpec"));
         assertThat(tests.get(2).getDisplayName(), is("passing"));
         assertThat(tests.get(3).getDisplayName(), is("nested"));
         assertThat(tests.get(5).getDisplayName(), is("failing"));
@@ -84,13 +83,13 @@ public class SpecsyTestEngineTest {
 
     @Test
     public void select_tests_by_UniqueId() {
-        List<TestIdentifier> tests = runTests(selectUniqueId("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]"));
+        List<TestIdentifier> tests = runTests(selectUniqueId("[engine:specsy]/[class:org.specsy.junit.SampleSpec]/[nested:0]"));
 
         assertThat("tests", tests, hasSize(4));
         assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
-        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
-        assertThat(tests.get(2).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]"));
-        assertThat(tests.get(3).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]/[nested:0]/[nested:0]"));
+        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]"));
+        assertThat(tests.get(2).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]/[nested:0]"));
+        assertThat(tests.get(3).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]/[nested:0]/[nested:0]"));
     }
 
     @Test
@@ -99,7 +98,7 @@ public class SpecsyTestEngineTest {
 
         assertThat("tests", tests, hasSize(6));
         assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
-        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
+        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]"));
     }
 
     @Test
@@ -108,23 +107,7 @@ public class SpecsyTestEngineTest {
 
         assertThat("tests", tests, hasSize(6));
         assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
-        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SpecsyTestEngineTest$DummySpec]"));
-    }
-
-
-    // guinea pigs
-
-    public static class DummySpec extends JavaSpecsy {
-        @Override
-        public void run() throws Throwable {
-            spec("passing", () -> {
-                spec("nested", () -> {
-                });
-            });
-            spec("failing", () -> {
-                throw new AssertionError("dummy failure");
-            });
-        }
+        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]"));
     }
 
 
