@@ -81,6 +81,18 @@ public class SpecsyTestEngineTest {
         assertThat(tests.get(5).getDisplayName(), is("failing"));
     }
 
+
+    // supported discovery selectors
+
+    @Test
+    public void select_tests_by_class() {
+        List<TestIdentifier> tests = runTests(selectClass(SampleSpec.class));
+
+        assertThat("tests", tests, hasSize(6));
+        assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
+        assertThat(tests.get(1).getUniqueId(), is("[engine:specsy]/[class:org.specsy.junit.SampleSpec]"));
+    }
+
     @Test
     public void select_tests_by_UniqueId() {
         List<TestIdentifier> tests = runTests(selectUniqueId("[engine:specsy]/[class:org.specsy.junit.SampleSpec]/[nested:0]"));
@@ -103,7 +115,7 @@ public class SpecsyTestEngineTest {
 
     @Test
     public void select_tests_by_package() {
-        List<TestIdentifier> tests = runTests(selectPackage(getClass().getPackage().getName()));
+        List<TestIdentifier> tests = runTests(selectPackage(SampleSpec.class.getPackage().getName()));
 
         assertThat("tests", tests, hasSize(6));
         assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
