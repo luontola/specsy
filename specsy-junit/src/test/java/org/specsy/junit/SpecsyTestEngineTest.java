@@ -32,27 +32,15 @@ import static org.junit.platform.launcher.EngineFilter.includeEngines;
 public class SpecsyTestEngineTest {
 
     @Test
-    public void runs_Specsy_with_JUnit() {
-        Launcher launcher = LauncherFactory.create();
-
-        SummaryGeneratingListener summaryListener = new SummaryGeneratingListener();
-        launcher.registerTestExecutionListeners(summaryListener);
-        launcher.registerTestExecutionListeners(new LoggingListener((throwable, messageSupplier) -> {
-            System.out.println("[INFO] " + messageSupplier.get());
-        }));
-
-        launcher.execute(LauncherDiscoveryRequestBuilder.request()
-                .selectors(selectClass(SampleSpec.class))
-                .build());
-
-        TestExecutionSummary summary = summaryListener.getSummary();
-        summary.printTo(new PrintWriter(System.out));
-        summary.printFailuresTo(new PrintWriter(System.out));
+    public void reported_test_results() {
+        TestExecutionSummary summary = runTestsVerbose(selectClass(SampleSpec.class));
 //        ConsoleLauncher.main(SampleSpec.class.getName());
 
         String summaryString = toString(summary);
         assertThat(summaryString, containsString("3 tests found"));
+        assertThat(summaryString, containsString("0 tests skipped"));
         assertThat(summaryString, containsString("3 tests started"));
+        assertThat(summaryString, containsString("0 tests aborted"));
         assertThat(summaryString, containsString("2 tests successful"));
         assertThat(summaryString, containsString("1 tests failed"));
     }
@@ -130,19 +118,35 @@ public class SpecsyTestEngineTest {
     }
 
     private static List<TestIdentifier> runTests(List<DiscoverySelector> selectors) {
-        Launcher launcher = LauncherFactory.create();
-        List<TestIdentifier> tests = new ArrayList<>();
-        launcher.registerTestExecutionListeners(new TestExecutionListener() {
+        List<TestIdentifier> executedTests = new ArrayList<>();
+        runTests(selectors, new TestExecutionListener() {
             @Override
             public void executionStarted(TestIdentifier testIdentifier) {
-                tests.add(testIdentifier);
+                executedTests.add(testIdentifier);
             }
         });
+        return executedTests;
+    }
+
+    private TestExecutionSummary runTestsVerbose(DiscoverySelector selector) {
+        SummaryGeneratingListener summaryListener = new SummaryGeneratingListener();
+        LoggingListener loggingListener = new LoggingListener((throwable, messageSupplier) -> {
+            System.out.println("[INFO] " + messageSupplier.get());
+        });
+        runTests(Collections.singletonList(selector), summaryListener, loggingListener);
+        TestExecutionSummary summary = summaryListener.getSummary();
+        summary.printTo(new PrintWriter(System.out));
+        summary.printFailuresTo(new PrintWriter(System.out));
+        return summary;
+    }
+
+    private static void runTests(List<DiscoverySelector> selectors, TestExecutionListener... listeners) {
+        Launcher launcher = LauncherFactory.create();
+        launcher.registerTestExecutionListeners(listeners);
         launcher.execute(LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectors)
                 .filters(includeEngines("specsy")) // avoid infinite recursion due to accidentally running SpecsyTestEngineTest
                 .build());
-        return tests;
     }
 
     private static String toString(TestExecutionSummary summary) {
