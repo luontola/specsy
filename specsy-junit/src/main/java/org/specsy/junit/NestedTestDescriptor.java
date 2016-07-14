@@ -12,15 +12,11 @@ public class NestedTestDescriptor extends AbstractTestDescriptor {
 
     public static final String SEGMENT_TYPE = "nested";
 
-    private final TestId testId;
-
     public NestedTestDescriptor(TestDescriptor parent, TestId testId, String name) {
         super(parent.getUniqueId().append(SEGMENT_TYPE, String.valueOf(testId.getIndex())), name);
-        this.testId = testId;
-    }
-
-    public TestId getTestId() {
-        return testId;
+        // XXX: using the parent's TestSource because we don't have a more accurate TestSource
+        // TODO: if might be possible to get the line number of the lambda, but there is no line number in JavaClassSource, only in FileSource
+        parent.getSource().ifPresent(this::setSource);
     }
 
     @Override

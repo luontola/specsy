@@ -6,6 +6,7 @@ package org.specsy.junit;
 
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
 import org.junit.platform.engine.support.descriptor.EngineDescriptor;
+import org.junit.platform.engine.support.descriptor.JavaClassSource;
 import org.specsy.core.Path;
 
 public class ClassTestDescriptor extends AbstractTestDescriptor {
@@ -21,6 +22,7 @@ public class ClassTestDescriptor extends AbstractTestDescriptor {
 
     public ClassTestDescriptor(EngineDescriptor parent, Class<?> testClass, Path pathToExecute) {
         super(parent.getUniqueId().append(SEGMENT_TYPE, testClass.getName()), testClass.getSimpleName());
+        setSource(new JavaClassSource(testClass));
         this.testClass = testClass;
         this.pathToExecute = pathToExecute;
     }

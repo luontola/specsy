@@ -6,6 +6,7 @@ package org.specsy.junit;
 
 import org.junit.Test;
 import org.junit.platform.engine.DiscoverySelector;
+import org.junit.platform.engine.support.descriptor.JavaClassSource;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -19,10 +20,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -67,6 +65,16 @@ public class SpecsyTestEngineTest {
         assertThat(tests.get(2).getDisplayName(), is("passing"));
         assertThat(tests.get(3).getDisplayName(), is("nested"));
         assertThat(tests.get(5).getDisplayName(), is("failing"));
+    }
+
+    @Test
+    public void reported_test_sources() {
+        List<TestIdentifier> tests = runTests(selectClass(SampleSpec.class));
+
+        assertThat("engine", tests.get(0).getSource(), is(Optional.empty()));
+        assertThat("class", tests.get(1).getSource(), is(Optional.of(new JavaClassSource(SampleSpec.class))));
+        assertThat("nested", tests.get(2).getSource(), is(Optional.of(new JavaClassSource(SampleSpec.class))));
+        assertThat("nested leaf", tests.get(3).getSource(), is(Optional.of(new JavaClassSource(SampleSpec.class))));
     }
 
 
