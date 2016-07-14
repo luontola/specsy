@@ -2,7 +2,7 @@
 Release Notes
 -------------
 
-### Upcoming
+### Specsy 2.3.1 (2016-07-14)
 
 - Improved JUnit support
     - In IntelliJ IDEA, now the specs are at least nested under the test class, though deeply nested specs are still not shown as a tree
