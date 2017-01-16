@@ -1,4 +1,4 @@
-// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2017, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -15,7 +15,7 @@ public class NestedTestDescriptor extends AbstractTestDescriptor {
     public NestedTestDescriptor(TestDescriptor parent, TestId testId, String name) {
         super(parent.getUniqueId().append(SEGMENT_TYPE, String.valueOf(testId.getIndex())), name);
         // XXX: using the parent's TestSource because we don't have a more accurate TestSource
-        // TODO: if might be possible to get the line number of the lambda, but there is no line number in JavaClassSource, only in FileSource
+        // TODO: get the line number by creating an exception in org.specsy.core.Context.spec, then set a ClassSource here
         parent.getSource().ifPresent(this::setSource);
     }
 

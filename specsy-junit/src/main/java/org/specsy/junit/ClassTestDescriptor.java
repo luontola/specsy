@@ -1,12 +1,12 @@
-// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2017, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
 package org.specsy.junit;
 
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
+import org.junit.platform.engine.support.descriptor.ClassSource;
 import org.junit.platform.engine.support.descriptor.EngineDescriptor;
-import org.junit.platform.engine.support.descriptor.JavaClassSource;
 import org.specsy.core.Path;
 
 public class ClassTestDescriptor extends AbstractTestDescriptor {
@@ -22,7 +22,7 @@ public class ClassTestDescriptor extends AbstractTestDescriptor {
 
     public ClassTestDescriptor(EngineDescriptor parent, Class<?> testClass, Path pathToExecute) {
         super(parent.getUniqueId().append(SEGMENT_TYPE, testClass.getName()), testClass.getSimpleName());
-        setSource(new JavaClassSource(testClass));
+        setSource(new ClassSource(testClass));
         this.testClass = testClass;
         this.pathToExecute = pathToExecute;
     }

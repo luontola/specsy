@@ -1,4 +1,4 @@
-// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2017, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -8,7 +8,7 @@ import fi.jumi.api.RunVia;
 import org.junit.platform.engine.*;
 import org.junit.platform.engine.UniqueId.Segment;
 import org.junit.platform.engine.discovery.ClassSelector;
-import org.junit.platform.engine.discovery.ClasspathSelector;
+import org.junit.platform.engine.discovery.ClasspathRootSelector;
 import org.junit.platform.engine.discovery.PackageSelector;
 import org.junit.platform.engine.discovery.UniqueIdSelector;
 import org.junit.platform.engine.support.descriptor.EngineDescriptor;
@@ -17,14 +17,17 @@ import org.specsy.bootstrap.ClassSpec;
 import org.specsy.core.Path;
 import org.specsy.core.SpecRun;
 
-import java.io.File;
+import java.net.URI;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
+import java.util.function.Predicate;
 
 import static org.junit.platform.commons.util.ReflectionUtils.findAllClassesInClasspathRoot;
 import static org.junit.platform.commons.util.ReflectionUtils.findAllClassesInPackage;
+import static org.junit.platform.engine.support.filter.ClasspathScanningSupport.buildClassNamePredicate;
 
 public class SpecsyTestEngine implements TestEngine {
 
@@ -38,6 +41,7 @@ public class SpecsyTestEngine implements TestEngine {
     @Override
     public TestDescriptor discover(EngineDiscoveryRequest discoveryRequest, UniqueId myUniqueId) {
         EngineDescriptor engineDescriptor = new EngineDescriptor(myUniqueId, "Specsy");
+        Predicate<String> classNamePredicate = buildClassNamePredicate(discoveryRequest);
 
         for (ClassSelector selector : discoveryRequest.getSelectorsByType(ClassSelector.class)) {
             Class<?> testClass = selector.getJavaClass();
@@ -46,16 +50,16 @@ public class SpecsyTestEngine implements TestEngine {
             }
         }
 
-        for (ClasspathSelector selector : discoveryRequest.getSelectorsByType(ClasspathSelector.class)) {
-            File classpathRoot = selector.getClasspathRoot();
-            for (Class<?> testClass : findAllClassesInClasspathRoot(classpathRoot, SpecsyTestEngine::isSpecsyClass)) {
+        for (ClasspathRootSelector selector : discoveryRequest.getSelectorsByType(ClasspathRootSelector.class)) {
+            URI classpathRoot = selector.getClasspathRoot();
+            for (Class<?> testClass : findAllClassesInClasspathRoot(Paths.get(classpathRoot), SpecsyTestEngine::isSpecsyClass, classNamePredicate)) {
                 engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
             }
         }
 
         for (PackageSelector selector : discoveryRequest.getSelectorsByType(PackageSelector.class)) {
             String packageName = selector.getPackageName();
-            for (Class<?> testClass : findAllClassesInPackage(packageName, SpecsyTestEngine::isSpecsyClass)) {
+            for (Class<?> testClass : findAllClassesInPackage(packageName, SpecsyTestEngine::isSpecsyClass, classNamePredicate)) {
                 engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
             }
         }

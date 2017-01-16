@@ -1,4 +1,4 @@
-// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2017, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -6,7 +6,7 @@ package org.specsy.junit;
 
 import org.junit.Test;
 import org.junit.platform.engine.DiscoverySelector;
-import org.junit.platform.engine.support.descriptor.JavaClassSource;
+import org.junit.platform.engine.support.descriptor.ClassSource;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -16,10 +16,11 @@ import org.junit.platform.launcher.listeners.LoggingListener;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -72,9 +73,9 @@ public class SpecsyTestEngineTest {
         List<TestIdentifier> tests = runTests(selectClass(SampleSpec.class));
 
         assertThat("engine", tests.get(0).getSource(), is(Optional.empty()));
-        assertThat("class", tests.get(1).getSource(), is(Optional.of(new JavaClassSource(SampleSpec.class))));
-        assertThat("nested", tests.get(2).getSource(), is(Optional.of(new JavaClassSource(SampleSpec.class))));
-        assertThat("nested leaf", tests.get(3).getSource(), is(Optional.of(new JavaClassSource(SampleSpec.class))));
+        assertThat("class", tests.get(1).getSource(), is(Optional.of(new ClassSource(SampleSpec.class))));
+        assertThat("nested", tests.get(2).getSource(), is(Optional.of(new ClassSource(SampleSpec.class))));
+        assertThat("nested leaf", tests.get(3).getSource(), is(Optional.of(new ClassSource(SampleSpec.class))));
     }
 
 
@@ -125,7 +126,7 @@ public class SpecsyTestEngineTest {
         return runTests(Collections.singletonList(selector));
     }
 
-    private static List<TestIdentifier> runTests(List<DiscoverySelector> selectors) {
+    private static List<TestIdentifier> runTests(List<? extends DiscoverySelector> selectors) {
         List<TestIdentifier> executedTests = new ArrayList<>();
         runTests(selectors, new TestExecutionListener() {
             @Override
@@ -148,7 +149,7 @@ public class SpecsyTestEngineTest {
         return summary;
     }
 
-    private static void runTests(List<DiscoverySelector> selectors, TestExecutionListener... listeners) {
+    private static void runTests(List<? extends DiscoverySelector> selectors, TestExecutionListener... listeners) {
         Launcher launcher = LauncherFactory.create();
         launcher.registerTestExecutionListeners(listeners);
         launcher.execute(LauncherDiscoveryRequestBuilder.request()
@@ -163,10 +164,10 @@ public class SpecsyTestEngineTest {
         return sw.toString();
     }
 
-    private Set<File> myClasspathRoot() {
+    private Set<Path> myClasspathRoot() {
         String classFile = getClass().getName().replace(".", "/") + ".class";
         URL resource = getClass().getResource("/" + classFile);
-        File file = new File(resource.getPath().replace(classFile, ""));
+        Path file = Paths.get(resource.getPath().replace(classFile, ""));
         return Collections.singleton(file);
     }
 }

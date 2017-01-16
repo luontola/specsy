@@ -14,15 +14,15 @@
     <orderEntry type="library" scope="TEST" name="Maven: fi.jumi:jumi-launcher:0.5.437" level="project" />
     <orderEntry type="module" module-name="specsy-junit" scope="TEST" />
     <orderEntry type="module" module-name="specsy-core" scope="TEST" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.0.0-M1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.0.0-M1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.0.0-M3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.0.0-M3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.0.0-M1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.0.0-M1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.0-M1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.0.0-M3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.0-M3" level="project" />
     <orderEntry type="module" module-name="specsy-java" scope="TEST" />
     <orderEntry type="module" module-name="specsy-groovy" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy:2.4.6" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.specsy:specsy-scala_2.10:2.3.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.specsy:specsy-scala_2.10:2.3.2-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.10.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.scala-lang:scala-compiler:2.10.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.scala-lang:scala-reflect:2.10.6" level="project" />
