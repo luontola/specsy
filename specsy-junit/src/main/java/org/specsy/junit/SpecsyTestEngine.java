@@ -17,6 +17,7 @@ import org.specsy.bootstrap.ClassSpec;
 import org.specsy.core.Path;
 import org.specsy.core.SpecRun;
 
+import java.lang.reflect.Modifier;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.List;
@@ -86,6 +87,9 @@ public class SpecsyTestEngine implements TestEngine {
     }
 
     private static boolean isSpecsyClass(Class<?> testClass) {
+        if (Modifier.isAbstract(testClass.getModifiers())) {
+            return false;
+        }
         RunVia runVia = testClass.getAnnotation(RunVia.class);
         return runVia != null && runVia.value() == Specsy.class;
     }

@@ -15,6 +15,7 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.LoggingListener;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
+import org.specsy.java.JavaSpecsy;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -76,6 +77,14 @@ public class SpecsyTestEngineTest {
         assertThat("class", tests.get(1).getSource(), is(Optional.of(new ClassSource(SampleSpec.class))));
         assertThat("nested", tests.get(2).getSource(), is(Optional.of(new ClassSource(SampleSpec.class))));
         assertThat("nested leaf", tests.get(3).getSource(), is(Optional.of(new ClassSource(SampleSpec.class))));
+    }
+
+    @Test
+    public void will_not_run_abstract_classes() {
+        List<TestIdentifier> tests = runTests(selectClass(JavaSpecsy.class));
+
+        assertThat("tests", tests, hasSize(1));
+        assertThat(tests.get(0).getUniqueId(), is("[engine:specsy]"));
     }
 
 

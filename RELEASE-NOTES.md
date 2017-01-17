@@ -5,6 +5,7 @@ Release Notes
 ### Upcoming
 
 - Upgraded to JUnit Platform 1.0.0-M3 (JUnit 5.0.0-M3)
+- Will no more attempt to run abstract test classes
 
 ### Specsy 2.3.1 (2016-07-14)
 
