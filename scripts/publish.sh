@@ -18,7 +18,3 @@ mvn nexus-staging:release \
 
 git push origin HEAD
 git push origin --tags
-
-cd ../specsy-site
-./update-version.sh "$VERSION"
-git push

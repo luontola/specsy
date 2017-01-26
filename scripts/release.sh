@@ -35,6 +35,13 @@ function set-project-version() {
     assert-file-contains-substring "$file" "<version>$version</version>"
 }
 
+function set-documentation-version() {
+    local file="documentation.md"
+    local version="$1"
+    sed -i -r -e "s/^(\\s*&lt;version>).+(<\\/version>)\$/\1$version\2/" "$file"
+    assert-file-contains-substring "$file" "&lt;version>$version</version>"
+}
+
 function next-snapshot-version() {
     local prefix=`echo $1 | sed -n -r 's/([0-9]+\.[0-9]+\.)[0-9]+/\1/p'`
     local suffix=`echo $1 | sed -n -r 's/[0-9]+\.[0-9]+\.([0-9]+)/\1/p'`
@@ -50,6 +57,7 @@ demand-file-contains-line RELEASE-NOTES.md "### $APP_NAME $RELEASE_VERSION (`dat
 set -x
 
 set-project-version "$RELEASE_VERSION"
+set-documentation-version "$RELEASE_VERSION"
 git add -u
 git commit -m "Release $RELEASE_VERSION"
 git tag -s -m "$APP_NAME $RELEASE_VERSION" "v$RELEASE_VERSION"
