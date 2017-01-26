@@ -19,7 +19,7 @@ import org.specsy.java.JavaSpecsy;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URL;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -174,9 +174,13 @@ public class SpecsyTestEngineTest {
     }
 
     private Set<Path> myClasspathRoot() {
-        String classFile = getClass().getName().replace(".", "/") + ".class";
-        URL resource = getClass().getResource("/" + classFile);
-        Path file = Paths.get(resource.getPath().replace(classFile, ""));
-        return Collections.singleton(file);
+        try {
+            String classFile = getClass().getName().replace(".", "/") + ".class";
+            Path path = Paths.get(getClass().getResource("/" + classFile).toURI());
+            path = Paths.get(path.toString().replace(Paths.get(classFile).toString(), ""));
+            return Collections.singleton(path);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
