@@ -48,14 +48,14 @@
     <developers>
         <developer>
             <name>Esko Luontola</name>
-            <url>http://www.orfjackal.net/</url>
+            <url>http://luontola.fi</url>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/orfjackal/specsy.git</connection>
-        <developerConnection>scm:git:git@github.com:orfjackal/specsy.git</developerConnection>
-        <url>http://github.com/orfjackal/specsy/tree</url>
+        <connection>scm:git:git://github.com/luontola/specsy.git</connection>
+        <developerConnection>scm:git:git@github.com:luontola/specsy.git</developerConnection>
+        <url>http://github.com/luontola/specsy/tree</url>
     </scm>
 
     <dependencies>

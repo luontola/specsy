@@ -131,10 +131,10 @@ public class StackSpec extends JavaSpecsy {
 Refer to the [documentation](/documentation) to see more examples and to start using Specsy.
 
 - Mailing list: <http://groups.google.com/group/specsy>
-- Release notes: <https://github.com/orfjackal/specsy/blob/master/RELEASE-NOTES.md>
-- Source code: <https://github.com/orfjackal/specsy>
+- Release notes: <https://github.com/luontola/specsy/blob/master/RELEASE-NOTES.md>
+- Source code: <https://github.com/luontola/specsy>
 - License: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-- Developer: [Esko Luontola](https://github.com/orfjackal) ([@orfjackal](http://twitter.com/orfjackal))
+- Developer: [Esko Luontola](https://github.com/luontola) ([@orfjackal](https://twitter.com/orfjackal))
 
 
 Project Goals

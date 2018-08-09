@@ -140,7 +140,7 @@ public class HelloWorldSpec extends JavaSpecsy {
 </pre>
 </figure>
 
-P.S. It's easy to add support for more JVM-based languages (create just one [facade class](https://github.com/orfjackal/specsy/blob/master/specsy-groovy/src/main/java/org/specsy/groovy) and [syntax example](https://github.com/orfjackal/specsy/tree/master/specsy-groovy/src/test/java/org/specsy/groovy)), so create a [feature or pull request](https://github.com/orfjackal/specsy/issues) if you would like your favorite language supported.
+P.S. It's easy to add support for more JVM-based languages (create just one [facade class](https://github.com/luontola/specsy/blob/master/specsy-groovy/src/main/java/org/specsy/groovy) and [syntax example](https://github.com/luontola/specsy/tree/master/specsy-groovy/src/test/java/org/specsy/groovy)), so create a [feature or pull request](https://github.com/luontola/specsy/issues) if you would like your favorite language supported.
 
 
 ### 3. Mental Model
@@ -486,7 +486,7 @@ public class ShareSideEffectsExampleSpec extends JavaSpecsy {
 
 Note that the effects of `shareSideEffects()` (pun intended) are restricted inside the subtree of the current spec, after the call to `shareSideEffects()`. The subtree can start from the root spec (if `shareSideEffects()` is called at the top level before all nested specs), or it can start from *any* nested spec. So you can mix the isolated and non-isolated modes inside one test class, so that only one subtree of specs is affected by it (or any number of subtrees, for that matter).
 
-[See here](https://github.com/orfjackal/dimdwarf/blob/e0f109dcd2d81f35b411fd1a2ad75be7ef60ae75/dimdwarf-core/src/test/scala/net/orfjackal/dimdwarf/domain/SimpleTimestampSpec.scala#L64) for a real-life example of using `shareSideEffects()` as a performance optimization for parameterized tests. Actually this is the first use case which drove me to finally implement `shareSideEffects()` (and it took [just one hour to implement](https://github.com/orfjackal/specsy/commit/c31f8508969098b05f7bedac0a9fe9a1b6fe833a)). Before that I had used Specsy for 9 months without any need for it, even though it had been in my plans already since much earlier in [GoSpec](https://github.com/orfjackal/gospec). So it should very rarely, if ever, be necessary to use the non-isolated execution model.
+[See here](https://github.com/luontola/dimdwarf/blob/e0f109dcd2d81f35b411fd1a2ad75be7ef60ae75/dimdwarf-core/src/test/scala/net/orfjackal/dimdwarf/domain/SimpleTimestampSpec.scala#L64) for a real-life example of using `shareSideEffects()` as a performance optimization for parameterized tests. Actually this is the first use case which drove me to finally implement `shareSideEffects()` (and it took [just one hour to implement](https://github.com/luontola/specsy/commit/c31f8508969098b05f7bedac0a9fe9a1b6fe833a)). Before that I had used Specsy for 9 months without any need for it, even though it had been in my plans already since much earlier in [GoSpec](https://github.com/luontola/gospec). So it should very rarely, if ever, be necessary to use the non-isolated execution model.
 
 
 ### "Before" and "After" Blocks
@@ -1014,11 +1014,11 @@ class AcceptanceTestHelpers {
 </figure>
 
 
-[FibonacciSpec]:                https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/FibonacciSpec.scala
-[StackSpec]:                    https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/StackSpec.scala
-[ShareSideEffectsExampleSpec]:  https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/ShareSideEffectsExampleSpec.scala
-[DeferBlocksExampleSpec]:       https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/DeferBlocksExampleSpec.scala
-[DeferBlocksExample2Spec]:      https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/DeferBlocksExample2Spec.scala
-[ParameterizedExampleSpec]:     https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/ParameterizedExampleSpec.scala
-[EnvironmentFilterExampleSpec]: https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/EnvironmentFilterExampleSpec.scala
-[PendingUntilFixedExampleSpec]: https://github.com/orfjackal/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/PendingUntilFixedExampleSpec.scala
+[FibonacciSpec]:                https://github.com/luontola/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/FibonacciSpec.scala
+[StackSpec]:                    https://github.com/luontola/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/StackSpec.scala
+[ShareSideEffectsExampleSpec]:  https://github.com/luontola/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/ShareSideEffectsExampleSpec.scala
+[DeferBlocksExampleSpec]:       https://github.com/luontola/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/DeferBlocksExampleSpec.scala
+[DeferBlocksExample2Spec]:      https://github.com/luontola/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/DeferBlocksExample2Spec.scala
+[ParameterizedExampleSpec]:     https://github.com/luontola/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/ParameterizedExampleSpec.scala
+[EnvironmentFilterExampleSpec]: https://github.com/luontola/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/EnvironmentFilterExampleSpec.scala
+[PendingUntilFixedExampleSpec]: https://github.com/luontola/specsy/blob/master/specsy-examples/src/test/scala/org/specsy/examples/scala/PendingUntilFixedExampleSpec.scala
