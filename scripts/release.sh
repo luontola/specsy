@@ -36,7 +36,7 @@ function set-project-version() {
 }
 
 function set-documentation-version() {
-    local file="documentation.md"
+    local file="docs/documentation.md"
     local version="$1"
     sed -i -r -e "s/^(\\s*&lt;version>).+(<\\/version>)\$/\1$version\2/" "$file"
     assert-file-contains-substring "$file" "&lt;version>$version</version>"

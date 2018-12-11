@@ -2,7 +2,7 @@
 Release Notes
 -------------
 
-### Upcoming
+### Specsy 2.3.3 (2018-12-11)
 
 - Upgraded to JUnit Platform 1.3.2 (JUnit 5.3.2)
 - Supports Scala 2.10-2.12
