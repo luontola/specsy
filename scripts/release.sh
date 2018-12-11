@@ -52,7 +52,7 @@ function next-snapshot-version() {
 APP_NAME="Specsy"
 NEXT_VERSION=`next-snapshot-version $RELEASE_VERSION`
 
-demand-file-contains-line RELEASE-NOTES.md "### $APP_NAME $RELEASE_VERSION (`date --iso-8601`)"
+demand-file-contains-line RELEASE-NOTES.md "### $APP_NAME $RELEASE_VERSION (`date +%Y-%m-%d`)"
 
 set -x
 
