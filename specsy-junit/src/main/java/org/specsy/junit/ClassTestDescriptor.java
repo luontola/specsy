@@ -1,4 +1,4 @@
-// Copyright © 2010-2017, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2018, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -21,8 +21,9 @@ public class ClassTestDescriptor extends AbstractTestDescriptor {
     }
 
     public ClassTestDescriptor(EngineDescriptor parent, Class<?> testClass, Path pathToExecute) {
-        super(parent.getUniqueId().append(SEGMENT_TYPE, testClass.getName()), testClass.getSimpleName());
-        setSource(new ClassSource(testClass));
+        super(parent.getUniqueId().append(SEGMENT_TYPE, testClass.getName()),
+                testClass.getSimpleName(),
+                ClassSource.from(testClass));
         this.testClass = testClass;
         this.pathToExecute = pathToExecute;
     }
@@ -36,17 +37,7 @@ public class ClassTestDescriptor extends AbstractTestDescriptor {
     }
 
     @Override
-    public boolean isTest() {
-        return false;
-    }
-
-    @Override
-    public boolean hasTests() {
-        return true;
-    }
-
-    @Override
-    public boolean isContainer() {
-        return true;
+    public Type getType() {
+        return Type.CONTAINER_AND_TEST;
     }
 }

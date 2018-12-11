@@ -1,4 +1,4 @@
-// Copyright © 2010-2017, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2018, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -18,8 +18,6 @@ import org.specsy.core.Path;
 import org.specsy.core.SpecRun;
 
 import java.lang.reflect.Modifier;
-import java.net.URI;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -52,8 +50,7 @@ public class SpecsyTestEngine implements TestEngine {
         }
 
         for (ClasspathRootSelector selector : discoveryRequest.getSelectorsByType(ClasspathRootSelector.class)) {
-            URI classpathRoot = selector.getClasspathRoot();
-            for (Class<?> testClass : findAllClassesInClasspathRoot(Paths.get(classpathRoot), SpecsyTestEngine::isSpecsyClass, classNamePredicate)) {
+            for (Class<?> testClass : findAllClassesInClasspathRoot(selector.getClasspathRoot(), SpecsyTestEngine::isSpecsyClass, classNamePredicate)) {
                 engineDescriptor.addChild(new ClassTestDescriptor(engineDescriptor, testClass));
             }
         }

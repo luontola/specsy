@@ -1,4 +1,4 @@
-// Copyright © 2010-2017, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2018, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -37,11 +37,11 @@ public class SpecsyTestEngineTest {
 //        ConsoleLauncher.main(SampleSpec.class.getName());
 
         String summaryString = toString(summary);
-        assertThat(summaryString, containsString("3 tests found"));
+        assertThat(summaryString, containsString("4 tests found"));
         assertThat(summaryString, containsString("0 tests skipped"));
-        assertThat(summaryString, containsString("3 tests started"));
+        assertThat(summaryString, containsString("5 tests started"));
         assertThat(summaryString, containsString("0 tests aborted"));
-        assertThat(summaryString, containsString("2 tests successful"));
+        assertThat(summaryString, containsString("4 tests successful"));
         assertThat(summaryString, containsString("1 tests failed"));
     }
 
@@ -74,9 +74,9 @@ public class SpecsyTestEngineTest {
         List<TestIdentifier> tests = runTests(selectClass(SampleSpec.class));
 
         assertThat("engine", tests.get(0).getSource(), is(Optional.empty()));
-        assertThat("class", tests.get(1).getSource(), is(Optional.of(new ClassSource(SampleSpec.class))));
-        assertThat("nested", tests.get(2).getSource(), is(Optional.of(new ClassSource(SampleSpec.class))));
-        assertThat("nested leaf", tests.get(3).getSource(), is(Optional.of(new ClassSource(SampleSpec.class))));
+        assertThat("class", tests.get(1).getSource(), is(Optional.of(ClassSource.from(SampleSpec.class))));
+        assertThat("nested", tests.get(2).getSource(), is(Optional.of(ClassSource.from(SampleSpec.class))));
+        assertThat("nested leaf", tests.get(3).getSource(), is(Optional.of(ClassSource.from(SampleSpec.class))));
     }
 
     @Test
@@ -148,7 +148,7 @@ public class SpecsyTestEngineTest {
 
     private TestExecutionSummary runTestsVerbose(DiscoverySelector selector) {
         SummaryGeneratingListener summaryListener = new SummaryGeneratingListener();
-        LoggingListener loggingListener = new LoggingListener((throwable, messageSupplier) -> {
+        LoggingListener loggingListener = LoggingListener.forBiConsumer((throwable, messageSupplier) -> {
             System.out.println("[INFO] " + messageSupplier.get());
         });
         runTests(Collections.singletonList(selector), summaryListener, loggingListener);

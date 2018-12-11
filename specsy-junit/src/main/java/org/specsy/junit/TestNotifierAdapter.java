@@ -1,4 +1,4 @@
-// Copyright © 2010-2016, Esko Luontola <www.orfjackal.net>
+// Copyright © 2010-2018, Esko Luontola <www.orfjackal.net>
 // This software is released under the Apache License 2.0.
 // The license text is at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -48,16 +48,6 @@ public class TestNotifierAdapter implements TestNotifier {
         if (failures.size() == 1) {
             return failures.get(0);
         }
-        // XXX: JUnit 5 cannot express the existence of multiple non-assertion failures
-        MultipleFailuresError multiple = new MultipleFailuresError(null);
-        for (Throwable failure : failures) {
-            if (failure instanceof AssertionError) {
-                multiple.addFailure((AssertionError) failure);
-            } else {
-                multiple.addFailure(new AssertionError(failure));
-            }
-        }
-        return multiple;
+        return new MultipleFailuresError(null, failures);
     }
-
 }
