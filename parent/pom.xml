@@ -26,7 +26,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jumi.version>0.5.437</jumi.version>
-        <scala.version>2.10.6</scala.version>
+        <scala.version>2.10.7</scala.version>
         <junit-platform.version>1.0.0-M3</junit-platform.version>
         <junit-jupiter.version>5.0.0-M3</junit-jupiter.version>
         <junit-vintage.version>4.12.0-M3</junit-vintage.version>

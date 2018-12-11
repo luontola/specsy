@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="Maven 2" modules="specsy-scala_2.10,specsy-examples,specsy-core,specsy-scala-parent">
+    <profile name="Maven 2" modules="specsy-core,specsy-examples,specsy-scala-parent,specsy-scala_2.10,specsy-scala_2.12">
       <option name="featureWarnings" value="true" />
     </profile>
   </component>

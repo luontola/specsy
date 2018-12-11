@@ -11,11 +11,26 @@
     </parent>
 
     <!-- See http://www.scala-sbt.org/release/docs/Cross-Build.html#Publishing+Conventions -->
-    <artifactId>specsy-scala_2.11</artifactId>
+    <artifactId>specsy-scala_2.12</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <scala.version>2.11.12</scala.version>
+        <scala.version>2.12.8</scala.version>
     </properties>
+
+    <build>
+        <plugins>
+
+            <!-- Scala 2.12 requires Java 8 -->
+
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <jvm>${env.JAVA8_HOME}/bin/java</jvm>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
